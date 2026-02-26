@@ -13,7 +13,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" name="viewport">
     <title>Sure Travel Agency - Réservation</title>
     
-    <!-- Translation Styles -->
+    <!-- Language Selector Styles -->
     <style>
         .language-selector {
             position: relative;
@@ -129,26 +129,27 @@
             border-radius: 4px;
             margin-left: auto;
         }
-        
-        /* Destination Cards */
-        .destination-card {
+        .service-option {
             transition: all 0.3s ease;
-            cursor: pointer;
         }
-        .destination-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(15, 73, 189, 0.2);
+        .service-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(15, 73, 189, 0.3);
         }
-        .destination-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(15, 73, 189, 0.9);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: bold;
+        .service-option.selected {
+            border-color: #0f49bd;
+            background: linear-gradient(135deg, rgba(15,73,189,0.1) 0%, rgba(15,73,189,0.2) 100%);
+            transform: scale(1.02);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f49bd 0%, #3a7bd5 100%);
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
     </style>
     
@@ -185,64 +186,49 @@
         .fill-1 {
             font-variation-settings: 'FILL' 1;
         }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         @media (min-width: 768px) {
             .max-w-container {
-                max-width: 768px;
+                max-width: 1280px;
                 margin-left: auto;
                 margin-right: auto;
             }
         }
         .form-input:focus {
-            box-shadow: 0 0 0 4px rgba(15, 73, 189, 0.1);
-        }
-        .service-option {
-            transition: all 0.2s ease;
-        }
-        .service-option:hover {
+            box-shadow: 0 0 0 4px rgba(15, 73, 189, 0.15);
             border-color: #0f49bd;
-            background-color: rgba(15, 73, 189, 0.05);
-        }
-        .service-option.selected {
-            border-color: #0f49bd;
-            background-color: rgba(15, 73, 189, 0.1);
-        }
-        .feature-card {
-            transition: transform 0.3s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #0f49bd 0%, #3a7bd5 100%);
-        }
-        .offer-badge {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: #ef4444;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            transform: rotate(5deg);
         }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
-    <!-- Header / Top Bar -->
-    <header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3">
+    <!-- Header / Top Bar (same as previous) -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 shadow-sm">
         <div class="flex items-center justify-between max-w-container mx-auto w-full">
-            <a href="index.html" class="flex items-center gap-3">
-                <!-- New Logo Image -->
-                <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden p-1">
-                    <img alt="Sure Travel Agency Logo" class="w-full h-full object-contain" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden p-1 group-hover:scale-110 transition-transform duration-300">
+                    <img alt="Sure Travel Agency Logo" class="w-full h-full object-contain" src="./Images/logo.jpeg">
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white">SURE</h1>
+                    <h1 class="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white group-hover:text-primary transition-colors">SURE</h1>
                     <p class="text-[8px] uppercase tracking-widest text-primary font-bold">TRAVEL AGENCY</p>
                 </div>
             </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-6">
+                <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Accueil</a>
+                <a href="services.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Services</a>
+                <a href="booking.html" class="text-primary font-semibold border-b-2 border-primary pb-1">Réservations</a>
+                <a href="aboutus.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">À Propos</a>
+                <a href="support.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Aide</a>
+            </nav>
+            
             <div class="flex items-center gap-2">
                 <a href="search.html" class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                     <span class="material-symbols-outlined">search</span>
@@ -250,9 +236,9 @@
                 
                 <!-- Language Selector -->
                 <div class="language-selector">
-                    <button class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center gap-1">
+                    <button class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center gap-1 border border-slate-200 dark:border-slate-700 rounded-lg">
                         <span class="material-symbols-outlined">language</span>
-                        <span class="text-sm hidden sm:inline" id="current-language">FR</span>
+                        <span class="text-sm hidden sm:inline font-medium" id="current-language">FR</span>
                     </button>
                     <div class="language-dropdown">
                         <div class="language-option active" onclick="changeLanguage('fr')" data-lang="fr">
@@ -277,471 +263,489 @@
 
     <!-- Main Content -->
     <main class="flex-1 max-w-container mx-auto w-full pb-24 px-4">
-        <!-- Page Header with Decoration -->
-        <div class="pt-6 pb-4 relative">
-            <div class="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full -mr-8 -mt-8"></div>
-            <div class="absolute bottom-0 left-0 w-16 h-16 bg-primary/5 rounded-full -ml-6 -mb-6"></div>
-            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white relative z-10" data-translate="booking_title">Réserver votre voyage</h2>
-            <p class="text-slate-500 dark:text-slate-400 mt-1 relative z-10" data-translate="booking_subtitle">Remplissez les informations ci-dessous pour commencer</p>
+        <!-- Page Header with Progress -->
+        <div class="pt-6 pb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2" data-translate="booking_title">Réserver votre voyage</h1>
+            <p class="text-slate-500 dark:text-slate-400" data-translate="booking_subtitle">Remplissez les informations ci-dessous pour commencer</p>
+            
+            <!-- Progress Steps -->
+            <div class="flex items-center justify-between mt-6 max-w-md mx-auto">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</div>
+                    <span class="text-xs mt-1 font-medium" data-translate="search">Recherche</span>
+                </div>
+                <div class="flex-1 h-0.5 bg-primary/30 mx-2"></div>
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold">2</div>
+                    <span class="text-xs mt-1 text-slate-500" data-translate="payment">Paiement</span>
+                </div>
+                <div class="flex-1 h-0.5 bg-slate-200 dark:bg-slate-700 mx-2"></div>
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold">3</div>
+                    <span class="text-xs mt-1 text-slate-500" data-translate="confirmation">Confirmation</span>
+                </div>
+            </div>
         </div>
 
         <!-- Special Offer Banner -->
-        <div class="gradient-bg rounded-2xl p-4 mb-6 text-white relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-12 -mt-12"></div>
-            <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-8 -mb-8"></div>
-            <div class="flex items-center gap-3 relative z-10">
-                <span class="material-symbols-outlined text-3xl">local_offer</span>
+        <div class="gradient-bg rounded-2xl p-5 mb-8 text-white relative overflow-hidden shadow-xl">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
+            <div class="flex items-center gap-4 relative z-10">
+                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm floating">
+                    <span class="material-symbols-outlined text-3xl">local_offer</span>
+                </div>
                 <div>
-                    <p class="font-bold text-lg" data-translate="special_offer">Offre spéciale de lancement !</p>
-                    <p class="text-sm opacity-90" data-translate="first_booking_discount">-15% sur votre première réservation avec le code <span class="font-bold">WELCOME15</span></p>
+                    <p class="font-bold text-xl" data-translate="special_offer">Offre spéciale de lancement !</p>
+                    <p class="text-sm opacity-90" data-translate="first_booking">-15% sur votre première réservation avec le code <span class="font-bold bg-white/20 px-2 py-1 rounded">WELCOME15</span></p>
                 </div>
             </div>
         </div>
 
         <!-- Service Type Selection with Icons -->
-        <div class="mb-6">
+        <div class="mb-8">
             <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 block" data-translate="what_would_you_book">Que souhaitez-vous réserver ?</label>
             <div class="grid grid-cols-3 gap-3">
-                <button onclick="selectService('flight')" id="service-flight" class="service-option selected flex flex-col items-center p-4 rounded-xl border-2 border-primary bg-primary/10 relative">
-                    <span class="material-symbols-outlined text-primary text-3xl mb-1 fill-1">flight</span>
+                <button onclick="selectService('flight')" id="service-flight" class="service-option selected flex flex-col items-center p-5 rounded-2xl border-2 border-primary bg-gradient-to-br from-primary/5 to-primary/10">
+                    <span class="material-symbols-outlined text-primary text-3xl mb-2 fill-1">flight</span>
                     <span class="font-bold text-sm" data-translate="flight">Vol</span>
                 </button>
-                <button onclick="selectService('hotel')" id="service-hotel" class="service-option flex flex-col items-center p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary/50 relative">
-                    <span class="material-symbols-outlined text-slate-500 text-3xl mb-1">hotel</span>
+                <button onclick="selectService('hotel')" id="service-hotel" class="service-option flex flex-col items-center p-5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary/30">
+                    <span class="material-symbols-outlined text-slate-500 text-3xl mb-2">hotel</span>
                     <span class="font-bold text-sm text-slate-500" data-translate="hotel">Hôtel</span>
                 </button>
-                <button onclick="selectService('car')" id="service-car" class="service-option flex flex-col items-center p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary/50 relative">
-                    <span class="material-symbols-outlined text-slate-500 text-3xl mb-1">directions_car</span>
+                <button onclick="selectService('car')" id="service-car" class="service-option flex flex-col items-center p-5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary/30">
+                    <span class="material-symbols-outlined text-slate-500 text-3xl mb-2">directions_car</span>
                     <span class="font-bold text-sm text-slate-500" data-translate="car">Voiture</span>
                 </button>
             </div>
         </div>
 
         <!-- Booking Form -->
-        <form class="space-y-6 bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-lg border border-primary/10 mb-6">
-            <!-- Trip Type (for flights) -->
-            <div id="trip-type-section" class="flex flex-wrap gap-4 pb-3 border-b border-slate-200 dark:border-slate-700">
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="trip-type" value="roundtrip" checked class="w-4 h-4 text-primary focus:ring-primary/20">
-                    <span class="text-sm font-medium" data-translate="round_trip">Aller-retour</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="trip-type" value="oneway" class="w-4 h-4 text-primary focus:ring-primary/20">
-                    <span class="text-sm font-medium" data-translate="one_way">Aller simple</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="trip-type" value="multicity" class="w-4 h-4 text-primary focus:ring-primary/20">
-                    <span class="text-sm font-medium" data-translate="multi_city">Multi-destinations</span>
-                </label>
-            </div>
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl border border-primary/10 mb-8">
+            <form class="space-y-6">
+                <!-- Trip Type (for flights) -->
+                <div id="trip-type-section" class="flex flex-wrap gap-4 pb-4 border-b border-slate-200 dark:border-slate-700">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="trip-type" value="roundtrip" checked class="w-4 h-4 text-primary focus:ring-primary/20">
+                        <span class="text-sm font-medium" data-translate="round_trip">Aller-retour</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="trip-type" value="oneway" class="w-4 h-4 text-primary focus:ring-primary/20">
+                        <span class="text-sm font-medium" data-translate="one_way">Aller simple</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="trip-type" value="multicity" class="w-4 h-4 text-primary focus:ring-primary/20">
+                        <span class="text-sm font-medium" data-translate="multi_city">Multi-destinations</span>
+                    </label>
+                </div>
 
-            <!-- Locations with Autocomplete -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">flight_takeoff</span>
-                        <span data-translate="departure_city">Ville de départ</span>
-                    </label>
-                    <div class="autocomplete-container">
-                        <input type="text" id="departure-input" placeholder="Ex: Bujumbura (BJM)" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" value="Bujumbura (BJM)" onkeyup="showAutocomplete('departure')" onfocus="showAutocomplete('departure')">
-                        <div id="departure-autocomplete" class="autocomplete-dropdown"></div>
+                <!-- Locations with Autocomplete -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">flight_takeoff</span>
+                            <span data-translate="departure_city">Ville de départ</span>
+                        </label>
+                        <div class="autocomplete-container">
+                            <input type="text" id="departure-input" placeholder="Ex: Bujumbura (BJM)" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" value="Bujumbura (BJM)" onkeyup="showAutocomplete('departure')" onfocus="showAutocomplete('departure')">
+                            <div id="departure-autocomplete" class="autocomplete-dropdown"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">flight_land</span>
+                            <span data-translate="arrival_city">Ville d'arrivée</span>
+                        </label>
+                        <div class="autocomplete-container">
+                            <input type="text" id="arrival-input" placeholder="Ex: Paris (CDG)" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" onkeyup="showAutocomplete('arrival')" onfocus="showAutocomplete('arrival')">
+                            <div id="arrival-autocomplete" class="autocomplete-dropdown"></div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">flight_land</span>
-                        <span data-translate="arrival_city">Ville d'arrivée</span>
-                    </label>
-                    <div class="autocomplete-container">
-                        <input type="text" id="arrival-input" placeholder="Ex: Paris (CDG)" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" onkeyup="showAutocomplete('arrival')" onfocus="showAutocomplete('arrival')">
-                        <div id="arrival-autocomplete" class="autocomplete-dropdown"></div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Dates with Calendar Icons -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">calendar_today</span>
-                        <span data-translate="departure_date">Date de départ</span>
-                    </label>
-                    <div class="relative">
-                        <input type="date" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" value="2026-03-15">
+                <!-- Dates -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">calendar_today</span>
+                            <span data-translate="departure_date">Date de départ</span>
+                        </label>
+                        <div class="relative">
+                            <input type="date" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" value="2026-03-15">
+                        </div>
+                    </div>
+                    <div id="return-date-section">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">calendar_month</span>
+                            <span data-translate="return_date">Date de retour</span>
+                        </label>
+                        <div class="relative">
+                            <input type="date" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" value="2026-03-22">
+                        </div>
                     </div>
                 </div>
-                <div id="return-date-section">
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">calendar_month</span>
-                        <span data-translate="return_date">Date de retour</span>
-                    </label>
-                    <div class="relative">
-                        <input type="date" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" value="2026-03-22">
-                    </div>
-                </div>
-            </div>
 
-            <!-- Passengers and Travel Class -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">group</span>
-                        <span data-translate="passengers">Passagers</span>
-                    </label>
-                    <div class="relative">
-                        <select class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all appearance-none">
-                            <option data-translate="1_adult">1 Adulte</option>
-                            <option selected data-translate="2_adults">2 Adultes</option>
-                            <option data-translate="2_adults_1_child">2 Adultes, 1 Enfant</option>
-                            <option data-translate="2_adults_2_children">2 Adultes, 2 Enfants</option>
-                            <option data-translate="3_adults">3 Adultes</option>
-                            <option data-translate="4_adults">4 Adultes</option>
-                        </select>
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-primary">
-                            <span class="material-symbols-outlined">expand_more</span>
-                        </span>
+                <!-- Passengers and Class -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">group</span>
+                            <span data-translate="passengers">Passagers</span>
+                        </label>
+                        <div class="relative">
+                            <select class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all appearance-none">
+                                <option data-translate="1_adult">1 Adulte</option>
+                                <option selected data-translate="2_adults">2 Adultes</option>
+                                <option data-translate="2_adults_1_child">2 Adultes, 1 Enfant</option>
+                                <option data-translate="2_adults_2_children">2 Adultes, 2 Enfants</option>
+                                <option data-translate="3_adults">3 Adultes</option>
+                                <option data-translate="4_adults">4 Adultes</option>
+                            </select>
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-primary">
+                                <span class="material-symbols-outlined">expand_more</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">airline_seat_recline_normal</span>
+                            <span data-translate="travel_class">Classe de voyage</span>
+                        </label>
+                        <div class="relative">
+                            <select class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all appearance-none">
+                                <option data-translate="economy">Économique</option>
+                                <option data-translate="premium_economy">Économique Premium</option>
+                                <option data-translate="business">Affaires</option>
+                                <option data-translate="first_class">Première classe</option>
+                            </select>
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-primary">
+                                <span class="material-symbols-outlined">expand_more</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">airline_seat_recline_normal</span>
-                        <span data-translate="travel_class">Classe de voyage</span>
-                    </label>
-                    <div class="relative">
-                        <select class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-background-light dark:bg-slate-900 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all appearance-none">
-                            <option data-translate="economy">Économique</option>
-                            <option data-translate="premium_economy">Économique Premium</option>
-                            <option data-translate="business">Affaires</option>
-                            <option data-translate="first_class">Première classe</option>
-                        </select>
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-primary">
-                            <span class="material-symbols-outlined">expand_more</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Hotel Options -->
-            <div id="hotel-options" class="hidden p-5 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border border-primary/20">
-                <h4 class="font-bold mb-3 flex items-center gap-2 text-primary">
-                    <span class="material-symbols-outlined">hotel</span>
-                    <span data-translate="hotel_options">Options d'hébergement</span>
-                </h4>
-                
-                <!-- Hotel Location Autocomplete -->
-                <div class="mb-4">
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">location_on</span>
-                        <span data-translate="hotel_location">Ville de l'hôtel</span>
-                    </label>
-                    <div class="autocomplete-container">
-                        <input type="text" id="hotel-input" placeholder="Ex: Paris, Dubaï..." class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" onkeyup="showAutocomplete('hotel')" onfocus="showAutocomplete('hotel')">
-                        <div id="hotel-autocomplete" class="autocomplete-dropdown"></div>
+                <!-- Hotel Options -->
+                <div id="hotel-options" class="hidden p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl border border-primary/20">
+                    <h4 class="font-bold mb-4 flex items-center gap-2 text-primary">
+                        <span class="material-symbols-outlined">hotel</span>
+                        <span data-translate="hotel_options">Options d'hébergement</span>
+                    </h4>
+                    
+                    <!-- Hotel Location Autocomplete -->
+                    <div class="mb-4">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+                            <span data-translate="hotel_location">Ville de l'hôtel</span>
+                        </label>
+                        <div class="autocomplete-container">
+                            <input type="text" id="hotel-input" placeholder="Ex: Paris, Dubaï..." class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" onkeyup="showAutocomplete('hotel')" onfocus="showAutocomplete('hotel')">
+                            <div id="hotel-autocomplete" class="autocomplete-dropdown"></div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">calendar_month</span>
-                        <span data-translate="return_date">Date de retour</span>
-                    </label>
-                    <div class="relative">
+                    
+                    <div class="mb-4">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">calendar_month</span>
+                            <span data-translate="check_out">Date de fin de séjour</span>
+                        </label>
                         <input type="date" class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" value="2026-03-22">
                     </div>
-                    <p class="text-xs text-slate-500 mt-1" data-translate="check_out_date">Date de fin de séjour</p>
-                </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="breakfast_included">Petit-déjeuner inclus</span>
-                    </label>
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="airport_shuttle">Navette aéroport</span>
-                    </label>
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="free_cancellation">Annulation gratuite</span>
-                    </label>
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="sea_view">Vue sur mer</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Car Options -->
-            <div id="car-options" class="hidden p-5 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border border-primary/20">
-                <h4 class="font-bold mb-3 flex items-center gap-2 text-primary">
-                    <span class="material-symbols-outlined">directions_car</span>
-                    <span data-translate="vehicle_options">Options de véhicule</span>
-                </h4>
-                
-                <!-- Car Pickup Location -->
-                <div class="mb-4">
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-sm">location_on</span>
-                        <span data-translate="pickup_location">Lieu de prise en charge</span>
-                    </label>
-                    <div class="autocomplete-container">
-                        <input type="text" id="car-input" placeholder="Ex: Aéroport, Hôtel..." class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" onkeyup="showAutocomplete('car')" onfocus="showAutocomplete('car')">
-                        <div id="car-autocomplete" class="autocomplete-dropdown"></div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="breakfast">Petit-déjeuner inclus</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="shuttle">Navette aéroport</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="cancellation">Annulation gratuite</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="checkbox" class="rounded text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="sea_view">Vue sur mer</span>
+                        </label>
                     </div>
                 </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="radio" name="car-type" class="text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="economy_car">Économique</span>
-                    </label>
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="radio" name="car-type" checked class="text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="sedan">Berline</span>
-                    </label>
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="radio" name="car-type" class="text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="suv">SUV</span>
-                    </label>
-                    <label class="flex items-center gap-2 p-3 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
-                        <input type="radio" name="car-type" class="text-primary focus:ring-primary/20">
-                        <span class="text-sm" data-translate="luxury">Luxe / Prestige</span>
-                    </label>
+
+                <!-- Car Options -->
+                <div id="car-options" class="hidden p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl border border-primary/20">
+                    <h4 class="font-bold mb-4 flex items-center gap-2 text-primary">
+                        <span class="material-symbols-outlined">directions_car</span>
+                        <span data-translate="vehicle_options">Options de véhicule</span>
+                    </h4>
+                    
+                    <!-- Pickup Location -->
+                    <div class="mb-4">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+                            <span data-translate="pickup_location">Lieu de prise en charge</span>
+                        </label>
+                        <div class="autocomplete-container">
+                            <input type="text" id="car-input" placeholder="Ex: Aéroport, Hôtel..." class="w-full h-14 px-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all form-input" onkeyup="showAutocomplete('car')" onfocus="showAutocomplete('car')">
+                            <div id="car-autocomplete" class="autocomplete-dropdown"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="radio" name="car-type" class="text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="economy_car">Économique</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="radio" name="car-type" checked class="text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="sedan">Berline</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="radio" name="car-type" class="text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="suv">SUV</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-xl cursor-pointer hover:bg-primary/5 transition-colors border border-primary/10">
+                            <input type="radio" name="car-type" class="text-primary focus:ring-primary/20">
+                            <span class="text-sm" data-translate="luxury">Luxe / Prestige</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Submit Button with Animation -->
-            <button type="submit" class="w-full gradient-bg text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-lg group">
-                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">search</span>
-                <span data-translate="search_best_deals">Rechercher les meilleures offres</span>
-                <span class="material-symbols-outlined text-sm bg-white/20 p-1 rounded-full ml-2">arrow_forward</span>
-            </button>
+                <!-- Submit Button -->
+                <button type="submit" class="w-full gradient-bg text-white font-bold py-5 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-lg group">
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">search</span>
+                    <span data-translate="search_best_deals">Rechercher les meilleures offres</span>
+                    <span class="material-symbols-outlined text-sm bg-white/20 p-1 rounded-full ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </button>
 
-            <!-- Trust Badge -->
-            <div class="flex items-center justify-center gap-2 text-xs text-slate-500">
-                <span class="material-symbols-outlined text-green-500 text-sm">verified</span>
-                <span data-translate="satisfied_customers">Plus de 500 clients satisfaits</span>
-                <span class="material-symbols-outlined text-green-500 text-sm ml-2">lock</span>
-                <span data-translate="secure_payment_text">Paiement sécurisé</span>
-            </div>
-        </form>
+                <!-- Trust Badge -->
+                <div class="flex items-center justify-center gap-4 text-xs text-slate-500">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-green-500 text-sm">verified</span>
+                        <span data-translate="secure">Sécurisé</span>
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-green-500 text-sm">lock</span>
+                        <span data-translate="encrypted">Crypté</span>
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-green-500 text-sm">schedule</span>
+                        <span data-translate="instant">Instantané</span>
+                    </span>
+                </div>
+            </form>
+        </div>
 
-        <!-- Professional Features Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-            <div class="feature-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-md transition-all">
-                <span class="material-symbols-outlined text-primary text-3xl mb-2">lock</span>
-                <p class="text-xs font-semibold" data-translate="secure_payment">Paiement 100% sécurisé</p>
-                <p class="text-[10px] text-slate-400 mt-1" data-translate="ssl_encrypted">Crypté SSL</p>
-            </div>
-            <div class="feature-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-md transition-all">
-                <span class="material-symbols-outlined text-primary text-3xl mb-2">support_agent</span>
-                <p class="text-xs font-semibold" data-translate="support_247">Support 24h/24</p>
-                <p class="text-[10px] text-slate-400 mt-1" data-translate="support_days">7j/7</p>
-            </div>
-            <div class="feature-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-md transition-all">
-                <span class="material-symbols-outlined text-primary text-3xl mb-2">verified</span>
-                <p class="text-xs font-semibold" data-translate="no_hidden_fees">Sans frais cachés</p>
-                <p class="text-[10px] text-slate-400 mt-1" data-translate="transparent_prices">Prix transparents</p>
-            </div>
-            <div class="feature-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-md transition-all">
-                <span class="material-symbols-outlined text-primary text-3xl mb-2">schedule</span>
-                <p class="text-xs font-semibold" data-translate="instant_confirmation">Confirmation</p>
-                <p class="text-[10px] text-slate-400 mt-1" data-translate="instant">Instantanée</p>
+        <!-- Payment Methods Section (Integrated in Booking) -->
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl border border-primary/10 mb-8">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">payments</span>
+                <span data-translate="payment_methods">Modes de paiement acceptés</span>
+            </h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <div class="bg-primary/5 rounded-xl p-3 text-center border border-primary/10 hover:border-primary/30 transition-all">
+                    <div class="w-10 h-10 mx-auto bg-[#FFCC00] rounded-full flex items-center justify-center mb-2">
+                        <span class="text-primary-dark font-bold text-xs">MTN</span>
+                    </div>
+                    <p class="text-xs font-semibold">MTN MoMo</p>
+                </div>
+                <div class="bg-primary/5 rounded-xl p-3 text-center border border-primary/10 hover:border-primary/30 transition-all">
+                    <div class="w-10 h-10 mx-auto bg-[#FF0000] rounded-full flex items-center justify-center mb-2">
+                        <span class="text-white font-bold text-[10px]">airtel</span>
+                    </div>
+                    <p class="text-xs font-semibold">Airtel Money</p>
+                </div>
+                <div class="bg-primary/5 rounded-xl p-3 text-center border border-primary/10 hover:border-primary/30 transition-all">
+                    <div class="w-10 h-10 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <span class="material-symbols-outlined text-primary">account_balance</span>
+                    </div>
+                    <p class="text-xs font-semibold">Virement</p>
+                </div>
+                <div class="bg-primary/5 rounded-xl p-3 text-center border border-primary/10 hover:border-primary/30 transition-all">
+                    <div class="w-10 h-10 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <span class="material-symbols-outlined text-primary">credit_card</span>
+                    </div>
+                    <p class="text-xs font-semibold">Visa/Mastercard</p>
+                </div>
+                <div class="bg-primary/5 rounded-xl p-3 text-center border border-primary/10 hover:border-primary/30 transition-all">
+                    <div class="w-10 h-10 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <span class="material-symbols-outlined text-primary">payments</span>
+                    </div>
+                    <p class="text-xs font-semibold">Espèces</p>
+                </div>
             </div>
         </div>
 
-        <!-- Popular Destinations with Images (Prices Removed) -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-primary/10 mb-4">
-            <h3 class="font-bold mb-4 flex items-center gap-2">
+        <!-- Popular Destinations -->
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl border border-primary/10 mb-8">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">star</span>
-                <span data-translate="popular_destinations">Destinations populaires</span>
+                                <span data-translate="popular_destinations">Destinations populaires</span>
             </h3>
-            <div id="destinations-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <!-- First 8 destinations (visible initially) -->
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="destinations-grid">
+                <!-- First 4 destinations -->
+                <div class="destination-card relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('Paris')">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Paris" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Paris, France</span>
-                    <span class="destination-badge">Europe</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">Paris</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">France</span>
                 </div>
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                
+                <div class="destination-card relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('Dubaï')">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Dubaï" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Dubaï, Émirats</span>
-                    <span class="destination-badge">Moyen-Orient</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">Dubaï</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">Émirats</span>
                 </div>
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1527838832700-5059252407fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                
+                <div class="destination-card relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('Istanbul')">
+                    <img src="https://images.unsplash.com/photo-1527838832700-5059252407fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Istanbul" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Istanbul, Turquie</span>
-                    <span class="destination-badge">Europe/Asie</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">Istanbul</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">Turquie</span>
                 </div>
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                
+                <div class="destination-card relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('New York')">
+                    <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="New York" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Maldives</span>
-                    <span class="destination-badge">Océan Indien</span>
-                </div>
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">New York, USA</span>
-                    <span class="destination-badge">Amérique</span>
-                </div>
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">San Francisco, USA</span>
-                    <span class="destination-badge">Amérique</span>
-                </div>
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Toronto, Canada</span>
-                    <span class="destination-badge">Amérique</span>
-                </div>
-                <div class="destination-card relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Vancouver, Canada</span>
-                    <span class="destination-badge">Amérique</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">New York</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">USA</span>
                 </div>
                 
                 <!-- Hidden destinations (initially hidden) -->
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('Tokyo')">
+                    <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Tokyo" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Londres, UK</span>
-                    <span class="destination-badge">Europe</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">Tokyo</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">Japon</span>
                 </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                
+                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('Londres')">
+                    <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Londres" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Rome, Italie</span>
-                    <span class="destination-badge">Europe</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">Londres</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">UK</span>
                 </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                
+                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('Rome')">
+                    <img src="https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Rome" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Venise, Italie</span>
-                    <span class="destination-badge">Europe</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">Rome</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">Italie</span>
                 </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1519677100203-a0e668c92439?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                
+                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl cursor-pointer" onclick="selectDestination('Sydney')">
+                    <img src="https://images.unsplash.com/photo-1526495124232-a04e1849168c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sydney" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Barcelone, Espagne</span>
-                    <span class="destination-badge">Europe</span>
-                </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Tokyo, Japon</span>
-                    <span class="destination-badge">Asie</span>
-                </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Pékin, Chine</span>
-                    <span class="destination-badge">Asie</span>
-                </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1526495124232-a04e1849168c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Sydney, Australie</span>
-                    <span class="destination-badge">Océanie</span>
-                </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1570168007204-dfb528c6958f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Le Cap, Afrique</span>
-                    <span class="destination-badge">Afrique</span>
-                </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Rio de Janeiro, Brésil</span>
-                    <span class="destination-badge">Amérique</span>
-                </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Bangkok, Thaïlande</span>
-                    <span class="destination-badge">Asie</span>
-                </div>
-                <div class="destination-card hidden-destination hidden relative group overflow-hidden rounded-xl">
-                    <div class="h-24 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" style="background-image: url('https://images.unsplash.com/photo-1548705085-101177834f47?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <span class="absolute bottom-2 left-2 text-white font-bold text-sm">Amsterdam, Pays-Bas</span>
-                    <span class="destination-badge">Europe</span>
+                    <span class="absolute bottom-2 left-2 text-white font-bold">Sydney</span>
+                    <span class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">Australie</span>
                 </div>
             </div>
             
-            <!-- Read More / Load More Button -->
+            <!-- Load More Button -->
             <div class="text-center mt-6">
-                <button id="loadMoreBtn" onclick="toggleDestinations()" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-md">
+                <button id="loadMoreBtn" onclick="toggleDestinations()" class="inline-flex items-center gap-2 border-2 border-primary text-primary px-6 py-3 rounded-xl font-semibold hover:bg-primary hover:text-white transition-all">
                     <span class="material-symbols-outlined">expand_more</span>
-                    <span id="loadMoreText" data-translate="read_more">Voir plus de destinations</span>
+                    <span id="loadMoreText" data-translate="load_more">Voir plus de destinations</span>
                 </button>
             </div>
         </div>
 
-        <!-- Why Book With Us - Detailed -->
-        <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-5 border border-primary/20 mb-8">
-            <h3 class="font-bold mb-4 flex items-center gap-2 text-primary">
-                <span class="material-symbols-outlined">workspace_premium</span>
-                <span data-translate="why_book_with_us">Pourquoi réserver avec Sure Travel ?</span>
-            </h3>
-            <div class="space-y-3">
-                <div class="flex items-start gap-3">
-                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
-                    <div>
-                        <p class="font-semibold" data-translate="best_rates_guaranteed">Meilleurs tarifs garantis</p>
-                        <p class="text-xs text-slate-500" data-translate="best_rates_desc">Nous négocions les prix pour vous</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3">
-                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
-                    <div>
-                        <p class="font-semibold" data-translate="iata_certified">Agence agréée IATA</p>
-                        <p class="text-xs text-slate-500" data-translate="iata_desc">Certification internationale</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3">
-                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
-                    <div>
-                        <p class="font-semibold" data-translate="installment_payment">Paiement en plusieurs fois</p>
-                        <p class="text-xs text-slate-500" data-translate="installment_desc">MTN MoMo, Airtel Money, Carte</p>
-                    </div>
-                </div>
+        <!-- Why Book With Us -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-lg transition-all">
+                <span class="material-symbols-outlined text-primary text-3xl mb-2">lock</span>
+                <p class="text-xs font-semibold" data-translate="secure_payment">Paiement sécurisé</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-lg transition-all">
+                <span class="material-symbols-outlined text-primary text-3xl mb-2">support_agent</span>
+                <p class="text-xs font-semibold" data-translate="support_247">Support 24/7</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-lg transition-all">
+                <span class="material-symbols-outlined text-primary text-3xl mb-2">verified</span>
+                <p class="text-xs font-semibold" data-translate="no_hidden">Sans frais cachés</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10 hover:shadow-lg transition-all">
+                <span class="material-symbols-outlined text-primary text-3xl mb-2">schedule</span>
+                <p class="text-xs font-semibold" data-translate="instant_confirm">Confirmation instantanée</p>
             </div>
         </div>
 
-        <!-- Contact Info with Emergency -->
-        <div class="p-5 bg-primary/5 dark:bg-primary/10 rounded-2xl border border-primary/10 mb-8">
-            <h3 class="font-bold mb-3 flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary">contact_support</span>
-                <span data-translate="need_help_booking">Besoin d'aide pour votre réservation ?</span>
-            </h3>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <a href="tel:+25779639803" class="flex-1 flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary/90 transition-colors">
+        <!-- Need Help -->
+        <div class="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 text-center">
+            <h3 class="font-bold text-lg mb-2" data-translate="need_help">Besoin d'aide pour votre réservation ?</h3>
+            <p class="text-sm text-slate-500 mb-4" data-translate="contact_team">Notre équipe est disponible 24h/24</p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="tel:+25779639803" class="inline-flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary/90 transition-all">
                     <span class="material-symbols-outlined">call</span>
                     <span data-translate="call_now">Appeler maintenant</span>
                 </a>
-                <a href="support.html" class="flex-1 flex items-center justify-center gap-2 border border-primary text-primary py-3 rounded-xl font-semibold hover:bg-primary/5 transition-colors">
+                <a href="support.html" class="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary px-6 py-3 rounded-xl font-semibold hover:bg-primary hover:text-white transition-all">
                     <span class="material-symbols-outlined">chat</span>
                     <span data-translate="live_chat">Chat en ligne</span>
                 </a>
             </div>
-            <p class="text-xs text-center text-slate-400 mt-3" data-translate="available_247">
-                Disponible 24h/24 - 7j/7 pour vous assister
-            </p>
         </div>
     </main>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pb-6 pt-2 z-50">
-        <div class="flex items-center justify-around max-w-container mx-auto">
-            <a href="./Home.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+    <!-- Footer (same as previous) -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 mt-8">
+        <div class="max-w-container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <img alt="Logo" class="w-8 h-8 object-contain" src="./Images/logo.jpeg">
+                        </div>
+                        <span class="font-bold text-primary">SURE TRAVEL</span>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="footer_desc">Votre partenaire de confiance pour des voyages inoubliables.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4" data-translate="quick_links">Liens rapides</h4>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="aboutus.html" class="hover:text-primary transition-colors" data-translate="about_us">À propos</a></li>
+                        <li><a href="services.html" class="hover:text-primary transition-colors" data-translate="our_services">Nos services</a></li>
+                        <li><a href="booking.html" class="hover:text-primary transition-colors" data-translate="book_now">Réserver</a></li>
+                        <li><a href="support.html" class="hover:text-primary transition-colors" data-translate="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4" data-translate="legal">Informations légales</h4>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="privacy">Politique de confidentialité</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="terms">Conditions générales</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="cookies">Cookies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4" data-translate="follow_us">Suivez-nous</h4>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">public</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">photo_camera</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">videocam</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-sm text-slate-500">
+                <p data-translate="copyright">© 2026 Sure Travel Agency. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation for Mobile -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pb-6 pt-2 z-50">
+        <div class="flex items-center justify-around">
+            <a href="./index.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
                 <span class="material-symbols-outlined">home</span>
                 <span class="text-[10px] font-medium" data-translate="home">Accueil</span>
             </a>
@@ -764,104 +768,17 @@
         </div>
     </nav>
 
-    <script>
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('darkMode', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('darkMode', 'dark');
-            }
-        }
-        
-        function selectService(service) {
-            // Reset all
-            document.getElementById('service-flight').classList.remove('selected', 'border-primary', 'bg-primary/10');
-            document.getElementById('service-hotel').classList.remove('selected', 'border-primary', 'bg-primary/10');
-            document.getElementById('service-car').classList.remove('selected', 'border-primary', 'bg-primary/10');
-            
-            document.getElementById('service-flight').classList.add('border-slate-200', 'dark:border-slate-700');
-            document.getElementById('service-hotel').classList.add('border-slate-200', 'dark:border-slate-700');
-            document.getElementById('service-car').classList.add('border-slate-200', 'dark:border-slate-700');
-            
-            document.getElementById('service-flight').querySelector('.material-symbols-outlined').classList.remove('fill-1', 'text-primary');
-            document.getElementById('service-hotel').querySelector('.material-symbols-outlined').classList.remove('fill-1', 'text-primary');
-            document.getElementById('service-car').querySelector('.material-symbols-outlined').classList.remove('fill-1', 'text-primary');
-            
-            document.getElementById('service-flight').querySelector('.material-symbols-outlined').classList.add('text-slate-500');
-            document.getElementById('service-hotel').querySelector('.material-symbols-outlined').classList.add('text-slate-500');
-            document.getElementById('service-car').querySelector('.material-symbols-outlined').classList.add('text-slate-500');
-            
-            document.getElementById('service-flight').querySelector('span:last-child').classList.add('text-slate-500');
-            document.getElementById('service-hotel').querySelector('span:last-child').classList.add('text-slate-500');
-            document.getElementById('service-car').querySelector('span:last-child').classList.add('text-slate-500');
-            
-            // Activate selected
-            document.getElementById(`service-${service}`).classList.remove('border-slate-200', 'dark:border-slate-700');
-            document.getElementById(`service-${service}`).classList.add('selected', 'border-primary', 'bg-primary/10');
-            
-            document.getElementById(`service-${service}`).querySelector('.material-symbols-outlined').classList.remove('text-slate-500');
-            document.getElementById(`service-${service}`).querySelector('.material-symbols-outlined').classList.add('fill-1', 'text-primary');
-            
-            document.getElementById(`service-${service}`).querySelector('span:last-child').classList.remove('text-slate-500');
-            document.getElementById(`service-${service}`).querySelector('span:last-child').classList.add('text-primary');
-            
-            // Show/hide options
-            document.getElementById('hotel-options').classList.add('hidden');
-            document.getElementById('car-options').classList.add('hidden');
-            document.getElementById('trip-type-section').classList.remove('hidden');
-            document.getElementById('return-date-section').classList.remove('hidden');
-            
-            if (service === 'hotel') {
-                document.getElementById('hotel-options').classList.remove('hidden');
-                document.getElementById('trip-type-section').classList.add('hidden');
-                // Keep return date visible for hotels
-                document.getElementById('return-date-section').classList.remove('hidden');
-            } else if (service === 'car') {
-                document.getElementById('car-options').classList.remove('hidden');
-                document.getElementById('trip-type-section').classList.add('hidden');
-                document.getElementById('return-date-section').classList.remove('hidden');
-            }
-        }
-        
-        // Check for saved dark mode preference
-        if (localStorage.getItem('darkMode') === 'dark') {
-            document.documentElement.classList.add('dark');
-        }
-        
-        // Check URL params for service
-        const urlParams = new URLSearchParams(window.location.search);
-        const service = urlParams.get('service');
-        if (service) {
-            selectService(service);
-        }
-    </script>
-
     <!-- Translation System -->
     <script>
-        // Translation database
         const translations = {
             fr: {
-                // Common
-                'home': 'Accueil',
-                'services': 'Services',
-                'bookings': 'Réservations',
-                'about': 'À Propos',
-                'help': 'Aide',
-                'search': 'Rechercher',
-                'read_more': 'Voir plus de destinations',
-                'show_less': 'Voir moins',
-                
-                // Booking page additions
-                'hotel_location': 'Ville de l\'hôtel',
-                'pickup_location': 'Lieu de prise en charge',
-                
-                // Booking page
                 'booking_title': 'Réserver votre voyage',
                 'booking_subtitle': 'Remplissez les informations ci-dessous pour commencer',
+                'search': 'Recherche',
+                'payment': 'Paiement',
+                'confirmation': 'Confirmation',
                 'special_offer': 'Offre spéciale de lancement !',
-                'first_booking_discount': '-15% sur votre première réservation avec le code',
+                'first_booking': '-15% sur votre première réservation avec le code',
                 'what_would_you_book': 'Que souhaitez-vous réserver ?',
                 'flight': 'Vol',
                 'hotel': 'Hôtel',
@@ -870,7 +787,7 @@
                 'one_way': 'Aller simple',
                 'multi_city': 'Multi-destinations',
                 'departure_city': 'Ville de départ',
-                'arrival_city': "Ville d'arrivée",
+                'arrival_city': 'Ville d\'arrivée',
                 'departure_date': 'Date de départ',
                 'return_date': 'Date de retour',
                 'passengers': 'Passagers',
@@ -885,62 +802,60 @@
                 'premium_economy': 'Économique Premium',
                 'business': 'Affaires',
                 'first_class': 'Première classe',
-                'hotel_options': "Options d'hébergement",
-                'check_out_date': 'Date de fin de séjour',
-                'breakfast_included': 'Petit-déjeuner inclus',
-                'airport_shuttle': 'Navette aéroport',
-                'free_cancellation': 'Annulation gratuite',
+                'hotel_options': 'Options d\'hébergement',
+                'hotel_location': 'Ville de l\'hôtel',
+                'check_out': 'Date de fin de séjour',
+                'breakfast': 'Petit-déjeuner inclus',
+                'shuttle': 'Navette aéroport',
+                'cancellation': 'Annulation gratuite',
                 'sea_view': 'Vue sur mer',
                 'vehicle_options': 'Options de véhicule',
+                'pickup_location': 'Lieu de prise en charge',
                 'economy_car': 'Économique',
                 'sedan': 'Berline',
                 'suv': 'SUV',
                 'luxury': 'Luxe / Prestige',
                 'search_best_deals': 'Rechercher les meilleures offres',
-                'satisfied_customers': 'Plus de 500 clients satisfaits',
-                'secure_payment_text': 'Paiement sécurisé',
-                'secure_payment': 'Paiement 100% sécurisé',
-                'ssl_encrypted': 'Crypté SSL',
-                'support_247': 'Support 24h/24',
-                'support_days': '7j/7',
-                'no_hidden_fees': 'Sans frais cachés',
-                'transparent_prices': 'Prix transparents',
-                'instant_confirmation': 'Confirmation',
-                'instant': 'Instantanée',
+                'secure': 'Sécurisé',
+                'encrypted': 'Crypté',
+                'instant': 'Instantané',
+                'payment_methods': 'Modes de paiement acceptés',
                 'popular_destinations': 'Destinations populaires',
-                'why_book_with_us': 'Pourquoi réserver avec Sure Travel ?',
-                'best_rates_guaranteed': 'Meilleurs tarifs garantis',
-                'best_rates_desc': 'Nous négocions les prix pour vous',
-                'iata_certified': 'Agence agréée IATA',
-                'iata_desc': 'Certification internationale',
-                'installment_payment': 'Paiement en plusieurs fois',
-                'installment_desc': 'MTN MoMo, Airtel Money, Carte',
-                'need_help_booking': "Besoin d'aide pour votre réservation ?",
+                'load_more': 'Voir plus de destinations',
+                'secure_payment': 'Paiement sécurisé',
+                'support_247': 'Support 24/7',
+                'no_hidden': 'Sans frais cachés',
+                'instant_confirm': 'Confirmation instantanée',
+                'need_help': 'Besoin d\'aide ?',
+                'contact_team': 'Notre équipe est disponible 24h/24',
                 'call_now': 'Appeler maintenant',
                 'live_chat': 'Chat en ligne',
-                'available_247': 'Disponible 24h/24 - 7j/7 pour vous assister',
-            },
-            
-            en: {
-                // Common
-                'home': 'Home',
+                'home': 'Accueil',
                 'services': 'Services',
-                'bookings': 'Bookings',
-                'about': 'About',
-                'help': 'Help',
-                'search': 'Search',
-                'read_more': 'Show more destinations',
-                'show_less': 'Show less',
-                
-                // Booking page additions
-                'hotel_location': 'Hotel city',
-                'pickup_location': 'Pickup location',
-                
-                // Booking page
+                'bookings': 'Réservations',
+                'about': 'À Propos',
+                'help': 'Aide',
+                'footer_desc': 'Votre partenaire de confiance pour des voyages inoubliables.',
+                'quick_links': 'Liens rapides',
+                'about_us': 'À propos',
+                'our_services': 'Nos services',
+                'book_now': 'Réserver',
+                'contact': 'Contact',
+                'legal': 'Informations légales',
+                'privacy': 'Politique de confidentialité',
+                'terms': 'Conditions générales',
+                'cookies': 'Cookies',
+                'follow_us': 'Suivez-nous',
+                'copyright': '© 2026 Sure Travel Agency. Tous droits réservés.',
+            },
+            en: {
                 'booking_title': 'Book your trip',
                 'booking_subtitle': 'Fill in the information below to get started',
+                'search': 'Search',
+                'payment': 'Payment',
+                'confirmation': 'Confirmation',
                 'special_offer': 'Special launch offer!',
-                'first_booking_discount': '-15% on your first booking with code',
+                'first_booking': '-15% on your first booking with code',
                 'what_would_you_book': 'What would you like to book?',
                 'flight': 'Flight',
                 'hotel': 'Hotel',
@@ -965,61 +880,59 @@
                 'business': 'Business',
                 'first_class': 'First class',
                 'hotel_options': 'Accommodation options',
-                'check_out_date': 'Check-out date',
-                'breakfast_included': 'Breakfast included',
-                'airport_shuttle': 'Airport shuttle',
-                'free_cancellation': 'Free cancellation',
+                'hotel_location': 'Hotel city',
+                'check_out': 'Check-out date',
+                'breakfast': 'Breakfast included',
+                'shuttle': 'Airport shuttle',
+                'cancellation': 'Free cancellation',
                 'sea_view': 'Sea view',
                 'vehicle_options': 'Vehicle options',
+                'pickup_location': 'Pickup location',
                 'economy_car': 'Economy',
                 'sedan': 'Sedan',
                 'suv': 'SUV',
                 'luxury': 'Luxury',
                 'search_best_deals': 'Search for the best deals',
-                'satisfied_customers': '500+ satisfied customers',
-                'secure_payment_text': 'Secure payment',
-                'secure_payment': '100% secure payment',
-                'ssl_encrypted': 'SSL encrypted',
-                'support_247': '24/7 Support',
-                'support_days': '7 days a week',
-                'no_hidden_fees': 'No hidden fees',
-                'transparent_prices': 'Transparent prices',
-                'instant_confirmation': 'Confirmation',
+                'secure': 'Secure',
+                'encrypted': 'Encrypted',
                 'instant': 'Instant',
+                'payment_methods': 'Accepted payment methods',
                 'popular_destinations': 'Popular destinations',
-                'why_book_with_us': 'Why book with Sure Travel?',
-                'best_rates_guaranteed': 'Best rates guaranteed',
-                'best_rates_desc': 'We negotiate prices for you',
-                'iata_certified': 'IATA accredited agency',
-                'iata_desc': 'International certification',
-                'installment_payment': 'Installment payment',
-                'installment_desc': 'MTN MoMo, Airtel Money, Card',
-                'need_help_booking': 'Need help with your booking?',
+                'load_more': 'Load more destinations',
+                'secure_payment': 'Secure payment',
+                'support_247': '24/7 Support',
+                'no_hidden': 'No hidden fees',
+                'instant_confirm': 'Instant confirmation',
+                'need_help': 'Need help?',
+                'contact_team': 'Our team is available 24/7',
                 'call_now': 'Call now',
                 'live_chat': 'Live chat',
-                'available_247': 'Available 24/7 to assist you',
+                'home': 'Home',
+                'services': 'Services',
+                'bookings': 'Bookings',
+                'about': 'About',
+                'help': 'Help',
+                'footer_desc': 'Your trusted partner for unforgettable travels.',
+                'quick_links': 'Quick links',
+                'about_us': 'About us',
+                'our_services': 'Our services',
+                'book_now': 'Book now',
+                'contact': 'Contact',
+                'legal': 'Legal',
+                'privacy': 'Privacy policy',
+                'terms': 'Terms & conditions',
+                'cookies': 'Cookies',
+                'follow_us': 'Follow us',
+                'copyright': '© 2026 Sure Travel Agency. All rights reserved.',
             },
-            
             rn: {
-                // Common
-                'home': 'Ahabanza',
-                'services': 'Serivisi',
-                'bookings': 'Kubika',
-                'about': 'Kuber',
-                'help': 'Ubufasha',
-                'search': 'Kurondera',
-                'read_more': 'Raba ibindi bihugu',
-                'show_less': 'Raba bike',
-                
-                // Booking page additions
-                'hotel_location': 'Umujyi wa hoteli',
-                'pickup_location': 'Aho kuwakira',
-                
-                // Booking page
                 'booking_title': 'Kubika urugendo rwawe',
                 'booking_subtitle': 'Uzuza amakuru aho hasi kugira ngo utangire',
+                'search': 'Kurondera',
+                'payment': 'Kwishura',
+                'confirmation': 'Kwemeza',
                 'special_offer': 'Impano idasanzwe yo gutangiza!',
-                'first_booking_discount': '-15% ku kibanza cawe ca mbere hamwe na kode',
+                'first_booking': '-15% ku kibanza cawe ca mbere hamwe na kode',
                 'what_would_you_book': 'Ni iki ushaka kubika?',
                 'flight': 'Indege',
                 'hotel': 'Hoteli',
@@ -1044,39 +957,50 @@
                 'business': 'Ubucuruzi',
                 'first_class': 'Icyiciro ca mbere',
                 'hotel_options': 'Amahitamo yo kwicara',
-                'check_out_date': 'Itariki yo kuva',
-                'breakfast_included': 'Umuseke urimo',
-                'airport_shuttle': 'Ikiganza ca za ndege',
-                'free_cancellation': 'Kuvana ubuntu',
+                'hotel_location': 'Umujyi wa hoteli',
+                'check_out': 'Itariki yo kuva',
+                'breakfast': 'Umuseke urimo',
+                'shuttle': 'Ikiganza ca za ndege',
+                'cancellation': 'Kuvana ubuntu',
                 'sea_view': 'Kureba ikiyaga',
                 'vehicle_options': 'Amahitamo y\'imodoka',
+                'pickup_location': 'Aho kuwakira',
                 'economy_car': 'Ubuciriritse',
                 'sedan': 'Sedan',
                 'suv': 'SUV',
                 'luxury': 'Imeza',
                 'search_best_deals': 'Shakisha amahirwe meza',
-                'satisfied_customers': 'Abarenze 500 banyishimiye',
-                'secure_payment_text': 'Kwishura gutekanye',
-                'secure_payment': 'Kwishura 100% gutekanye',
-                'ssl_encrypted': 'Yanditswe muri SSL',
-                'support_247': 'Ubufasha 24/24',
-                'support_days': 'Imisi 7/7',
-                'no_hidden_fees': 'Nta mafaranga yihishe',
-                'transparent_prices': 'Ibiciro biri k\'umugaragaro',
-                'instant_confirmation': 'Kwemeza ako kanya',
+                'secure': 'Gutekanye',
+                'encrypted': 'Byanditswe',
                 'instant': 'Ako kanya',
+                'payment_methods': 'Uburyo bwo kwishura',
                 'popular_destinations': 'Ibihugu bikunzwe',
-                'why_book_with_us': 'Kuki ubika na Sure Travel?',
-                'best_rates_guaranteed': 'Ibiciro vyiza bibazwe',
-                'best_rates_desc': 'Turategura ibiciro kubwawe',
-                'iata_certified': 'Ishirahamwe ryemewe na IATA',
-                'iata_desc': 'Impapuro mpuzamakungwa',
-                'installment_payment': 'Kwishura mu bice',
-                'installment_desc': 'MTN MoMo, Airtel Money, Ikarita',
-                'need_help_booking': 'Urakenera ubufasha mu kubika kwawe?',
+                'load_more': 'Raba ibindi bihugu',
+                'secure_payment': 'Kwishura gutekanye',
+                'support_247': 'Ubufasha 24/7',
+                'no_hidden': 'Nta mafaranga yihishe',
+                'instant_confirm': 'Kwemeza ako kanya',
+                'need_help': 'Urakenera ubufasha?',
+                'contact_team': 'Ikipe yacu iraboneka 24/24',
                 'call_now': 'Hamagara ubu',
                 'live_chat': 'Kuganira ku murongo',
-                'available_247': 'Tuboneka 24/24 ngo tugufashe',
+                'home': 'Ahabanza',
+                'services': 'Serivisi',
+                'bookings': 'Kubika',
+                'about': 'Kuber',
+                'help': 'Ubufasha',
+                'footer_desc': 'Ushurwe wawe wo kwizigirwa.',
+                'quick_links': 'Amahuza',
+                'about_us': 'Kuber',
+                'our_services': 'Serivisi zacu',
+                'book_now': 'Kubika ubu',
+                'contact': 'Aho twohamwe',
+                'legal': 'Amategeko',
+                'privacy': 'Ibanga',
+                'terms': 'Amasezerano',
+                'cookies': 'Cookies',
+                'follow_us': 'Dukurikire',
+                'copyright': '© 2026 Sure Travel Agency. Uburenganzira bwose burubahirizwa.',
             }
         };
 
@@ -1086,7 +1010,6 @@
             currentLanguage = lang;
             localStorage.setItem('language', lang);
             
-            // Update active class in dropdown
             document.querySelectorAll('.language-option').forEach(option => {
                 option.classList.remove('active');
                 if (option.dataset.lang === lang) {
@@ -1094,13 +1017,11 @@
                 }
             });
             
-            // Update current language display
             const langDisplay = document.getElementById('current-language');
             if (lang === 'fr') langDisplay.textContent = 'FR';
             else if (lang === 'en') langDisplay.textContent = 'EN';
             else if (lang === 'rn') langDisplay.textContent = 'RN';
             
-            // Translate all elements with data-translate attribute
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.getAttribute('data-translate');
                 if (translations[lang] && translations[lang][key]) {
@@ -1115,126 +1036,44 @@
             });
         }
 
-        // Initialize translations on page load
         document.addEventListener('DOMContentLoaded', function() {
             changeLanguage(currentLanguage);
         });
-    </script>
 
-    <!-- Autocomplete and Load More Script -->
-    <script>
-        // World Cities Database for Autocomplete
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('darkMode', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('darkMode', 'dark');
+            }
+        }
+        
+        if (localStorage.getItem('darkMode') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+
+        // World Cities Database
         const worldCities = [
             { city: "Bujumbura", country: "Burundi", code: "BJM" },
             { city: "Paris", country: "France", code: "CDG" },
             { city: "Nice", country: "France", code: "NCE" },
             { city: "Lyon", country: "France", code: "LYS" },
             { city: "Marseille", country: "France", code: "MRS" },
-            { city: "Dubai", country: "United Arab Emirates", code: "DXB" },
-            { city: "Abu Dhabi", country: "United Arab Emirates", code: "AUH" },
+            { city: "Dubai", country: "UAE", code: "DXB" },
             { city: "Istanbul", country: "Turkey", code: "IST" },
-            { city: "Ankara", country: "Turkey", code: "ESB" },
-            { city: "Antalya", country: "Turkey", code: "AYT" },
             { city: "New York", country: "USA", code: "JFK" },
             { city: "Los Angeles", country: "USA", code: "LAX" },
-            { city: "Chicago", country: "USA", code: "ORD" },
-            { city: "Miami", country: "USA", code: "MIA" },
-            { city: "San Francisco", country: "USA", code: "SFO" },
-            { city: "Las Vegas", country: "USA", code: "LAS" },
-            { city: "Boston", country: "USA", code: "BOS" },
-            { city: "Washington DC", country: "USA", code: "IAD" },
-            { city: "Toronto", country: "Canada", code: "YYZ" },
-            { city: "Vancouver", country: "Canada", code: "YVR" },
-            { city: "Montreal", country: "Canada", code: "YUL" },
-            { city: "Calgary", country: "Canada", code: "YYC" },
-            { city: "London", country: "United Kingdom", code: "LHR" },
-            { city: "Manchester", country: "United Kingdom", code: "MAN" },
-            { city: "Rome", country: "Italy", code: "FCO" },
-            { city: "Milan", country: "Italy", code: "MXP" },
-            { city: "Venice", country: "Italy", code: "VCE" },
-            { city: "Florence", country: "Italy", code: "FLR" },
-            { city: "Barcelona", country: "Spain", code: "BCN" },
-            { city: "Madrid", country: "Spain", code: "MAD" },
+            { city: "London", country: "UK", code: "LHR" },
             { city: "Tokyo", country: "Japan", code: "NRT" },
-            { city: "Osaka", country: "Japan", code: "KIX" },
-            { city: "Kyoto", country: "Japan", code: "UKY" },
-            { city: "Beijing", country: "China", code: "PEK" },
-            { city: "Shanghai", country: "China", code: "PVG" },
-            { city: "Hong Kong", country: "China", code: "HKG" },
+            { city: "Rome", country: "Italy", code: "FCO" },
             { city: "Sydney", country: "Australia", code: "SYD" },
-            { city: "Melbourne", country: "Australia", code: "MEL" },
-            { city: "Brisbane", country: "Australia", code: "BNE" },
             { city: "Cape Town", country: "South Africa", code: "CPT" },
-            { city: "Johannesburg", country: "South Africa", code: "JNB" },
-            { city: "Durban", country: "South Africa", code: "DUR" },
             { city: "Nairobi", country: "Kenya", code: "NBO" },
-            { city: "Mombasa", country: "Kenya", code: "MBA" },
-            { city: "Dar es Salaam", country: "Tanzania", code: "DAR" },
-            { city: "Zanzibar", country: "Tanzania", code: "ZNZ" },
             { city: "Kigali", country: "Rwanda", code: "KGL" },
-            { city: "Entebbe", country: "Uganda", code: "EBB" },
-            { city: "Addis Ababa", country: "Ethiopia", code: "ADD" },
-            { city: "Cairo", country: "Egypt", code: "CAI" },
-            { city: "Casablanca", country: "Morocco", code: "CMN" },
-            { city: "Marrakech", country: "Morocco", code: "RAK" },
-            { city: "Tunis", country: "Tunisia", code: "TUN" },
-            { city: "Algiers", country: "Algeria", code: "ALG" },
-            { city: "Lagos", country: "Nigeria", code: "LOS" },
-            { city: "Accra", country: "Ghana", code: "ACC" },
-            { city: "Dakar", country: "Senegal", code: "DKR" },
-            { city: "Bamako", country: "Mali", code: "BKO" },
-            { city: "Ouagadougou", country: "Burkina Faso", code: "OUA" },
-            { city: "Abidjan", country: "Côte d'Ivoire", code: "ABJ" },
-            { city: "Yaoundé", country: "Cameroon", code: "NSI" },
-            { city: "Douala", country: "Cameroon", code: "DLA" },
-            { city: "Libreville", country: "Gabon", code: "LBV" },
-            { city: "Brazzaville", country: "Congo", code: "BZV" },
-            { city: "Kinshasa", country: "DR Congo", code: "FIH" },
-            { city: "Lubumbashi", country: "DR Congo", code: "FBM" },
-            { city: "Luanda", country: "Angola", code: "LAD" },
-            { city: "Maputo", country: "Mozambique", code: "MPM" },
-            { city: "Harare", country: "Zimbabwe", code: "HRE" },
-            { city: "Lusaka", country: "Zambia", code: "LUN" },
-            { city: "Lilongwe", country: "Malawi", code: "LLW" },
-            { city: "Blantyre", country: "Malawi", code: "BLZ" },
-            { city: "Antananarivo", country: "Madagascar", code: "TNR" },
-            { city: "Port Louis", country: "Mauritius", code: "MRU" },
-            { city: "Saint-Denis", country: "Réunion", code: "RUN" },
-            { city: "Rio de Janeiro", country: "Brazil", code: "GIG" },
-            { city: "São Paulo", country: "Brazil", code: "GRU" },
-            { city: "Brasília", country: "Brazil", code: "BSB" },
-            { city: "Buenos Aires", country: "Argentina", code: "EZE" },
-            { city: "Santiago", country: "Chile", code: "SCL" },
-            { city: "Lima", country: "Peru", code: "LIM" },
-            { city: "Bogotá", country: "Colombia", code: "BOG" },
-            { city: "Quito", country: "Ecuador", code: "UIO" },
-            { city: "Caracas", country: "Venezuela", code: "CCS" },
-            { city: "Panama City", country: "Panama", code: "PTY" },
-            { city: "Mexico City", country: "Mexico", code: "MEX" },
-            { city: "Cancún", country: "Mexico", code: "CUN" },
-            { city: "Havana", country: "Cuba", code: "HAV" },
-            { city: "Kingston", country: "Jamaica", code: "KIN" },
-            { city: "Nassau", country: "Bahamas", code: "NAS" },
-            { city: "Mumbai", country: "India", code: "BOM" },
-            { city: "Delhi", country: "India", code: "DEL" },
-            { city: "Bangalore", country: "India", code: "BLR" },
-            { city: "Chennai", country: "India", code: "MAA" },
-            { city: "Kolkata", country: "India", code: "CCU" },
-            { city: "Bangkok", country: "Thailand", code: "BKK" },
-            { city: "Phuket", country: "Thailand", code: "HKT" },
-            { city: "Chiang Mai", country: "Thailand", code: "CNX" },
-            { city: "Singapore", country: "Singapore", code: "SIN" },
-            { city: "Kuala Lumpur", country: "Malaysia", code: "KUL" },
-            { city: "Jakarta", country: "Indonesia", code: "CGK" },
-            { city: "Bali", country: "Indonesia", code: "DPS" },
-            { city: "Manila", country: "Philippines", code: "MNL" },
-            { city: "Ho Chi Minh City", country: "Vietnam", code: "SGN" },
-            { city: "Hanoi", country: "Vietnam", code: "HAN" },
-            { city: "Seoul", country: "South Korea", code: "ICN" },
-            { city: "Busan", country: "South Korea", code: "PUS" }
         ];
 
-        // Show autocomplete dropdown
         function showAutocomplete(type) {
             const input = document.getElementById(`${type}-input`);
             const dropdown = document.getElementById(`${type}-autocomplete`);
@@ -1245,15 +1084,14 @@
                 return;
             }
             
-            const filteredCities = worldCities.filter(city => 
+            const filtered = worldCities.filter(city => 
                 city.city.toLowerCase().includes(searchTerm) || 
-                city.country.toLowerCase().includes(searchTerm) ||
-                city.code.toLowerCase().includes(searchTerm)
-            ).slice(0, 8); // Limit to 8 results
+                city.country.toLowerCase().includes(searchTerm)
+            ).slice(0, 5);
             
-            if (filteredCities.length > 0) {
-                dropdown.innerHTML = filteredCities.map(city => `
-                    <div class="autocomplete-item" onclick="selectCity('${type}', '${city.city}', '${city.country}', '${city.code}')">
+            if (filtered.length > 0) {
+                dropdown.innerHTML = filtered.map(city => `
+                    <div class="autocomplete-item" onclick="selectCity('${type}', '${city.city} (${city.code})')">
                         <span class="material-symbols-outlined text-primary">location_on</span>
                         <div>
                             <div class="city-name">${city.city}</div>
@@ -1268,49 +1106,538 @@
             }
         }
 
-        // Select city from autocomplete
-        function selectCity(type, city, country, code) {
-            const input = document.getElementById(`${type}-input`);
-            input.value = `${city} (${code}), ${country}`;
+        function selectCity(type, value) {
+            document.getElementById(`${type}-input`).value = value;
             document.getElementById(`${type}-autocomplete`).style.display = 'none';
         }
 
-        // Close autocomplete when clicking outside
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.autocomplete-container')) {
-                document.querySelectorAll('.autocomplete-dropdown').forEach(dropdown => {
-                    dropdown.style.display = 'none';
-                });
+                document.querySelectorAll('.autocomplete-dropdown').forEach(d => d.style.display = 'none');
             }
         });
 
-        // Toggle destinations (Read More / Load More)
-        function toggleDestinations() {
-            const hiddenDestinations = document.querySelectorAll('.hidden-destination');
-            const loadMoreBtn = document.getElementById('loadMoreBtn');
-            const loadMoreText = document.getElementById('loadMoreText');
-            const isHidden = hiddenDestinations[0].classList.contains('hidden');
-            
-            hiddenDestinations.forEach(dest => {
-                if (isHidden) {
-                    dest.classList.remove('hidden');
-                    loadMoreText.textContent = translations[currentLanguage]?.show_less || 'Voir moins';
-                    loadMoreBtn.querySelector('.material-symbols-outlined').textContent = 'expand_less';
-                } else {
-                    dest.classList.add('hidden');
-                    loadMoreText.textContent = translations[currentLanguage]?.read_more || 'Voir plus de destinations';
-                    loadMoreBtn.querySelector('.material-symbols-outlined').textContent = 'expand_more';
-                }
+        function selectService(service) {
+            document.querySelectorAll('.service-option').forEach(el => {
+                el.classList.remove('selected', 'border-primary', 'bg-gradient-to-br', 'from-primary/5', 'to-primary/10');
+                el.classList.add('border-slate-200', 'dark:border-slate-700');
+                el.querySelector('.material-symbols-outlined').classList.remove('fill-1', 'text-primary');
+                el.querySelector('.material-symbols-outlined').classList.add('text-slate-500');
+                el.querySelector('span:last-child').classList.remove('text-primary');
+                el.querySelector('span:last-child').classList.add('text-slate-500');
             });
+            
+            const selected = document.getElementById(`service-${service}`);
+            selected.classList.remove('border-slate-200', 'dark:border-slate-700');
+            selected.classList.add('selected', 'border-primary', 'bg-gradient-to-br', 'from-primary/5', 'to-primary/10');
+            selected.querySelector('.material-symbols-outlined').classList.remove('text-slate-500');
+            selected.querySelector('.material-symbols-outlined').classList.add('fill-1', 'text-primary');
+            selected.querySelector('span:last-child').classList.remove('text-slate-500');
+            selected.querySelector('span:last-child').classList.add('text-primary');
+            
+            document.getElementById('hotel-options').classList.add('hidden');
+            document.getElementById('car-options').classList.add('hidden');
+            document.getElementById('trip-type-section').classList.remove('hidden');
+            document.getElementById('return-date-section').classList.remove('hidden');
+            
+            if (service === 'hotel') {
+                document.getElementById('hotel-options').classList.remove('hidden');
+                document.getElementById('trip-type-section').classList.add('hidden');
+            } else if (service === 'car') {
+                document.getElementById('car-options').classList.remove('hidden');
+                document.getElementById('trip-type-section').classList.add('hidden');
+            }
         }
 
-        // Add translation for show_less in all languages
-        translations.fr.show_less = 'Voir moins';
-        translations.en.show_less = 'Show less';
-        translations.rn.show_less = 'Raba bike';
+        function toggleDestinations() {
+            const hidden = document.querySelectorAll('.hidden-destination');
+            const btn = document.getElementById('loadMoreBtn');
+            const text = document.getElementById('loadMoreText');
+            const icon = btn.querySelector('.material-symbols-outlined');
+            
+            if (hidden[0].classList.contains('hidden')) {
+                hidden.forEach(d => d.classList.remove('hidden'));
+                text.textContent = translations[currentLanguage].load_more.replace('plus', 'moins');
+                icon.textContent = 'expand_less';
+            } else {
+                hidden.forEach(d => d.classList.add('hidden'));
+                text.textContent = translations[currentLanguage].load_more;
+                icon.textContent = 'expand_more';
+            }
+        }
+
+        function selectDestination(city) {
+            document.getElementById('arrival-input').value = city;
+            document.getElementById('arrival-input').scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
 
-    <!-- AI Chatbot Assistant (Keep your existing chatbot code here) -->
-    <!-- ... (your existing chatbot code remains the same) ... -->
+    <!-- AI Chatbot Assistant (same as previous) -->
+    <!-- ... (copy chatbot code from index.html) ... -->
+
+
+    <!-- AI Chatbot Assistant -->
+    <style>
+        .chatbot-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 320px;
+            max-width: 90vw;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            visibility: hidden;
+            border: 1px solid rgba(15, 73, 189, 0.2);
+        }
+        .dark .chatbot-container {
+            background: #1e293b;
+            border-color: rgba(255,255,255,0.1);
+        }
+        .chatbot-container.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        .chatbot-header {
+            background: #0f49bd;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .chatbot-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chatbot-avatar {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chatbot-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .chatbot-subtitle {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        .chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .chatbot-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f8fafc;
+        }
+        .dark .chatbot-messages {
+            background: #0f172a;
+        }
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message.bot {
+            justify-content: flex-start;
+        }
+        .message.user {
+            justify-content: flex-end;
+        }
+        .message-content {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .bot .message-content {
+            background: #e9eef5;
+            color: #1e293b;
+            border-bottom-left-radius: 4px;
+        }
+        .dark .bot .message-content {
+            background: #334155;
+            color: #f1f5f9;
+        }
+        .user .message-content {
+            background: #0f49bd;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .chatbot-input-area {
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 0 0 20px 20px;
+        }
+        .dark .chatbot-input-area {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        .chatbot-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        .chatbot-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 13px;
+            background: #f8fafc;
+        }
+        .dark .chatbot-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: white;
+        }
+        .chatbot-input:focus {
+            border-color: #0f49bd;
+        }
+        .chatbot-send {
+            width: 45px;
+            height: 45px;
+            background: #0f49bd;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .chatbot-send:hover {
+            transform: scale(1.05);
+        }
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #0f49bd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(15, 73, 189, 0.4);
+            z-index: 999;
+            transition: transform 0.2s;
+            border: 2px solid white;
+        }
+        .dark .chatbot-toggle {
+            border-color: #1e293b;
+        }
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+        }
+        .chatbot-quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .quick-question {
+            padding: 6px 12px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #1e293b;
+            transition: all 0.2s;
+        }
+        .dark .quick-question {
+            background: #334155;
+            color: #f1f5f9;
+            border-color: #475569;
+        }
+        .quick-question:hover {
+            background: #0f49bd;
+            color: white;
+            border-color: #0f49bd;
+        }
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 15px;
+            background: #e9eef5;
+            border-radius: 18px;
+            width: fit-content;
+            border-bottom-left-radius: 4px;
+        }
+        .dark .typing-indicator {
+            background: #334155;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #64748b;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .dark .typing-dot {
+            background: #94a3b8;
+        }
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+    </style>
+
+    <div class="chatbot-toggle" onclick="toggleChatbot()" id="chatbotToggle">
+        <span class="material-symbols-outlined">chat</span>
+        <span class="notification-badge" id="chatNotification" style="display: none;">1</span>
+    </div>
+
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header" onclick="toggleChatbot()">
+            <div class="chatbot-header-left">
+                <div class="chatbot-avatar">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">smart_toy</span>
+                </div>
+                <div>
+                    <div class="chatbot-title" data-translate="assistant_title">Assistant Sure Travel</div>
+                    <div class="chatbot-subtitle" data-translate="assistant_subtitle">En ligne • Réponse instantanée</div>
+                </div>
+            </div>
+            <span class="chatbot-close material-symbols-outlined" onclick="event.stopPropagation(); toggleChatbot()">close</span>
+        </div>
+        
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-content" data-translate="welcome_message">
+                    Bonjour ! 👋 Je suis l'assistant virtuel de Sure Travel. Comment puis-je vous aider aujourd'hui ?
+                </div>
+            </div>
+        </div>
+        
+        <div class="chatbot-input-area">
+            <div class="chatbot-quick-questions" id="quickQuestions">
+                <span class="quick-question" onclick="quickQuestion('paiement')">💳 Paiement</span>
+                <span class="quick-question" onclick="quickQuestion('bagages')">🧳 Bagages</span>
+                <span class="quick-question" onclick="quickQuestion('annulation')">❌ Annulation</span>
+                <span class="quick-question" onclick="quickQuestion('vols')">✈️ Vols</span>
+                <span class="quick-question" onclick="quickQuestion('hotels')">🏨 Hôtels</span>
+                <span class="quick-question" onclick="quickQuestion('contact')">📞 Contact</span>
+                <span class="quick-question" onclick="quickQuestion('safari')">🦁 Safari</span>
+            </div>
+            <div class="chatbot-input-wrapper">
+                <input type="text" class="chatbot-input" id="chatInput" placeholder="Posez votre question..." onkeypress="handleKeyPress(event)" data-translate="chat_placeholder">
+                <button class="chatbot-send" onclick="sendMessage()">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chatbot State
+        let isChatbotOpen = false;
+        let unreadMessages = 1;
+        
+        function toggleChatbot() {
+            const container = document.getElementById('chatbotContainer');
+            const toggle = document.getElementById('chatbotToggle');
+            
+            if (container.classList.contains('open')) {
+                container.classList.remove('open');
+                isChatbotOpen = false;
+            } else {
+                container.classList.add('open');
+                isChatbotOpen = true;
+                unreadMessages = 0;
+                document.getElementById('chatNotification').style.display = 'none';
+            }
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = getAIResponse(message);
+                addMessage(response, 'bot');
+            }, 1500);
+        }
+        
+        function quickQuestion(type) {
+            let question = '';
+            const lang = currentLanguage;
+            
+            if (lang === 'fr') {
+                switch(type) {
+                    case 'paiement': question = 'Quels sont les modes de paiement acceptés ?'; break;
+                    case 'bagages': question = 'Quelle est la franchise bagages ?'; break;
+                    case 'annulation': question = 'Comment annuler ma réservation ?'; break;
+                    case 'vols': question = 'Comment réserver un vol ?'; break;
+                    case 'hotels': question = 'Quels hôtels recommandez-vous ?'; break;
+                    case 'contact': question = 'Comment contacter le support ?'; break;
+                    case 'safari': question = 'Pouvez-vous me parler des safaris ?'; break;
+                }
+            } else if (lang === 'en') {
+                switch(type) {
+                    case 'paiement': question = 'What payment methods are accepted?'; break;
+                    case 'bagages': question = 'What is the baggage allowance?'; break;
+                    case 'annulation': question = 'How do I cancel my booking?'; break;
+                    case 'vols': question = 'How do I book a flight?'; break;
+                    case 'hotels': question = 'Which hotels do you recommend?'; break;
+                    case 'contact': question = 'How do I contact support?'; break;
+                    case 'safari': question = 'Can you tell me about safaris?'; break;
+                }
+            } else {
+                switch(type) {
+                    case 'paiement': question = 'Ni ubuhe buryo bwo kwishura bwemerwa?'; break;
+                    case 'bagages': question = 'Ibipimo vy\'imigendekwa ni ibiki?'; break;
+                    case 'annulation': question = 'Nigute nakuraho ikibanza cyanje?'; break;
+                    case 'vols': question = 'Nigute nakwiyandikisha ku ndege?'; break;
+                    case 'hotels': question = 'Ni ayahe mahoteli mwotwemerera?'; break;
+                    case 'contact': question = 'Nigute novugana n\'ubufasha?'; break;
+                    case 'safari': question = 'Murashobora kumbwira kuri safari?'; break;
+                }
+            }
+            
+            addMessage(question, 'user');
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = getAIResponse(question);
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+        
+        function addMessage(text, sender) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+            
+            if (!isChatbotOpen && sender === 'bot') {
+                unreadMessages++;
+                document.getElementById('chatNotification').style.display = 'flex';
+                document.getElementById('chatNotification').textContent = unreadMessages;
+            }
+        }
+        
+        function showTypingIndicator() {
+            const messages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function removeTypingIndicator() {
+            const typing = document.getElementById('typingIndicator');
+            if (typing) typing.remove();
+        }
+        
+        function getAIResponse(question) {
+            const q = question.toLowerCase();
+            const lang = currentLanguage;
+            
+            if (lang === 'fr') {
+                if (q.includes('paiement') || q.includes('payer')) {
+                    return "Nous acceptons plusieurs modes de paiement :\n\n• 💳 MTN MoMo (79 639 803)\n• 📱 Airtel Money\n• 🏦 Virement bancaire (BCB, BANCOBU, Interbank)\n• 💳 Visa/Mastercard\n• 💵 Espèces en agence";
+                } else if (q.includes('bagage') || q.includes('valise')) {
+                    return "🛄 Franchise standard : 1 bagage 23kg + 1 cabine 7kg en économique.";
+                } else if (q.includes('annulation')) {
+                    return "❌ Contactez-nous au +257 79 639 803 pour toute annulation.";
+                } else {
+                    return "Merci pour votre question ! Contactez-nous au +257 79 639 803 pour plus d'aide.";
+                }
+            } else if (lang === 'en') {
+                if (q.includes('payment')) {
+                    return "We accept MTN MoMo, Airtel Money, bank transfer, Visa/Mastercard, and cash.";
+                } else {
+                    return "Thank you! Contact us at +257 79 639 803 for help.";
+                }
+            } else {
+                if (q.includes('kwishura')) {
+                    return "Twemera MTN MoMo, Airtel Money, banki, Visa/Mastercard, n' amafaranga mu biro.";
+                } else {
+                    return "Urakoze! Twandikire kuri +257 79 639 803.";
+                }
+            }
+        }
+        
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (!isChatbotOpen) {
+                    document.getElementById('chatNotification').style.display = 'flex';
+                }
+            }, 5000);
+        });
+    </script>
+    <!-- End AI Chatbot Assistant -->
+
+    
 </body>
 </html>

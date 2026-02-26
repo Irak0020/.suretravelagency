@@ -13,7 +13,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" name="viewport">
     <title>Sure Travel Agency - À Propos</title>
     
-    <!-- Translation Styles -->
+    <!-- Language Selector Styles -->
     <style>
         .language-selector {
             position: relative;
@@ -64,12 +64,57 @@
         [data-translate] {
             transition: all 0.2s;
         }
-        .team-member-card {
-            transition: transform 0.3s ease;
+        .timeline-dot {
+            box-shadow: 0 0 0 4px rgba(15, 73, 189, 0.2);
+            transition: all 0.3s ease;
         }
-        .team-member-card:hover {
-            transform: translateY(-5px);
+        .timeline-dot:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 6px rgba(15, 73, 189, 0.3);
+        }
+        .team-card {
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(15, 73, 189, 0.2);
+        }
+        .bible-verse-card {
+            background: linear-gradient(135deg, #0f49bd 0%, #1e3a8a 100%);
+            transition: all 0.3s ease;
+        }
+        .bible-verse-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(15, 73, 189, 0.3);
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px rgba(15, 73, 189, 0.2);
+        }
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+            border-radius: 1.5rem;
+            padding: 3px;
+        }
+        .gradient-border-inner {
+            background: white;
+            border-radius: 1.4rem;
+            height: 100%;
+            width: 100%;
+        }
+        .dark .gradient-border-inner {
+            background: #1e293b;
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
     </style>
     
@@ -83,6 +128,8 @@
                 extend: {
                     colors: {
                         "primary": "#0f49bd",
+                        "primary-light": "#3a7bd5",
+                        "primary-dark": "#0a3570",
                         "background-light": "#f6f6f8",
                         "background-dark": "#101622",
                     },
@@ -104,35 +151,45 @@
         .fill-1 {
             font-variation-settings: 'FILL' 1;
         }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         @media (min-width: 768px) {
             .max-w-container {
-                max-width: 768px;
+                max-width: 1280px;
                 margin-left: auto;
                 margin-right: auto;
             }
-        }
-        .timeline-dot {
-            box-shadow: 0 0 0 4px rgba(15, 73, 189, 0.2);
-        }
-        .bible-verse {
-            background: linear-gradient(135deg, #0f49bd 0%, #1e3a8a 100%);
         }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
     <!-- Header / Top Bar -->
-    <header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3">
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 shadow-sm">
         <div class="flex items-center justify-between max-w-container mx-auto w-full">
-            <a href="index.html" class="flex items-center gap-3">
-                <!-- New Logo Image -->
-                <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden p-1">
-                    <img alt="Sure Travel Agency Logo" class="w-full h-full object-contain" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden p-1 group-hover:scale-110 transition-transform duration-300">
+                    <img alt="Sure Travel Agency Logo" class="w-full h-full object-contain" src="./Images/logo.jpeg">
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white">SURE</h1>
+                    <h1 class="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white group-hover:text-primary transition-colors">SURE</h1>
                     <p class="text-[8px] uppercase tracking-widest text-primary font-bold">TRAVEL AGENCY</p>
                 </div>
             </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-6">
+                <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Accueil</a>
+                <a href="services.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Services</a>
+                <a href="booking.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Réservations</a>
+                <a href="aboutus.html" class="text-primary font-semibold border-b-2 border-primary pb-1">À Propos</a>
+                <a href="support.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Aide</a>
+            </nav>
+            
             <div class="flex items-center gap-2">
                 <a href="search.html" class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                     <span class="material-symbols-outlined">search</span>
@@ -140,9 +197,9 @@
                 
                 <!-- Language Selector -->
                 <div class="language-selector">
-                    <button class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center gap-1">
+                    <button class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center gap-1 border border-slate-200 dark:border-slate-700 rounded-lg">
                         <span class="material-symbols-outlined">language</span>
-                        <span class="text-sm hidden sm:inline" id="current-language">FR</span>
+                        <span class="text-sm hidden sm:inline font-medium" id="current-language">FR</span>
                     </button>
                     <div class="language-dropdown">
                         <div class="language-option active" onclick="changeLanguage('fr')" data-lang="fr">
@@ -178,52 +235,40 @@
 
         <!-- Hero Section with Logo -->
         <div class="pt-2 pb-8 flex flex-col items-center text-center">
-            <div class="w-32 h-32 mb-6 rounded-2xl overflow-hidden bg-white shadow-lg border-4 border-primary/20 p-2">
-                <img alt="Sure Travel Agency Logo" class="w-full h-full object-contain" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z">
+            <div class="w-32 h-32 mb-6 rounded-2xl overflow-hidden bg-white shadow-lg border-4 border-primary/20 p-2 floating">
+                <img alt="Sure Travel Agency Logo" class="w-full h-full object-contain" src="./Images/logo.jpeg">
             </div>
             <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white" data-translate="company_name">Sure Travel Agency</h1>
             <p class="text-primary font-bold text-lg mt-2" data-translate="trusted_partner">Votre partenaire voyage de confiance depuis 2024</p>
             <div class="flex gap-2 mt-4">
                 <span class="bg-primary/10 text-primary px-4 py-1 rounded-full text-sm font-semibold" data-translate="iata_certified">Agréée IATA</span>
-                <span class="bg-primary/10 text-primary px-4 py-1 rounded-full text-sm font-semibold" data-translate="clients_count">500+ clients</span>
+                <span class="bg-primary/10 text-primary px-4 py-1 rounded-full text-sm font-semibold" data-translate="clients_count">300+ clients</span>
             </div>
         </div>
 
-        <!-- Our Story - Why We Were Founded -->
-        <div class="mb-8 p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-primary/10">
-            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary">history</span>
-                <span data-translate="our_story">Notre Histoire</span>
-            </h2>
-            <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                <span class="font-bold text-primary" data-translate="company_name">Sure Travel Agency</span> <span data-translate="founded_text">a été fondée en</span> <span class="font-bold">2024</span> <span data-translate="by_founders">par Kanyoge Celine et Keza Nadia, deux passionnées de voyage qui ont vécu la frustration de chercher des billets d'avion abordables sans y passer des semaines.</span>
-            </p>
-            <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                <span data-translate="we_launched">Nous avons lancé cette agence parce que nous savons à quel point il peut être</span> <span class="font-bold text-primary" data-translate="frustrating">frustrant</span> <span data-translate="of">de :</span>
-            </p>
-            <ul class="space-y-2 mb-4">
-                <li class="flex items-start gap-2">
-                    <span class="material-symbols-outlined text-primary text-sm">close</span>
-                    <span class="text-slate-600 dark:text-slate-400" data-translate="frustration_1">Passer des heures à comparer des prix de vols</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="material-symbols-outlined text-primary text-sm">close</span>
-                    <span class="text-slate-600 dark:text-slate-400" data-translate="frustration_2">Chercher séparément un hôtel, une voiture et des activités</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="material-symbols-outlined text-primary text-sm">close</span>
-                    <span class="text-slate-600 dark:text-slate-400" data-translate="frustration_3">Payer trop cher parce qu'on ne connaît pas les bons plans</span>
-                </li>
-            </ul>
-            <p class="text-slate-700 dark:text-slate-300 leading-relaxed font-semibold">
-                <span data-translate="mission_statement">Notre mission est simple :</span> <span class="text-primary" data-translate="mission_highlight">vous offrir des voyages abordables et complets</span> <span data-translate="in_one_place">en un seul endroit, avec professionnalisme et transparence.</span>
-            </p>
+        <!-- Our Story Section -->
+        <div class="gradient-border mb-8">
+            <div class="gradient-border-inner p-6">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">history</span>
+                    <span data-translate="our_story">Notre Histoire</span>
+                </h2>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                    <span class="font-bold text-primary" data-translate="company_name">Sure Travel Agency</span> <span data-translate="founded_text">a été fondée en</span> <span class="font-bold">2024</span> <span data-translate="by_founders">par Kanyoge Celine et Keza Nadia, deux passionnées de voyage qui ont vécu la frustration de chercher des billets d'avion abordables sans y passer des semaines.</span>
+                </p>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4" data-translate="mission_statement_full">
+                    Notre mission est simple : vous offrir des voyages abordables et complets en un seul endroit, avec professionnalisme et transparence.
+                </p>
+                <div class="bg-primary/5 p-4 rounded-xl border border-primary/10">
+                    <p class="text-sm italic text-primary" data-translate="quote">"Voyager ne devrait pas être un luxe, mais une expérience accessible à tous."</p>
+                </div>
+            </div>
         </div>
 
         <!-- Bible Verses Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <!-- Vision/Success Verse -->
-            <div class="bible-verse p-6 rounded-2xl text-white shadow-lg">
+            <div class="bible-verse-card p-6 rounded-2xl text-white shadow-lg">
                 <span class="material-symbols-outlined text-3xl mb-2">auto_stories</span>
                 <p class="text-lg font-bold mb-2" data-translate="proverbs_16_3">Proverbes 16:3</p>
                 <p class="text-sm italic mb-3" data-translate="proverbs_text">"Remets ton sort à l'Éternel, et tes projets réussiront."</p>
@@ -231,7 +276,7 @@
             </div>
             
             <!-- Faith Verse -->
-            <div class="bible-verse p-6 rounded-2xl text-white shadow-lg" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f49bd 100%);">
+            <div class="bible-verse-card p-6 rounded-2xl text-white shadow-lg" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f49bd 100%);">
                 <span class="material-symbols-outlined text-3xl mb-2">favorite</span>
                 <p class="text-lg font-bold mb-2" data-translate="hebrews_11_1">Hébreux 11:1</p>
                 <p class="text-sm italic mb-3" data-translate="hebrews_text">"La foi est une ferme assurance des choses qu'on espère, une démonstration de celles qu'on ne voit pas."</p>
@@ -241,7 +286,7 @@
 
         <!-- Mission & Vision Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all stat-card">
                 <div class="flex items-center gap-3 mb-4 text-primary">
                     <span class="material-symbols-outlined text-3xl">rocket_launch</span>
                     <h3 class="text-xl font-bold" data-translate="our_mission">Notre Mission</h3>
@@ -250,7 +295,7 @@
                     Aider nos clients à trouver des billets d'avion abordables et à planifier leurs voyages (vols, hôtels, voitures) en un seul endroit, avec un service personnalisé et des conseils d'experts.
                 </p>
             </div>
-            <div class="bg-primary/5 dark:bg-primary/10 p-6 rounded-xl border border-primary/10 dark:border-primary/20 shadow-sm hover:shadow-md transition-shadow">
+            <div class="bg-primary/5 dark:bg-primary/10 p-6 rounded-2xl border border-primary/10 shadow-lg hover:shadow-xl transition-all stat-card">
                 <div class="flex items-center gap-3 mb-4 text-primary">
                     <span class="material-symbols-outlined text-3xl">visibility</span>
                     <h3 class="text-xl font-bold" data-translate="our_vision">Notre Vision</h3>
@@ -263,19 +308,19 @@
 
         <!-- Stats Section -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center">
-                <p class="text-2xl font-bold text-primary">500+</p>
+            <div class="stat-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10">
+                <p class="text-2xl font-bold text-primary">300+</p>
                 <p class="text-xs text-slate-500" data-translate="satisfied_clients">Clients satisfaits</p>
             </div>
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center">
+            <div class="stat-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10">
                 <p class="text-2xl font-bold text-primary">100+</p>
                 <p class="text-xs text-slate-500" data-translate="trips_organized">Voyages organisés</p>
             </div>
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center">
+            <div class="stat-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10">
                 <p class="text-2xl font-bold text-primary">30+</p>
                 <p class="text-xs text-slate-500" data-translate="destinations">Destinations</p>
             </div>
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 text-center">
+            <div class="stat-card bg-white dark:bg-slate-800 rounded-xl p-4 text-center shadow-sm border border-primary/10">
                 <p class="text-2xl font-bold text-primary">24/7</p>
                 <p class="text-xs text-slate-500" data-translate="customer_support">Support client</p>
             </div>
@@ -311,20 +356,81 @@
                         <span class="material-symbols-outlined text-white text-sm">stars</span>
                     </div>
                     <p class="text-primary font-bold text-sm mb-1" data-translate="today">Aujourd'hui - 2026</p>
-                    <p class="text-slate-700 dark:text-slate-300" data-translate="today_text">Plus de 500 clients nous ont fait confiance. Nous continuons à grandir avec vous.</p>
+                    <p class="text-slate-700 dark:text-slate-300" data-translate="today_text">Plus de 300 clients nous ont fait confiance. Nous continuons à grandir avec vous.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Founders Section Title -->
+        <!-- Testimonials Section (Now in About) -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">star</span>
+                <span data-translate="what_clients_say">Ce que disent nos clients</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Testimonial 1 - Ineza Queen Kethia -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-primary/10 hover:shadow-xl transition-all">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="text-primary font-bold">IQ</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Ineza Queen Kethia</h4>
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm italic text-slate-600 dark:text-slate-300 mb-2" data-translate="testimonial_1">
+                        "Sans Sure Travel Agency, je n'aurais jamais pu aller au Canada. Je cherchais des billets abordables depuis des mois sans succès. Leur équipe a trouvé un vol au moment parfait et m'a accompagnée pendant toutes les escales jusqu'à mon arrivée. Une expérience incroyable !"
+                    </p>
+                    <p class="text-xs text-primary font-semibold" data-translate="canada_trip">✈️ Voyage au Canada</p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-primary/10 hover:shadow-xl transition-all">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="text-primary font-bold">MD</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Marc Dubois</h4>
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                                <span class="material-symbols-outlined fill-1 text-sm">star</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm italic text-slate-600 dark:text-slate-300 mb-2" data-translate="testimonial_2">
+                        "Le safari en Tanzanie organisé par Sure Travel était magique. Notre guide était passionné et très compétent. L'agence a su gérer tous les imprévus logistiques avec un professionnalisme exemplaire."
+                    </p>
+                    <p class="text-xs text-primary font-semibold" data-translate="safari_trip">✈️ Safari Tanzanie</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="#" class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
+                    <span data-translate="read_more_testimonials">Lire plus de témoignages</span>
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Founders Section -->
         <h2 class="text-slate-900 dark:text-slate-100 text-2xl font-bold leading-tight mb-6 text-center" data-translate="our_team">Notre Équipe</h2>
         
-        <!-- Team Members Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             <!-- 1. Mr. Eric - Founder & CEO -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-5xl">person</span>
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Mr. Eric</h4>
@@ -340,10 +446,10 @@
                 </div>
             </div>
             
-            <!-- 2. Keza Nadia - Directrice des Opérations -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary text-5xl">person</span>
+            <!-- 2. Keza Nadia - Operations Director -->
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20">
+                    <img alt="Keza Nadia" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80">
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Keza Nadia</h4>
                 <p class="text-primary font-semibold mb-3" data-translate="operations_director">Directrice des Opérations</p>
@@ -358,9 +464,9 @@
                 </div>
             </div>
             
-            <!-- 3. Kanyonge Celine - Directrice Administrative -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20">
+            <!-- 3. Kanyonge Celine - Administrative Director -->
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20">
                     <img alt="Kanyoge Celine" class="w-full h-full object-cover" src="./images/pic1 mom.jpeg">
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Kanyonge Celine</h4>
@@ -376,9 +482,9 @@
                 </div>
             </div>
             
-            <!-- 4. Izere Guy Tresor - Directeur de l'Innovation -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
+            <!-- 4. Izere Guy Tresor - Innovation Director -->
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-5xl">lightbulb</span>
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Izere Guy Tresor</h4>
@@ -394,9 +500,9 @@
                 </div>
             </div>
             
-            <!-- 5. Iradukunda Esther Glory - Directrice du Développement -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
+            <!-- 5. Iradukunda Esther Glory - Development Director -->
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-5xl">psychology</span>
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Iradukunda Esther Glory</h4>
@@ -412,9 +518,9 @@
                 </div>
             </div>
             
-            <!-- 6. Lord Life Irakoze - Directeur du Design -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
+            <!-- 6. Lord Life Irakoze - Design Director -->
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-5xl">brush</span>
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Lord Life Irakoze</h4>
@@ -430,14 +536,14 @@
                 </div>
             </div>
             
-            <!-- 7. Ineza Queen Kethia - Directrice Marketing & Partenariats -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
+            <!-- 7. Ineza Queen Kethia - Marketing Director -->
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-5xl">campaign</span>
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Ineza Queen Kethia</h4>
-                <p class="text-primary font-semibold mb-3" data-translate="marketing_director">Directrice Marketing & Partenariats</p>
-                <p class="text-sm text-slate-500 mb-4" data-translate="kethia_desc">Promotion de l'entreprise et recherche de sponsors avec Tabitha.</p>
+                <p class="text-primary font-semibold mb-3" data-translate="marketing_director">Directrice Marketing</p>
+                <p class="text-sm text-slate-500 mb-4" data-translate="kethia_desc">Promotion de l'entreprise et recherche de sponsors.</p>
                 <div class="flex justify-center gap-2">
                     <a href="#" class="p-2 bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition-colors">
                         <span class="material-symbols-outlined text-sm">alternate_email</span>
@@ -448,14 +554,14 @@
                 </div>
             </div>
             
-            <!-- 8. Ishimwe Nice Tabitha - Chargée des Partenariats -->
-            <div class="team-member-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm border border-primary/10 hover:border-primary/30 transition-all">
-                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
+            <!-- 8. Ishimwe Nice Tabitha - Partnerships Manager -->
+            <div class="team-card bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-lg border border-primary/10 md:col-span-2 lg:col-span-1">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4 ring-4 ring-primary/20 bg-primary/5 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-5xl">handshake</span>
                 </div>
                 <h4 class="text-xl font-bold text-slate-900 dark:text-white">Ishimwe Nice Tabitha</h4>
                 <p class="text-primary font-semibold mb-3" data-translate="partnership_manager">Chargée des Partenariats</p>
-                <p class="text-sm text-slate-500 mb-4" data-translate="tabitha_desc">Promotion et recherche de sponsors, en charge avec Kethia.</p>
+                <p class="text-sm text-slate-500 mb-4" data-translate="tabitha_desc">Promotion et recherche de sponsors.</p>
                 <div class="flex justify-center gap-2">
                     <a href="#" class="p-2 bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition-colors">
                         <span class="material-symbols-outlined text-sm">alternate_email</span>
@@ -463,31 +569,6 @@
                     <a href="#" class="p-2 bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition-colors">
                         <span class="material-symbols-outlined text-sm">linkedin</span>
                     </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Professional Promise -->
-        <div class="mb-8 p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-primary/10">
-            <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-primary">
-                <span class="material-symbols-outlined">verified</span>
-                <span data-translate="professional_commitment">Notre Engagement Professionnel</span>
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                <div>
-                    <span class="material-symbols-outlined text-primary text-3xl">handshake</span>
-                    <p class="font-bold" data-translate="professionalism">Professionnalisme</p>
-                    <p class="text-xs text-slate-500" data-translate="professionalism_desc">Agence agréée et certifiée</p>
-                </div>
-                <div>
-                    <span class="material-symbols-outlined text-primary text-3xl">payments</span>
-                    <p class="font-bold" data-translate="best_prices">Meilleurs prix</p>
-                    <p class="text-xs text-slate-500" data-translate="best_prices_desc">Négociés pour vous</p>
-                </div>
-                <div>
-                    <span class="material-symbols-outlined text-primary text-3xl">support_agent</span>
-                    <p class="font-bold" data-translate="support">Support 24/7</p>
-                    <p class="text-xs text-slate-500" data-translate="support_desc">Toujours disponibles</p>
                 </div>
             </div>
         </div>
@@ -515,7 +596,7 @@
         </div>
 
         <!-- Contact Info -->
-        <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-primary/10 mb-8">
+        <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-primary/10 mb-8">
             <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">contact_support</span>
                 <span data-translate="contact_direction">Contactez la direction</span>
@@ -533,14 +614,15 @@
                     <span class="material-symbols-outlined text-primary">mail</span>
                     <div>
                         <p class="text-xs text-slate-500 uppercase font-bold" data-translate="email">Email</p>
-                        <a href="mailto:contact@suretravel.com" class="font-medium">contact@suretravel.com</a>
+                        <a href="mailto:suretravelagency9@gmail.com" class="font-medium">suretravelagency9@gmail.com</a>
                     </div>
                 </div>
                 <div class="flex items-start gap-3 md:col-span-2">
                     <span class="material-symbols-outlined text-primary">location_on</span>
                     <div>
                         <p class="text-xs text-slate-500 uppercase font-bold" data-translate="address">Adresse</p>
-                        <p class="font-medium" data-translate="office_address">Boulevard de l'Indépendance, Bujumbura, Burundi</p>
+                        <p class="font-medium">Excellence House, Bureau 3.17</p>
+                        <p class="text-sm text-slate-500">Boulevard de l'Indépendance, Bujumbura, Burundi</p>
                     </div>
                 </div>
             </div>
@@ -555,10 +637,61 @@
         </div>
     </main>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pb-6 pt-2 z-50">
-        <div class="flex items-center justify-around max-w-container mx-auto">
-            <a href="./Home.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 mt-8">
+        <div class="max-w-container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <img alt="Logo" class="w-8 h-8 object-contain" src="./Images/logo.jpeg">
+                        </div>
+                        <span class="font-bold text-primary">SURE TRAVEL</span>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="footer_desc">Votre partenaire de confiance pour des voyages inoubliables.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4" data-translate="quick_links">Liens rapides</h4>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="aboutus.html" class="hover:text-primary transition-colors" data-translate="about_us">À propos</a></li>
+                        <li><a href="services.html" class="hover:text-primary transition-colors" data-translate="our_services">Nos services</a></li>
+                        <li><a href="booking.html" class="hover:text-primary transition-colors" data-translate="book_now">Réserver</a></li>
+                        <li><a href="support.html" class="hover:text-primary transition-colors" data-translate="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4" data-translate="legal">Informations légales</h4>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="privacy">Politique de confidentialité</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="terms">Conditions générales</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="cookies">Cookies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4" data-translate="follow_us">Suivez-nous</h4>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">public</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">photo_camera</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">videocam</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-sm text-slate-500">
+                <p data-translate="copyright">© 2026 Sure Travel Agency. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation for Mobile -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pb-6 pt-2 z-50">
+        <div class="flex items-center justify-around">
+            <a href="./index.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
                 <span class="material-symbols-outlined">home</span>
                 <span class="text-[10px] font-medium" data-translate="home">Accueil</span>
             </a>
@@ -581,73 +714,34 @@
         </div>
     </nav>
 
-    <script>
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('darkMode', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('darkMode', 'dark');
-            }
-        }
-        
-        // Check for saved dark mode preference
-        if (localStorage.getItem('darkMode') === 'dark') {
-            document.documentElement.classList.add('dark');
-        }
-    </script>
-
     <!-- Translation System -->
     <script>
-        // Translation database
         const translations = {
             fr: {
-                // Common
-                'home': 'Accueil',
-                'services': 'Services',
-                'bookings': 'Réservations',
-                'about': 'À Propos',
-                'help': 'Aide',
                 'about_title': 'À Propos',
                 'company_name': 'Sure Travel Agency',
                 'trusted_partner': 'Votre partenaire voyage de confiance depuis 2024',
                 'iata_certified': 'Agréée IATA',
-                'clients_count': '500+ clients',
+                'clients_count': '300+ clients',
                 'our_story': 'Notre Histoire',
                 'founded_text': 'a été fondée en',
                 'by_founders': 'par Kanyoge Celine et Keza Nadia, deux passionnées de voyage qui ont vécu la frustration de chercher des billets d\'avion abordables sans y passer des semaines.',
-                'we_launched': 'Nous avons lancé cette agence parce que nous savons à quel point il peut être',
-                'frustrating': 'frustrant',
-                'of': 'de :',
-                'frustration_1': 'Passer des heures à comparer des prix de vols',
-                'frustration_2': 'Chercher séparément un hôtel, une voiture et des activités',
-                'frustration_3': 'Payer trop cher parce qu\'on ne connaît pas les bons plans',
-                'mission_statement': 'Notre mission est simple :',
-                'mission_highlight': 'vous offrir des voyages abordables et complets',
-                'in_one_place': 'en un seul endroit, avec professionnalisme et transparence.',
-                
-                // Bible verses
+                'mission_statement_full': 'Notre mission est simple : vous offrir des voyages abordables et complets en un seul endroit, avec professionnalisme et transparence.',
+                'quote': '"Voyager ne devrait pas être un luxe, mais une expérience accessible à tous."',
                 'proverbs_16_3': 'Proverbes 16:3',
                 'proverbs_text': '"Remets ton sort à l\'Éternel, et tes projets réussiront."',
                 'proverbs_desc': 'Nous plaçons notre agence sous la direction de Dieu pour guider vos voyages.',
                 'hebrews_11_1': 'Hébreux 11:1',
                 'hebrews_text': '"La foi est une ferme assurance des choses qu\'on espère, une démonstration de celles qu\'on ne voit pas."',
                 'hebrews_desc': 'Comme la foi, chaque voyage commence par un pas de confiance.',
-                
-                // Mission & Vision
                 'our_mission': 'Notre Mission',
                 'mission_desc': 'Aider nos clients à trouver des billets d\'avion abordables et à planifier leurs voyages (vols, hôtels, voitures) en un seul endroit, avec un service personnalisé et des conseils d\'experts.',
                 'our_vision': 'Notre Vision',
                 'vision_desc': '"Libérer nos clients des frustrations liées à la recherche de billets abordables en offrant une expertise transparente et efficace, et devenir la référence du voyage en Afrique d\'ici 2030."',
-                
-                // Stats
                 'satisfied_clients': 'Clients satisfaits',
                 'trips_organized': 'Voyages organisés',
                 'destinations': 'Destinations',
                 'customer_support': 'Support client',
-                
-                // Timeline
                 'our_journey': 'Notre Parcours',
                 'jan_2024': 'Janvier 2024 - L\'Idée',
                 'idea_text': 'Celine et Nadia, frustrées par la difficulté de trouver des billets abordables, décident de créer une agence qui simplifie tout.',
@@ -656,9 +750,13 @@
                 'sep_2024': 'Septembre 2024 - Premiers succès',
                 'success_text': '100 premiers clients, lancement des forfaits safari et partenariats avec des hôtels.',
                 'today': 'Aujourd\'hui - 2026',
-                'today_text': 'Plus de 500 clients nous ont fait confiance. Nous continuons à grandir avec vous.',
-                
-                // Team Section
+                'today_text': 'Plus de 300 clients nous ont fait confiance. Nous continuons à grandir avec vous.',
+                'what_clients_say': 'Ce que disent nos clients',
+                'testimonial_1': '"Sans Sure Travel Agency, je n\'aurais jamais pu aller au Canada. Je cherchais des billets abordables depuis des mois sans succès. Leur équipe a trouvé un vol au moment parfait et m\'a accompagnée pendant toutes les escales jusqu\'à mon arrivée. Une expérience incroyable !"',
+                'canada_trip': '✈️ Voyage au Canada',
+                'testimonial_2': '"Le safari en Tanzanie organisé par Sure Travel était magique. Notre guide était passionné et très compétent. L\'agence a su gérer tous les imprévus logistiques avec un professionnalisme exemplaire."',
+                'safari_trip': '✈️ Safari Tanzanie',
+                'read_more_testimonials': 'Lire plus de témoignages',
                 'our_team': 'Notre Équipe',
                 'founder_ceo': 'Fondateur & CEO',
                 'eric_desc': 'Fondateur de Sure Travel Agency, visionnaire et leader',
@@ -672,21 +770,10 @@
                 'esther_desc': 'Développe et concrétise les idées de l\'agence.',
                 'design_director': 'Directeur du Design',
                 'lord_desc': 'Graphiste de l\'agence, en charge du design du site et garant de la fluidité.',
-                'marketing_director': 'Directrice Marketing & Partenariats',
-                'kethia_desc': 'Promotion de l\'entreprise et recherche de sponsors avec Tabitha.',
+                'marketing_director': 'Directrice Marketing',
+                'kethia_desc': 'Promotion de l\'entreprise et recherche de sponsors.',
                 'partnership_manager': 'Chargée des Partenariats',
-                'tabitha_desc': 'Promotion et recherche de sponsors, en charge avec Kethia.',
-                
-                // Professional Promise
-                'professional_commitment': 'Notre Engagement Professionnel',
-                'professionalism': 'Professionnalisme',
-                'professionalism_desc': 'Agence agréée et certifiée',
-                'best_prices': 'Meilleurs prix',
-                'best_prices_desc': 'Négociés pour vous',
-                'support': 'Support 24/7',
-                'support_desc': 'Toujours disponibles',
-                
-                // Values
+                'tabitha_desc': 'Promotion et recherche de sponsors.',
                 'our_values': 'Nos Valeurs',
                 'trust': 'Confiance',
                 'trust_desc': 'Transparence et honnêteté',
@@ -694,101 +781,86 @@
                 'excellence_desc': 'Service de qualité supérieure',
                 'passion': 'Passion',
                 'passion_desc': 'L\'amour du voyage',
-                
-                // Contact
                 'contact_direction': 'Contactez la direction',
                 'phones': 'Téléphones',
                 'email': 'Email',
                 'address': 'Adresse',
-                'office_address': 'Boulevard de l\'Indépendance, Bujumbura, Burundi',
                 'talk_about_project': 'Parlez-nous de votre projet de voyage',
-            },
-            
-            en: {
-                // Common
-                'home': 'Home',
+                'home': 'Accueil',
                 'services': 'Services',
-                'bookings': 'Bookings',
-                'about': 'About',
-                'help': 'Help',
+                'bookings': 'Réservations',
+                'about': 'À Propos',
+                'help': 'Aide',
+                'footer_desc': 'Votre partenaire de confiance pour des voyages inoubliables.',
+                'quick_links': 'Liens rapides',
+                'about_us': 'À propos',
+                'our_services': 'Nos services',
+                'book_now': 'Réserver',
+                'contact': 'Contact',
+                'legal': 'Informations légales',
+                'privacy': 'Politique de confidentialité',
+                'terms': 'Conditions générales',
+                'cookies': 'Cookies',
+                'follow_us': 'Suivez-nous',
+                'copyright': '© 2026 Sure Travel Agency. Tous droits réservés.',
+            },
+            en: {
                 'about_title': 'About Us',
                 'company_name': 'Sure Travel Agency',
                 'trusted_partner': 'Your trusted travel partner since 2024',
                 'iata_certified': 'IATA Accredited',
-                'clients_count': '500+ clients',
+                'clients_count': '300+ clients',
                 'our_story': 'Our Story',
                 'founded_text': 'was founded in',
-                'by_founders': 'by Kanyoge Celine and Keza Nadia, two travel enthusiasts who experienced the frustration of searching for affordable flight tickets without spending weeks.',
-                'we_launched': 'We launched this agency because we know how',
-                'frustrating': 'frustrating',
-                'of': 'it can be to:',
-                'frustration_1': 'Spend hours comparing flight prices',
-                'frustration_2': 'Separately search for a hotel, car and activities',
-                'frustration_3': 'Pay too much because you don\'t know the best deals',
-                'mission_statement': 'Our mission is simple:',
-                'mission_highlight': 'to offer you affordable and complete trips',
-                'in_one_place': 'in one place, with professionalism and transparency.',
-                
-                // Bible verses
+                'by_founders': 'by Kanyoge Celine and Keza Nadia, two travel enthusiasts who experienced the frustration of searching for affordable flight tickets.',
+                'mission_statement_full': 'Our mission is simple: to offer you affordable and complete trips in one place, with professionalism and transparency.',
+                'quote': '"Travel should not be a luxury, but an experience accessible to all."',
                 'proverbs_16_3': 'Proverbs 16:3',
                 'proverbs_text': '"Commit your works to the Lord, and your plans will succeed."',
-                'proverbs_desc': 'We place our agency under God\'s guidance to direct your travels.',
+                'proverbs_desc': 'We place our agency under God\'s guidance.',
                 'hebrews_11_1': 'Hebrews 11:1',
                 'hebrews_text': '"Now faith is the assurance of things hoped for, the conviction of things not seen."',
-                'hebrews_desc': 'Like faith, every journey begins with a step of trust.',
-                
-                // Mission & Vision
+                'hebrews_desc': 'Like faith, every journey begins with trust.',
                 'our_mission': 'Our Mission',
-                'mission_desc': 'Help our clients find affordable flight tickets and plan their travels (flights, hotels, cars) in one place, with personalized service and expert advice.',
+                'mission_desc': 'Help our clients find affordable flights and plan their travels (flights, hotels, cars) in one place, with personalized service.',
                 'our_vision': 'Our Vision',
-                'vision_desc': '"Free our clients from the frustrations of searching for affordable tickets by offering transparent and efficient expertise, and become the reference for travel in Africa by 2030."',
-                
-                // Stats
+                'vision_desc': '"Free our clients from the frustrations of searching for affordable tickets by offering transparent expertise."',
                 'satisfied_clients': 'Satisfied clients',
                 'trips_organized': 'Trips organized',
                 'destinations': 'Destinations',
                 'customer_support': 'Customer support',
-                
-                // Timeline
                 'our_journey': 'Our Journey',
                 'jan_2024': 'January 2024 - The Idea',
-                'idea_text': 'Celine and Nadia, frustrated by the difficulty of finding affordable tickets, decide to create an agency that simplifies everything.',
+                'idea_text': 'Celine and Nadia decide to create an agency that simplifies everything.',
                 'mar_2024': 'March 2024 - Launch',
-                'launch_text': 'Sure Travel Agency opens its doors in Bujumbura with the promise of simple and affordable travel.',
+                'launch_text': 'Sure Travel Agency opens in Bujumbura.',
                 'sep_2024': 'September 2024 - First successes',
-                'success_text': 'First 100 clients, launch of safari packages and partnerships with hotels.',
+                'success_text': 'First 100 clients, launch of safari packages.',
                 'today': 'Today - 2026',
-                'today_text': 'More than 500 clients have trusted us. We continue to grow with you.',
-                
-                // Team Section
+                'today_text': 'More than 300 clients have trusted us.',
+                'what_clients_say': 'What our clients say',
+                'testimonial_1': '"Without Sure Travel Agency, I would never have made it to Canada. Their team found the perfect flight and accompanied me through all the transfers."',
+                'canada_trip': '✈️ Trip to Canada',
+                'testimonial_2': '"The Tanzania safari organized by Sure Travel was magical. Professionalism at its best."',
+                'safari_trip': '✈️ Tanzania Safari',
+                'read_more_testimonials': 'Read more testimonials',
                 'our_team': 'Our Team',
                 'founder_ceo': 'Founder & CEO',
-                'eric_desc': 'Founder of Sure Travel Agency, visionary and leader',
+                'eric_desc': 'Founder of Sure Travel Agency',
                 'operations_director': 'Operations Director',
-                'nadia_desc': 'Controls everything happening in the company. Emergency number managed by her.',
+                'nadia_desc': 'Manages all operations. Emergency number handled by her.',
                 'administrative_director': 'Administrative Director',
-                'celine_desc': 'Luxury travel expert. Ensures nothing is missing.',
+                'celine_desc': 'Luxury travel expert.',
                 'innovation_director': 'Innovation Director',
-                'tresor_desc': 'Brings new and creative ideas to the agency.',
+                'tresor_desc': 'Brings new ideas to the agency.',
                 'development_director': 'Development Director',
-                'esther_desc': 'Develops and implements the agency\'s ideas.',
+                'esther_desc': 'Develops agency ideas.',
                 'design_director': 'Design Director',
-                'lord_desc': 'Agency graphic designer, in charge of website design and ensuring smooth operation.',
-                'marketing_director': 'Marketing & Partnerships Director',
-                'kethia_desc': 'Company promotion and sponsor research with Tabitha.',
+                'lord_desc': 'Graphic designer in charge of website design.',
+                'marketing_director': 'Marketing Director',
+                'kethia_desc': 'Company promotion and sponsor research.',
                 'partnership_manager': 'Partnership Manager',
-                'tabitha_desc': 'Promotion and sponsor research, in charge with Kethia.',
-                
-                // Professional Promise
-                'professional_commitment': 'Our Professional Commitment',
-                'professionalism': 'Professionalism',
-                'professionalism_desc': 'Accredited and certified agency',
-                'best_prices': 'Best prices',
-                'best_prices_desc': 'Negotiated for you',
-                'support': '24/7 Support',
-                'support_desc': 'Always available',
-                
-                // Values
+                'tabitha_desc': 'Promotion and sponsor research.',
                 'our_values': 'Our Values',
                 'trust': 'Trust',
                 'trust_desc': 'Transparency and honesty',
@@ -796,116 +868,115 @@
                 'excellence_desc': 'Superior quality service',
                 'passion': 'Passion',
                 'passion_desc': 'Love of travel',
-                
-                // Contact
                 'contact_direction': 'Contact management',
                 'phones': 'Phones',
                 'email': 'Email',
                 'address': 'Address',
-                'office_address': 'Boulevard de l\'Indépendance, Bujumbura, Burundi',
                 'talk_about_project': 'Tell us about your travel project',
+                'home': 'Home',
+                'services': 'Services',
+                'bookings': 'Bookings',
+                'about': 'About',
+                'help': 'Help',
+                'footer_desc': 'Your trusted partner for unforgettable travels.',
+                'quick_links': 'Quick links',
+                'about_us': 'About us',
+                'our_services': 'Our services',
+                'book_now': 'Book now',
+                'contact': 'Contact',
+                'legal': 'Legal',
+                'privacy': 'Privacy policy',
+                'terms': 'Terms & conditions',
+                'cookies': 'Cookies',
+                'follow_us': 'Follow us',
+                'copyright': '© 2026 Sure Travel Agency. All rights reserved.',
             },
-            
             rn: {
-                // Common
+                'about_title': 'Kuber',
+                'company_name': 'Sure Travel Agency',
+                'trusted_partner': 'Ushurwe wawe w\'urugendo mu kwizigirwa kuva 2024',
+                'iata_certified': 'Yemewe na IATA',
+                'clients_count': '300+ abakiriya',
+                'our_story': 'Inkuru yacu',
+                'founded_text': 'yashinzwe mu',
+                'by_founders': 'na Kanyoge Celine na Keza Nadia',
+                'mission_statement_full': 'Inshingano yacu ni ukubaha urugendo rudakenyereye.',
+                'quote': '"Urugendo ntirukwiye kuba ibintu bikomeye."',
+                'proverbs_16_3': 'Imigani 16:3',
+                'proverbs_text': '"Rega ibikorwa vyawe ku Muremyi."',
+                'proverbs_desc': 'Twizigira Imana mu rugendo rwawe.',
+                'hebrews_11_1': 'Abaheburayo 11:1',
+                'hebrews_text': '"Ukwiye kwizigira ni icizigiro."',
+                'hebrews_desc': 'Urugendo rutangura n\'ukwizigira.',
+                'our_mission': 'Inshingano yacu',
+                'mission_desc': 'Gufasha abakiriya kurondora amatike adakenyereye.',
+                'our_vision': 'Ikiyerezo cacu',
+                'vision_desc': '"Kuba icicaro c\'urugendo muri Afrika."',
+                'satisfied_clients': 'Abakiriya banyishimiye',
+                'trips_organized': 'Urugendo rwatunganijwe',
+                'destinations': 'Ibihugu',
+                'customer_support': 'Ubufasha kubakiriya',
+                'our_journey': 'Urwego rwacu',
+                'jan_2024': 'Mutarama 2024 - Igitekerezo',
+                'idea_text': 'Celine na Nadia bashiraho ishirahamwe.',
+                'mar_2024': 'Ntwarante 2024 - Gutangiza',
+                'launch_text': 'Sure Travel Agency ifungura i Bujumbura.',
+                'sep_2024': 'Nyakanga 2024 - Intsinzi',
+                'success_text': 'Abakiriya 100 ba mbere.',
+                'today': 'Uyu musi - 2026',
+                'today_text': 'Abarenze 300 batureye ikizigiro.',
+                'what_clients_say': 'Ivy\'abakiriya bavuga',
+                'testimonial_1': '"Nta Sure Travel Agency, sinari kugera muri Kanada. Baranyerekeza mu ngendo zose."',
+                'canada_trip': '✈️ Urugendo muri Kanada',
+                'testimonial_2': '"Safari muri Tanzanie yari nziza cane."',
+                'safari_trip': '✈️ Safari Tanzanie',
+                'read_more_testimonials': 'Soma ibindi',
+                'our_team': 'Ikipe yacu',
+                'founder_ceo': 'Umushinga & CEO',
+                'eric_desc': 'Umushinga wa Sure Travel',
+                'operations_director': 'Umuyobozi w\'Ibikorwa',
+                'nadia_desc': 'Agenga ibikorwa. Numero y\'ikaduhamwe ifatwa nawe.',
+                'administrative_director': 'Umuyobozi w\'Ubuyobozi',
+                'celine_desc': 'Umuhanga mu rugendo.',
+                'innovation_director': 'Umuyobozi w\'Ihinduka',
+                'tresor_desc': 'Azana ibitekerezo bishasha.',
+                'development_director': 'Umuyobozi w\'Iterambere',
+                'esther_desc': 'Ateza ibitekerezo.',
+                'design_director': 'Umuyobozi w\'Igishushanyo',
+                'lord_desc': 'Ashushanya urubuga.',
+                'marketing_director': 'Umuyobozi w\'Ubucuruzi',
+                'kethia_desc': 'Arangaza ishirahamwe.',
+                'partnership_manager': 'Umuhuza w\'Ubufatanye',
+                'tabitha_desc': 'Arondora abaterankunga.',
+                'our_values': 'Indangagaciro',
+                'trust': 'Ukwiye kwizigira',
+                'trust_desc': 'Kugaragaza',
+                'excellence': 'Ubuhanga',
+                'excellence_desc': 'Serivisi nziza',
+                'passion': 'Urukundo',
+                'passion_desc': 'Urukundo rw\'urugendo',
+                'contact_direction': 'Kuvugana n\'ubuyobozi',
+                'phones': 'Telefone',
+                'email': 'Imeri',
+                'address': 'Akarere',
+                'talk_about_project': 'Tubwire umushinga wawe',
                 'home': 'Ahabanza',
                 'services': 'Serivisi',
                 'bookings': 'Kubika',
                 'about': 'Kuber',
                 'help': 'Ubufasha',
-                'about_title': 'Kuber',
-                'company_name': 'Sure Travel Agency',
-                'trusted_partner': 'Ushurwe wawe w\'urugendo mu kwizigirwa kuva 2024',
-                'iata_certified': 'Yemewe na IATA',
-                'clients_count': '500+ abakiriya',
-                'our_story': 'Inkuru yacu',
-                'founded_text': 'yashinzwe mu',
-                'by_founders': 'na Kanyoge Celine na Keza Nadia, abashimishijwe n\'urugendo bamenye ingorane zo kurondora amatike y\'indege adakenyereye',
-                'we_launched': 'Twashinze iyi serivisi kuko tuzi ingorane',
-                'frustrating': 'zikabije',
-                'of': 'zo:',
-                'frustration_1': 'Gufata amasaha menshi ugereranya ibiciro vy\'indege',
-                'frustration_2': 'Kurondora hoteli, imodoka n\'ibikorwa ukwiye',
-                'frustration_3': 'Kwishura menshi kubera utazi amahirwe meza',
-                'mission_statement': 'Inshingano yacu iroroshye:',
-                'mission_highlight': 'kubaha urugendo rudakenyereye kandi rwuzuye',
-                'in_one_place': 'ahantu hamwe, mw\'inyubahiro no kugaragaza.',
-                
-                // Bible verses
-                'proverbs_16_3': 'Imigani 16:3',
-                'proverbs_text': '"Rega ibikorwa vyawe ku Muremyi, n\'imigambi yawe izotsindira."',
-                'proverbs_desc': 'Tushira ishirahamwe ryacu munsi y\'ubuyobozi bw\'Imana kugira ngo irongore urugendo rwawe.',
-                'hebrews_11_1': 'Abaheburayo 11:1',
-                'hebrews_text': '"Ukwiye kwizigira ni icizigiro c\'ivyo twizigiye, n\'icemezo c\'ivyo tutabona."',
-                'hebrews_desc': 'Nk\'ukwizigira, buri rugendo rutangura n\'intambwe yo kwizigira.',
-                
-                // Mission & Vision
-                'our_mission': 'Inshingano yacu',
-                'mission_desc': 'Gufasha abakiriya bacu kurondora amatike y\'indege adakenyereye no gutunganya urugendo rwabo (indege, hoteli, amodoka) ahantu hamwe, hamwe n\'ubufasha bw\'umwihariko n\'inama z\'abahanga.',
-                'our_vision': 'Ikiyerezo cacu',
-                'vision_desc': '"Gukura abakiriya bacu mu ngorane zo kurondora amatike adakenyereye mu gutanga ubumenyi bugaragara kandi bukora, no kuba icicaro c\'urugendo muri Afrika mu 2030."',
-                
-                // Stats
-                'satisfied_clients': 'Abakiriya banyishimiye',
-                'trips_organized': 'Urugendo rwatunganijwe',
-                'destinations': 'Ibihugu',
-                'customer_support': 'Ubufasha kubakiriya',
-                
-                // Timeline
-                'our_journey': 'Urwego rwacu',
-                'jan_2024': 'Mutarama 2024 - Igitekerezo',
-                'idea_text': 'Celine na Nadia, babandanijwe n\'ingorane zo kurondora amatike adakenyereye, bahisemwo gushinga ishirahamwe rirorosha vyose.',
-                'mar_2024': 'Ntwarante 2024 - Gutangiza',
-                'launch_text': 'Sure Travel Agency irafungura imiryango yayo i Bujumbura hamwe n\'isezerano ry\'urugendo rworoshye kandi rudakenyereye.',
-                'sep_2024': 'Nyakanga 2024 - Intsinzi ya mbere',
-                'success_text': 'Abakiriya 100 ba mbere, gutangiza amapakeji ya safari n\'ubufatanye na hoteli.',
-                'today': 'Uyu musi - 2026',
-                'today_text': 'Abarenze 500 batureye ikizigiro. Turakomeza gukura hamwe na wewe.',
-                
-                // Team Section
-                'our_team': 'Ikipe yacu',
-                'founder_ceo': 'Umushinga & CEO',
-                'eric_desc': 'Umushinga wa Sure Travel Agency, umuntu w\'iyerezo n\'umuyobozi',
-                'operations_director': 'Umuyobozi w\'Ibikorwa',
-                'nadia_desc': 'Agenga ivyo vyose bigenda mu ishirahamwe. Inomero y\'ikaduhamwe ifatwa nawe.',
-                'administrative_director': 'Umuyobozi w\'Ubuyobozi',
-                'celine_desc': 'Umuhanga mu rugendo rw\'imeza. Araba nta kintu kibura.',
-                'innovation_director': 'Umuyobozi w\'Ihinduka',
-                'tresor_desc': 'Azana ibitekerezo bishasha kandi vy\'ubwenge ku ishirahamwe.',
-                'development_director': 'Umuyobozi w\'Iterambere',
-                'esther_desc': 'Ateza no kuzana ibitekerezo vy\'ishirahamwe.',
-                'design_director': 'Umuyobozi w\'Igishushanyo',
-                'lord_desc': 'Umushushanyo w\'ishirahamwe, ashinzwe igishushanyo c\'urubuga no kwemeza ko vyose bigenda neza.',
-                'marketing_director': 'Umuyobozi w\'Ubucuruzi n\'Ubufatanye',
-                'kethia_desc': 'Kurangaza ishirahamwe no kurondora abaterankunga hamwe na Tabitha.',
-                'partnership_manager': 'Umuhuza w\'Ubufatanye',
-                'tabitha_desc': 'Kurangaza no kurondora abaterankunga, ashinzwe na Kethia.',
-                
-                // Professional Promise
-                'professional_commitment': 'Isezerano ryacu ry\'Ubunywanyi',
-                'professionalism': 'Ubunywanyi',
-                'professionalism_desc': 'Ishirahamwe ryemewe kandi ry\'impamo',
-                'best_prices': 'Ibiciro vyiza',
-                'best_prices_desc': 'Twateguriye wewe',
-                'support': 'Ubufasha 24/7',
-                'support_desc': 'Tuboneka igihe cose',
-                
-                // Values
-                'our_values': 'Indangagaciro zacu',
-                'trust': 'Ukwiye kwizigira',
-                'trust_desc': 'Kugaragaza n\'ukuri',
-                'excellence': 'Ubuhanga',
-                'excellence_desc': 'Serivisi y\'ikirenga',
-                'passion': 'Urukundo',
-                'passion_desc': 'Urukundo rw\'urugendo',
-                
-                // Contact
-                'contact_direction': 'Kuvugana n\'ubuyobozi',
-                'phones': 'Telefone',
-                'email': 'Imeri',
-                'address': 'Akarere',
-                'office_address': 'Boulevard de l\'Indépendance, Bujumbura, Burundi',
-                'talk_about_project': 'Tubwire umushinga wawe w\'urugendo',
+                'footer_desc': 'Ushurwe wawe wo kwizigirwa.',
+                'quick_links': 'Amahuza',
+                'about_us': 'Kuber',
+                'our_services': 'Serivisi zacu',
+                'book_now': 'Kubika ubu',
+                'contact': 'Aho twohamwe',
+                'legal': 'Amategeko',
+                'privacy': 'Ibanga',
+                'terms': 'Amasezerano',
+                'cookies': 'Cookies',
+                'follow_us': 'Dukurikire',
+                'copyright': '© 2026 Sure Travel Agency. Uburenganzira bwose burubahirizwa.',
             }
         };
 
@@ -915,7 +986,6 @@
             currentLanguage = lang;
             localStorage.setItem('language', lang);
             
-            // Update active class in dropdown
             document.querySelectorAll('.language-option').forEach(option => {
                 option.classList.remove('active');
                 if (option.dataset.lang === lang) {
@@ -923,32 +993,39 @@
                 }
             });
             
-            // Update current language display
             const langDisplay = document.getElementById('current-language');
             if (lang === 'fr') langDisplay.textContent = 'FR';
             else if (lang === 'en') langDisplay.textContent = 'EN';
             else if (lang === 'rn') langDisplay.textContent = 'RN';
             
-            // Translate all elements with data-translate attribute
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.getAttribute('data-translate');
                 if (translations[lang] && translations[lang][key]) {
-                    // Handle different element types
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[lang][key];
-                    } else if (element.tagName === 'OPTION') {
-                        element.textContent = translations[lang][key];
-                    } else {
-                        element.textContent = translations[lang][key];
-                    }
+                    element.textContent = translations[lang][key];
                 }
             });
         }
 
-        // Initialize translations on page load
         document.addEventListener('DOMContentLoaded', function() {
             changeLanguage(currentLanguage);
         });
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('darkMode', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('darkMode', 'dark');
+            }
+        }
+        
+        if (localStorage.getItem('darkMode') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
     </script>
+
+    <!-- AI Chatbot Assistant (copy from index.html) -->
+    <!-- ... -->
 </body>
 </html>
