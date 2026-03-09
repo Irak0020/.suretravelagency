@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Trip — Sure Travel Agency</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../images/logo.jpeg" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">
+      <img src="../images/logo.jpeg" alt="Sure Travel Agency" />
+      <div class="logo-text">
+        <span class="logo-name">Sure Travel</span>
+        <span class="logo-sub">Travel Agency</span>
+      </div>
+    </a>
+    <nav id="nav-menu">
+      <a href="../index.html" data-translate="nav_home">Home</a>
+      <a href="about.html" data-translate="nav_about">About</a>
+      <a href="services.html" data-translate="nav_services">Services</a>
+      <a href="booking.html" class="active" data-translate="nav_booking">Booking</a>
+      <a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a>
+      <a href="faq.html" data-translate="nav_faq">FAQ</a>
+      <a href="support.html" data-translate="nav_support">Contact</a>
+      <a href="booking.html" class="btn-nav" data-translate="nav_book_now">Book Now</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="ki">KI</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <h1 data-translate="booking_title">Book Your Trip</h1>
+    <p data-translate="booking_subtitle">Fill in your details and we will find the best options for you</p>
+  </div>
+</section>
+
+<!-- BIBLE VERSES -->
+<section class="bible-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge" style="background:rgba(212,168,67,0.15);color:var(--gold);" data-translate="bible_badge">Faith &amp; Business</span>
+      <h2 class="section-title" data-translate="bible_heading">Words We Travel By</h2>
+    </div>
+    <div class="bible-grid">
+      <div class="bible-card bible-card--gold">
+        <p class="bible-verse" data-translate="bible1_verse">Commit to the Lord whatever you do, and he will establish your plans.</p>
+        <div class="bible-ref">
+          <div class="bible-ref-line bible-ref-line--gold"></div>
+          <span data-translate="bible1_ref">Proverbs 16:3</span>
+        </div>
+        <p class="bible-desc" data-translate="bible1_desc">At Sure Travel Agency, we commit every journey to God — trusting that He directs our steps and those of every traveler we serve. Our work is not just business; it is purpose-driven service.</p>
+      </div>
+      <div class="bible-card bible-card--blue">
+        <p class="bible-verse" data-translate="bible2_verse">And whatever you do, whether in word or deed, do it all in the name of the Lord Jesus, giving thanks to God the Father through him.</p>
+        <div class="bible-ref">
+          <div class="bible-ref-line bible-ref-line--blue"></div>
+          <span data-translate="bible2_ref">Colossians 3:17</span>
+        </div>
+        <p class="bible-desc" data-translate="bible2_desc">We serve each client as an act of worship — with excellence, honesty and care. Every ticket issued, every journey planned, is done with gratitude and dedication to something greater than profit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking-section">
+  <div class="container">
+    <div class="booking-form-wrap">
+      <div class="trip-type-toggle">
+        <button class="toggle-btn active" data-type="oneway" data-translate="booking_type_one">One Way</button>
+        <button class="toggle-btn" data-type="return" data-translate="booking_type_return">Return</button>
+      </div>
+      <form id="booking-form">
+        <div class="form-grid">
+          <div class="form-group" style="position:relative;">
+            <label data-translate="booking_from">From (Airport / City)</label>
+            <input type="text" id="airport-from" autocomplete="off" required />
+          </div>
+          <div class="form-group" style="position:relative;">
+            <label data-translate="booking_to">To (Airport / City)</label>
+            <input type="text" id="airport-to" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label data-translate="booking_depart">Departure Date</label>
+            <input type="date" id="dep-date" required />
+          </div>
+          <div class="form-group" id="return-date-group" style="display:none;">
+            <label data-translate="booking_return">Return Date</label>
+            <input type="date" id="ret-date" />
+          </div>
+          <div class="form-group">
+            <label data-translate="booking_passengers">Passengers</label>
+            <select id="passengers">
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-translate="booking_class">Class</label>
+            <select id="flight-class">
+              <option data-translate="booking_class_eco">Economy</option>
+              <option data-translate="booking_class_bus">Business</option>
+              <option data-translate="booking_class_first">First Class</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--light-gray);padding-top:22px;margin-top:8px;">
+          <h3 style="font-size:1rem;color:var(--navy);margin-bottom:18px;font-family:'DM Sans',sans-serif;font-weight:700;" data-translate="booking_personal_title">Personal Details</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label data-translate="booking_name">Full Name</label>
+              <input type="text" id="b-name" required />
+            </div>
+            <div class="form-group">
+              <label data-translate="booking_email">Email Address</label>
+              <input type="email" id="b-email" required />
+            </div>
+            <div class="form-group form-full">
+              <label data-translate="booking_phone">Phone / WhatsApp</label>
+              <input type="tel" id="b-phone" />
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--light-gray);padding-top:22px;margin-top:8px;">
+          <h3 style="font-size:1rem;color:var(--navy);margin-bottom:14px;font-family:'DM Sans',sans-serif;font-weight:700;" data-translate="booking_addons_title">Add-ons</h3>
+          <div class="checkbox-group" style="margin-bottom:14px;">
+            <label class="checkbox-item">
+              <input type="checkbox" id="add-hotel" />
+              <span data-translate="booking_hotel">Add Hotel Booking</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" id="add-car" />
+              <span data-translate="booking_car">Add Car Rental</span>
+            </label>
+          </div>
+          <div id="hotel-city-wrap" style="display:none;" class="form-group">
+            <label data-translate="booking_hotel_city">Hotel City</label>
+            <input type="text" id="hotel-city" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="form-note" style="margin-top:16px;">
+          <span data-translate="booking_note">Our team responds within 30 minutes. Your ticket is delivered within 1-2 hours of payment.</span>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+          <button type="submit" class="btn-primary" style="flex:1;min-width:140px;justify-content:center;" data-translate="booking_submit">Get Quote &amp; Book</button>
+          <button type="button" id="pay-now-btn" class="btn-primary" style="flex:1;min-width:140px;justify-content:center;background:var(--navy);" data-translate="booking_pay_now">💳 Pay Now</button>
+        </div>
+
+        <div id="booking-success" style="display:none;margin-top:16px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:16px;color:#065f46;font-weight:600;text-align:center;">
+          ✅ <span data-translate="booking_sent">Booking request sent! We will contact you within 30 minutes.</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background:white;padding:80px 0;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge" data-translate="how_badge">How It Works</span>
+      <h2 class="section-title" data-translate="how_title">Pay &amp; Fly in 3 Steps</h2>
+      <p class="section-subtitle" data-translate="how_subtitle">Simple, fast and reliable — every time</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-bottom:40px;">
+      <div class="how-step-card">
+        <div class="how-step-num" style="background:var(--navy);">1</div>
+        <div style="font-size:2.4rem;margin-bottom:14px;">📋</div>
+        <h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:10px;" data-translate="how1_title">Book</h3>
+        <p style="color:var(--text-gray);font-size:0.9rem;line-height:1.7;" data-translate="how1_desc">Fill the booking form or contact us. We send you the price within 30 minutes.</p>
+      </div>
+      <div class="how-step-card">
+        <div class="how-step-num" style="background:var(--sky);">2</div>
+        <div style="font-size:2.4rem;margin-bottom:14px;">💸</div>
+        <h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:10px;" data-translate="how2_title">Pay</h3>
+        <p style="color:var(--text-gray);font-size:0.9rem;line-height:1.7;" data-translate="how2_desc">Send payment via Lumicash, Airtel, bank transfer, card or Apple Pay.</p>
+      </div>
+      <div class="how-step-card">
+        <div class="how-step-num" style="background:var(--gold);color:var(--navy);">3</div>
+        <div style="font-size:2.4rem;margin-bottom:14px;">✈️</div>
+        <h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:10px;" data-translate="how3_title">Fly</h3>
+        <p style="color:var(--text-gray);font-size:0.9rem;line-height:1.7;" data-translate="how3_desc">Send proof of payment via WhatsApp. Receive your confirmed ticket in 1-2 hours.</p>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,#fff7ed,#fef3c7);border:2px solid #f59e0b;border-radius:16px;padding:24px 28px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;">
+      <div style="font-size:1.8rem;flex-shrink:0;">⚠️</div>
+      <div style="flex:1;min-width:200px;">
+        <h4 style="color:#92400e;font-size:1rem;margin-bottom:8px;font-family:'DM Sans',sans-serif;font-weight:700;" data-translate="proof_title">Always Send Proof of Payment</h4>
+        <p style="color:#78350f;font-size:0.9rem;line-height:1.7;" data-translate="proof_desc">After any payment, send a screenshot of your confirmation via WhatsApp to +257 69 31 46 40. Your ticket will be issued within 1-2 hours of confirmation.</p>
+      </div>
+    </div>
+    <div style="background:var(--navy);border-radius:14px;padding:24px 28px;margin-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div>
+        <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin-bottom:4px;" data-translate="help_payment_q">Need help with payment?</p>
+        <p style="color:white;font-weight:600;" data-translate="help_payment_a">Our team is available 24/7 — we will walk you through every step.</p>
+      </div>
+      <a href="https://wa.me/25769314640" target="_blank" class="btn-primary" style="text-decoration:none;white-space:nowrap;" data-translate="btn_whatsapp_now">💬 WhatsApp Us Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section style="background:var(--off-white);padding:80px 0;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge" data-translate="why_title">Why Choose Us</span>
+      <h2 class="section-title" data-translate="why_title">Why Choose Us</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item"><span class="why-icon">⚡</span><h3 data-translate="why_fast_title">Fast Response</h3><p data-translate="why_fast_desc">We respond to every booking request within 30 minutes.</p></div>
+      <div class="why-item"><span class="why-icon">💰</span><h3 data-translate="why2_title">Best Prices</h3><p data-translate="why2_desc">We search hundreds of airlines and hotels to guarantee the lowest possible fares.</p></div>
+      <div class="why-item"><span class="why-icon">🕐</span><h3 data-translate="why1_title">Available 24/7</h3><p data-translate="why1_desc">Our team is available around the clock, every day of the week.</p></div>
+      <div class="why-item"><span class="why-icon">🎉</span><h3 data-translate="why_clients_title">200+ Happy Clients</h3><p data-translate="why_clients_desc">Since 2025 we have helped over 200 travelers reach their destinations safely.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT MODAL -->
+<div class="payment-modal-overlay" id="payment-modal-overlay">
+  <div class="payment-modal">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
+    <h3 data-translate="modal_pay_title">Make a Payment</h3>
+    <p class="modal-subtitle" data-translate="modal_pay_subtitle">Choose your payment method. After paying, send proof to WhatsApp and your ticket arrives within 1-2 hours.</p>
+    <div class="payment-method-tabs">
+      <button class="pm-tab active" data-pm="lumicash">Lumicash</button>
+      <button class="pm-tab" data-pm="card" data-translate="pm_tab_card">Card</button>
+      <button class="pm-tab" data-pm="apple">Apple Pay</button>
+      <button class="pm-tab" data-pm="bank" data-translate="pm_tab_bank">Bank</button>
+    </div>
+
+    <div class="pm-content active" id="pm-lumicash">
+      <div class="pm-detail"><label data-translate="pm_service">Service</label><p>📱 Lumicash Mobile Money</p></div>
+      <div class="pm-detail"><label data-translate="pm_send_to">Send To Number</label><p>+257 69 31 46 40 <button class="copy-btn" onclick="copyText('+257 69 31 46 40')">Copy</button></p></div>
+      <div class="pm-detail"><label data-translate="pm_account_name">Account Name</label><p>Sure Travel Agency</p></div>
+      <p style="color:var(--text-gray);font-size:0.85rem;margin-top:12px;" data-translate="pm_lumi_note">After sending, screenshot your transaction and send to WhatsApp: +257 69 31 46 40. Ticket arrives in 1-2 hours.</p>
+      <div style="margin-top:16px;"><a href="https://wa.me/25769314640" target="_blank" class="btn-primary" style="display:flex;justify-content:center;text-decoration:none;">💬 <span data-translate="btn_whatsapp">WhatsApp Us</span></a></div>
+    </div>
+
+    <div class="pm-content" id="pm-card">
+      <div class="card-icons"><span class="card-badge">VISA</span><span class="card-badge">Mastercard</span><span style="font-size:0.78rem;color:var(--text-gray);margin-left:4px;">🔒 <span data-translate="pm_secure">Secure Payment</span></span></div>
+      <form id="card-payment-form">
+        <div class="amount-display">
+          <span data-translate="pm_amount_label">Amount to Pay</span>
+          <span id="card-amount-display">$0.00</span>
+        </div>
+        <div class="card-form-grid">
+          <div class="card-form-group full"><label data-translate="pm_amount">Amount (USD)</label><input type="number" id="card-amount" placeholder="e.g. 420" min="1" required oninput="updateAmountDisplay(this.value)" /></div>
+          <div class="card-form-group full"><label data-translate="pm_cardholder">Cardholder Name</label><input type="text" id="card-name" placeholder="As on card" required /></div>
+          <div class="card-form-group full"><label data-translate="pm_card_number">Card Number</label><input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required /></div>
+          <div class="card-form-group"><label data-translate="pm_expiry">Expiry</label><input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required /></div>
+          <div class="card-form-group"><label>CVV</label><input type="text" id="card-cvv" placeholder="123" maxlength="4" required /></div>
+          <div class="card-form-group full"><label data-translate="pm_billing_email">Billing Email</label><input type="email" id="card-email" required /></div>
+        </div>
+        <button type="submit" class="btn-primary btn-full" style="margin-top:14px;" data-translate="pm_pay_btn">Pay Securely</button>
+        <div id="card-success" style="display:none;margin-top:12px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:13px;color:#065f46;font-weight:600;text-align:center;"><span data-translate="pm_card_success">Payment request received! Ticket within 1-2 hours.</span></div>
+      </form>
+    </div>
+
+    <div class="pm-content" id="pm-apple">
+      <div style="text-align:center;padding:16px 0;">
+        <div style="font-size:2.8rem;margin-bottom:10px;">🍎</div>
+        <h4 style="font-size:1.1rem;color:var(--navy);margin-bottom:8px;">Apple Pay</h4>
+        <p style="color:var(--text-gray);font-size:0.88rem;margin-bottom:20px;" data-translate="pm_apple_desc">Pay instantly and securely from your iPhone, iPad or Mac with Apple Pay.</p>
+        <div class="card-form-group" style="text-align:left;margin-bottom:14px;"><label data-translate="pm_amount">Amount (USD)</label><input type="number" id="apple-amount" placeholder="e.g. 420" min="1" style="width:100%;padding:11px 14px;border:2px solid var(--light-gray);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.93rem;margin-top:6px;box-sizing:border-box;" /></div>
+        <button class="apple-pay-btn" onclick="initiateApplePay()"><span class="apple-logo"></span>Pay with Apple Pay</button>
+        <p style="font-size:0.78rem;color:var(--text-gray);" data-translate="pm_apple_note">If Apple Pay is unavailable, use Card payment or WhatsApp us.</p>
+        <div id="apple-success" style="display:none;margin-top:12px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:13px;color:#065f46;font-weight:600;"><span data-translate="pm_apple_success">Apple Pay request received! Ticket within 1-2 hours.</span></div>
+      </div>
+    </div>
+
+    <div class="pm-content" id="pm-bank">
+      <div class="pm-detail"><label data-translate="pm_banks">Banks Accepted</label><p>🏦 Bancobu &amp; BCB</p></div>
+      <div class="pm-detail"><label data-translate="pm_account_name">Account Name</label><p>Sure Travel Agency</p></div>
+      <div class="pm-detail"><label data-translate="pm_get_account">Get Account Details Via</label><p>WhatsApp or Email</p></div>
+      <p style="color:var(--text-gray);font-size:0.85rem;margin-top:12px;" data-translate="pm_bank_note">Contact us and we will securely send you our bank account details via WhatsApp or email before you transfer.</p>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+        <a href="https://wa.me/25769314640" target="_blank" class="btn-primary" style="flex:1;min-width:120px;justify-content:center;text-decoration:none;">💬 <span data-translate="btn_whatsapp">WhatsApp</span></a>
+        <a href="mailto:suretravelagency9@gmail.com" class="btn-outline" style="flex:1;min-width:120px;justify-content:center;color:var(--navy);border-color:var(--navy);" data-translate="btn_email">✉️ Email Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI CHAT -->
+<button id="ai-chat-toggle" aria-label="Open AI Assistant" aria-expanded="false">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+</button>
+<div id="ai-chat-widget">
+  <div class="ai-chat-header">
+    <div class="ai-avatar">✈</div>
+    <div><h4 data-translate="ai_title">Sure Travel AI</h4><p data-translate="ai_status">Online · Replies fast</p></div>
+    <button class="ai-chat-close" id="ai-chat-close" type="button">✕</button>
+  </div>
+  <div id="ai-chat-messages"></div>
+  <div id="ai-quick-chips" class="quick-replies"></div>
+  <div class="ai-chat-input-row">
+    <input type="text" id="ai-chat-input" data-translate-placeholder="ai_placeholder" placeholder="Ask about flights, hotels, payments..." autocomplete="off" />
+    <button id="ai-chat-send" type="button">&#10148;</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <img src="../images/logo.jpeg" alt="Sure Travel Agency" style="height:48px;border-radius:8px;" />
+          <div class="logo-text">
+            <span class="logo-name">Sure Travel</span>
+            <span class="logo-sub">Travel Agency</span>
+          </div>
+        </a>
+        <p style="margin-top:18px;max-width:300px;" data-translate="footer_tagline">Your trusted travel partner. Available 24/7 to help you explore the world.</p>
+        <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+          <a href="https://wa.me/25769314640" target="_blank" class="footer-wa-btn">💬 WhatsApp</a>
+          <a href="mailto:suretravelagency9@gmail.com" class="footer-email-btn">✉️ Email</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_quick_links">Quick Links</h4>
+        <ul>
+          <li><a href="../index.html" data-translate="nav_home">Home</a></li>
+          <li><a href="about.html" data-translate="nav_about">About</a></li>
+          <li><a href="services.html" data-translate="nav_services">Services</a></li>
+          <li><a href="booking.html" data-translate="nav_booking">Booking</a></li>
+          <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+          <li><a href="faq.html" data-translate="nav_faq">FAQ</a></li>
+          <li><a href="support.html" data-translate="nav_support">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_contact">Contact Us</h4>
+        <ul>
+          <li><a href="mailto:suretravelagency9@gmail.com" class="footer-contact-link"><span class="footer-icon">📧</span>suretravelagency9@gmail.com</a></li>
+          <li><a href="tel:+25779639803" class="footer-contact-link"><span class="footer-icon">📱</span>+257 79 639 803</a></li>
+          <li><a href="tel:+25769314640" class="footer-contact-link"><span class="footer-icon">📱</span>+257 69 31 46 40</a></li>
+          <li><span class="footer-contact-link"><span class="footer-icon">📍</span>Excellence House, Bureau 3.17, Bujumbura, Burundi</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-translate="footer_rights">2025 Sure Travel Agency. All rights reserved.</span></span>
+      <span data-translate="footer_founders">Founded by Keza Nadia &amp; Mr. Eric</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/translations.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/ai-assistant.js"></script>
+<script>
+(function() {
+  emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
+
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById('dep-date').min = today;
+  var ret = document.getElementById('ret-date');
+  if (ret) ret.min = today;
+
+  if (typeof makeAutocomplete === 'function') {
+    makeAutocomplete(document.getElementById('airport-from'), window.WORLD_AIRPORTS || [], function(a){ return a.code + ' — ' + a.city + ', ' + a.country; });
+    makeAutocomplete(document.getElementById('airport-to'),   window.WORLD_AIRPORTS || [], function(a){ return a.code + ' — ' + a.city + ', ' + a.country; });
+    makeAutocomplete(document.getElementById('hotel-city'),   window.WORLD_CITIES   || []);
+  }
+
+  document.getElementById('add-hotel').addEventListener('change', function() {
+    document.getElementById('hotel-city-wrap').style.display = this.checked ? 'flex' : 'none';
+  });
+
+  var cardNum = document.getElementById('card-number');
+  cardNum.addEventListener('input', function() {
+    var v = this.value.replace(/\D/g,'').substring(0,16);
+    this.value = v.replace(/(\d{4})(?=\d)/g,'$1 ');
+  });
+  var cardExp = document.getElementById('card-expiry');
+  cardExp.addEventListener('input', function() {
+    var v = this.value.replace(/\D/g,'');
+    if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2,4);
+    this.value = v;
+  });
+
+  document.getElementById('booking-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = this.querySelector('button[type="submit"]');
+    var orig = btn.textContent;
+    btn.textContent = '...';
+    btn.disabled = true;
+    var params = {
+      from_name:    document.getElementById('b-name').value,
+      from_email:   document.getElementById('b-email').value,
+      phone:        document.getElementById('b-phone').value || 'Not provided',
+      airport_from: document.getElementById('airport-from').value,
+      airport_to:   document.getElementById('airport-to').value,
+      dep_date:     document.getElementById('dep-date').value,
+      passengers:   document.getElementById('passengers').value,
+      flight_class: document.getElementById('flight-class').value,
+      hotel:        document.getElementById('add-hotel').checked ? 'Yes — ' + (document.getElementById('hotel-city').value || 'TBD') : 'No',
+      car_rental:   document.getElementById('add-car').checked ? 'Yes' : 'No',
+    };
+    emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID', params)
+      .then(function(){ showSuccess(btn); })
+      .catch(function(){
+        var s = 'mailto:suretravelagency9@gmail.com?subject=' + encodeURIComponent('Booking: ' + params.airport_from + ' to ' + params.airport_to)
+          + '&body=' + encodeURIComponent('Name: '+params.from_name+'\nEmail: '+params.from_email+'\nPhone: '+params.phone+'\nFrom: '+params.airport_from+'\nTo: '+params.airport_to+'\nDate: '+params.dep_date+'\nPassengers: '+params.passengers+'\nClass: '+params.flight_class);
+        window.location.href = s;
+        showSuccess(btn);
+      });
+  });
+
+  function showSuccess(btn) {
+    document.getElementById('booking-success').style.display = 'block';
+    btn.textContent = '✓ Sent!';
+    btn.style.background = '#10b981';
+  }
+
+  document.getElementById('card-payment-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = this.querySelector('button[type="submit"]');
+    btn.textContent = '...';
+    btn.disabled = true;
+    var params = {
+      payment_type:'Card', cardholder: document.getElementById('card-name').value,
+      card_last4: document.getElementById('card-number').value.replace(/\s/g,'').slice(-4),
+      amount: '$' + document.getElementById('card-amount').value,
+      from_email: document.getElementById('card-email').value,
+      from_name: document.getElementById('card-name').value,
+    };
+    emailjs.send('YOUR_SERVICE_ID','YOUR_PAYMENT_TEMPLATE_ID', params)
+      .then(function(){ showCardSuccess(btn); })
+      .catch(function(){
+        var s = 'mailto:suretravelagency9@gmail.com?subject=Card+Payment+Sure+Travel&body=' + encodeURIComponent('Cardholder: '+params.cardholder+'\nLast4: '+params.card_last4+'\nAmount: '+params.amount);
+        window.location.href = s;
+        showCardSuccess(btn);
+      });
+  });
+
+  function showCardSuccess(btn) {
+    document.getElementById('card-success').style.display = 'block';
+    btn.textContent = '✓ Sent!';
+    btn.style.background = '#10b981';
+  }
+
+  var overlay = document.getElementById('payment-modal-overlay');
+  document.getElementById('pay-now-btn').addEventListener('click', function(){ overlay.classList.add('open'); });
+  document.getElementById('modal-close-btn').addEventListener('click', function(){ overlay.classList.remove('open'); });
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) overlay.classList.remove('open'); });
+
+  document.querySelectorAll('.pm-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.pm-tab').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.pm-content').forEach(function(c){ c.classList.remove('active'); });
+      this.classList.add('active');
+      document.getElementById('pm-' + this.dataset.pm).classList.add('active');
+    });
+  });
+})();
+
+function updateAmountDisplay(val) {
+  var el = document.getElementById('card-amount-display');
+  if (el) el.textContent = val ? '$' + parseFloat(val).toFixed(2) : '$0.00';
+}
+
+function initiateApplePay() {
+  var amount = document.getElementById('apple-amount').value;
+  if (!amount || amount <= 0) { alert('Please enter an amount first.'); return; }
+  window.location.href = 'mailto:suretravelagency9@gmail.com?subject=Apple+Pay+Request+%24' + amount + '&body=Apple+Pay+payment+request+of+%24' + amount;
+  document.getElementById('apple-success').style.display = 'block';
+}
+
+function copyText(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function(){ alert('Copied: ' + text); });
+  } else {
+    prompt('Copy this:', text);
+  }
+}
+</script>
+</body>
+</html>

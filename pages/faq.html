@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Sure Travel Agency</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../images/logo.jpeg" />
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">
+      <img src="../images/logo.jpeg" alt="Sure Travel Agency Logo" />
+      <div class="logo-text"><span class="logo-name">Sure Travel</span><span class="logo-sub">Travel Agency</span></div>
+    </a>
+    <nav id="nav-menu">
+      <a href="../index.html" data-translate="nav_home">Home</a>
+      <a href="about.html" data-translate="nav_about">About</a>
+      <a href="services.html" data-translate="nav_services">Services</a>
+      <a href="booking.html" data-translate="nav_booking">Booking</a>
+      <a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a>
+      <a href="faq.html" data-translate="nav_faq">FAQ</a>
+      <a href="support.html" data-translate="nav_support">Contact</a>
+      <a href="booking.html" class="btn-nav" data-translate="nav_book_now">Book Now</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="ki">KI</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <h1 data-translate="faq_title">Frequently Asked Questions</h1>
+    <p data-translate="faq_subtitle">Find answers to the most common questions</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-translate="faq1_q">How do I book a flight?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><p data-translate="faq1_a">You can book a flight by filling out our booking form on the Booking page, or by contacting us directly via WhatsApp, phone, or email. Our team will respond within 30 minutes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-translate="faq2_q">What payment methods do you accept?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><p data-translate="faq2_a">We accept MTN Mobile Money, Airtel Money, Bank Transfer, Visa, and Mastercard. All payments are 100% secure.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-translate="faq3_q">Are you available on weekends?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><p data-translate="faq3_a">Yes! We are available 24 hours a day, 7 days a week, including all public holidays.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-translate="faq4_q">Can you help with visa applications?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><p data-translate="faq4_a">Yes, we provide travel assistance which includes visa guidance and documentation support for your destination country.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-translate="faq5_q">How quickly will I receive my ticket?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><p data-translate="faq5_a">Once payment is confirmed, tickets are typically sent within 1–2 hours by email or WhatsApp.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-translate="faq6_q">Do you offer group travel packages?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><p data-translate="faq6_a">Absolutely! We offer special rates for groups of 5 or more. Contact us for a custom quote.</p></div>
+      </div>
+    </div>
+
+    <!-- Still have questions? -->
+    <div style="text-align:center; margin-top: 60px; padding: 48px; background: var(--off-white); border-radius: var(--radius-lg);">
+      <h3 style="font-size:1.6rem; color:var(--navy); margin-bottom:12px;">Still have questions?</h3>
+      <p style="color:var(--text-gray); margin-bottom:28px;">Our team is available 24/7 to assist you.</p>
+      <a href="support.html" class="btn-primary" data-translate="nav_support">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <img src="../images/logo.jpeg" alt="Sure Travel Agency" style="height:48px;border-radius:8px;" />
+          <div class="logo-text">
+            <span class="logo-name">Sure Travel</span>
+            <span class="logo-sub">Travel Agency</span>
+          </div>
+        </a>
+        <p style="margin-top:18px;max-width:300px;" data-translate="footer_tagline">Your trusted travel partner. Available 24/7 to help you explore the world.</p>
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <a href="https://wa.me/25769314640" target="_blank" style="background:var(--gold);color:var(--navy);font-weight:700;font-size:0.8rem;padding:8px 16px;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:6px;">💬 WhatsApp</a>
+          <a href="mailto:suretravelagency9@gmail.com" style="background:rgba(255,255,255,0.1);color:white;font-weight:600;font-size:0.8rem;padding:8px 16px;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,0.15);">✉️ Email</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_quick_links">Quick Links</h4>
+        <ul>
+          <li><a href="../index.html" data-translate="nav_home">Home</a></li>
+          <li><a href="../pages/about.html" data-translate="nav_about">About</a></li>
+          <li><a href="../pages/services.html" data-translate="nav_services">Services</a></li>
+          <li><a href="../pages/booking.html" data-translate="nav_booking">Booking</a></li>
+          <li><a href="../pages/testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+          <li><a href="../pages/faq.html" data-translate="nav_faq">FAQ</a></li>
+          <li><a href="../pages/support.html" data-translate="nav_support">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_contact">Contact Us</h4>
+        <ul>
+          <li style="margin-bottom:12px;">
+            <a href="mailto:suretravelagency9@gmail.com" style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:center;gap:8px;text-decoration:none;transition:color 0.2s;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;">📧</span>
+              suretravelagency9@gmail.com
+            </a>
+          </li>
+          <li style="margin-bottom:12px;">
+            <a href="tel:+25779639803" style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:center;gap:8px;text-decoration:none;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;">📱</span>
+              +257 79 639 803
+            </a>
+          </li>
+          <li style="margin-bottom:12px;">
+            <a href="tel:+25769314640" style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:center;gap:8px;text-decoration:none;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;">📱</span>
+              +257 69 31 46 40
+            </a>
+          </li>
+          <li>
+            <span style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:flex-start;gap:8px;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;margin-top:2px;">📍</span>
+              Excellence House, Bureau 3.17,<br>Bujumbura, Burundi
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-translate="footer_rights">© 2025 Sure Travel Agency. All rights reserved.</span>
+      <span data-translate="footer_founders">Founded by Keza Nadia & Mr. Eric</span>
+    </div>
+  </div>
+</footer>
+
+<!-- AI CHAT WIDGET -->
+<button id="ai-chat-toggle" aria-label="Open AI Assistant" aria-expanded="false" style="position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:#2563eb;color:white;font-size:1.5rem;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(37,99,235,0.45);z-index:9998;display:flex;align-items:center;justify-content:center;transition:transform 0.2s;">✈</button>
+<div id="ai-chat-widget" style="display:none;">
+  <div class="ai-chat-header">
+    <div class="ai-avatar">✈</div>
+    <div>
+      <h4 data-translate="ai_title">Sure Travel AI</h4>
+      <p data-translate="ai_status">Online · Replies fast</p>
+    </div>
+    <button class="ai-chat-close" id="ai-chat-close" type="button" aria-label="Close">✕</button>
+  </div>
+  <div id="ai-chat-messages"></div>
+  <div id="ai-quick-chips" class="quick-replies"></div>
+  <div class="ai-chat-input-row">
+    <input type="text" id="ai-chat-input" data-translate-placeholder="ai_placeholder" placeholder="Ask about flights, hotels, payments..." autocomplete="off" />
+    <button id="ai-chat-send" type="button">&#10148;</button>
+  </div>
+</div>
+
+<script src="../js/translations.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/ai-assistant.js"></script>
+</body>
+</html>

@@ -1,1300 +1,298 @@
 <!DOCTYPE html>
-<html class="light" lang="fr">
+<html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D6DVXZSJRD"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-D6DVXZSJRD');
-    </script>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" name="viewport">
-    <title>Sure Travel Agency - Accueil</title>
-    
-    <!-- Language Selector Styles -->
-    <style>
-        .language-selector {
-            position: relative;
-            display: inline-block;
-        }
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            min-width: 180px;
-            z-index: 100;
-            display: none;
-            border: 1px solid #e2e8f0;
-            margin-top: 5px;
-        }
-        .dark .language-dropdown {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        .language-selector:hover .language-dropdown {
-            display: block;
-        }
-        .language-option {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-        .language-option:hover {
-            background: #f1f5f9;
-        }
-        .dark .language-option:hover {
-            background: #334155;
-        }
-        .language-option.active {
-            color: #0f49bd;
-            font-weight: 600;
-        }
-        .dark .language-option.active {
-            color: #3a7bd5;
-        }
-        [data-translate] {
-            transition: all 0.2s;
-        }
-        .hero-bg {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .floating-card {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .stats-card {
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(15, 73, 189, 0.2);
-        }
-        .gradient-border {
-            position: relative;
-            background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
-            border-radius: 1.5rem;
-            padding: 3px;
-        }
-        .gradient-border-inner {
-            background: white;
-            border-radius: 1.4rem;
-            height: 100%;
-            width: 100%;
-        }
-        .dark .gradient-border-inner {
-            background: #1e293b;
-        }
-    </style>
-    
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#0f49bd",
-                        "primary-light": "#3a7bd5",
-                        "primary-dark": "#0a3570",
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#101622",
-                    },
-                    fontFamily: {
-                        "display": ["Plus Jakarta Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .fill-1 {
-            font-variation-settings: 'FILL' 1;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        @media (min-width: 768px) {
-            .max-w-container {
-                max-width: 1280px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sure Travel Agency — Home</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/logo.jpeg" />
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
-    <!-- Header / Top Bar -->
-    <header class="sticky top-0 z-50 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 shadow-sm">
-        <div class="flex items-center justify-between max-w-container mx-auto w-full">
-            <a href="index.html" class="flex items-center gap-3 group">
-                <!-- Logo Image from Images folder -->
-                <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden p-1 group-hover:scale-110 transition-transform duration-300">
-                    <img alt="Sure Travel Agency Logo" class="w-full h-full object-contain" src="./Images/logo.jpeg">
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white group-hover:text-primary transition-colors">SURE</h1>
-                    <p class="text-[8px] uppercase tracking-widest text-primary font-bold">TRAVEL AGENCY</p>
-                </div>
-            </a>
-            
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center gap-6">
-                <a href="index.html" class="text-primary font-semibold border-b-2 border-primary pb-1">Accueil</a>
-                <a href="services.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Services</a>
-                <a href="booking.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Réservations</a>
-                <a href="aboutus.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">À Propos</a>
-                <a href="support.html" class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">Aide</a>
-            </nav>
-            
-            <div class="flex items-center gap-2">
-                <a href="search.html" class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">search</span>
-                </a>
-                
-                <!-- Language Selector -->
-                <div class="language-selector">
-                    <button class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors flex items-center gap-1 border border-slate-200 dark:border-slate-700 rounded-lg">
-                        <span class="material-symbols-outlined">language</span>
-                        <span class="text-sm hidden sm:inline font-medium" id="current-language">FR</span>
-                    </button>
-                    <div class="language-dropdown">
-                        <div class="language-option active" onclick="changeLanguage('fr')" data-lang="fr">
-                            <span>🇫🇷</span> Français
-                        </div>
-                        <div class="language-option" onclick="changeLanguage('en')" data-lang="en">
-                            <span>🇬🇧</span> English
-                        </div>
-                        <div class="language-option" onclick="changeLanguage('rn')" data-lang="rn">
-                            <span>🇧🇮</span> Kirundi
-                        </div>
-                    </div>
-                </div>
-                
-                <button onclick="toggleDarkMode()" class="p-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined dark:hidden">dark_mode</span>
-                    <span class="material-symbols-outlined hidden dark:inline">light_mode</span>
-                </button>
-            </div>
-        </div>
-    </header>
+<body>
 
-    <!-- Main Content -->
-    <main class="flex-1 max-w-container mx-auto w-full pb-24 px-4">
-        <!-- Hero Section with Travel Background -->
-        <section class="hero-bg relative rounded-3xl overflow-hidden mb-8 mt-4">
-            <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/40 mix-blend-multiply"></div>
-            <div class="relative z-10 px-6 py-16 md:py-20 text-white">
-                <div class="max-w-3xl">
-                    <span class="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-4" data-translate="welcome_badge">✈️ Votre agence de confiance</span>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight" data-translate="hero_title">Voyagez en toute confiance</h1>
-                    <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl" data-translate="hero_subtitle">Découvrez nos solutions de voyage sur mesure avec Sure Travel Agency.</p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="booking.html" class="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all group">
-                            <span data-translate="book_now">Réserver maintenant</span>
-                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </a>
-                        <a href="services.html" class="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-all">
-                            <span data-translate="discover_services">Découvrir nos services</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Floating elements for visual interest -->
-            <div class="absolute bottom-0 right-0 w-64 h-64 bg-white/5 rounded-full -mb-32 -mr-32"></div>
-            <div class="absolute top-0 left-0 w-40 h-40 bg-white/5 rounded-full -mt-20 -ml-20"></div>
-        </section>
+<!-- ========== HEADER ========== -->
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.jpeg" alt="Sure Travel Agency Logo" />
+      <div class="logo-text">
+        <span class="logo-name">Sure Travel</span>
+        <span class="logo-sub">Travel Agency</span>
+      </div>
+    </a>
 
-        <!-- Stats Section with Glassmorphism -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="stats-card bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg border border-white/20 dark:border-slate-700/20">
-                <div class="w-16 h-16 mx-auto bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                    <span class="material-symbols-outlined text-primary text-3xl">flight</span>
-                </div>
-                <p class="text-3xl font-bold text-slate-900 dark:text-white mb-1" data-translate="destinations_count">50+</p>
-                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium" data-translate="destinations">Destinations</p>
-            </div>
-            <div class="stats-card bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg border border-white/20 dark:border-slate-700/20 floating-card">
-                <div class="w-16 h-16 mx-auto bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                    <span class="material-symbols-outlined text-primary text-3xl">handshake</span>
-                </div>
-                <p class="text-3xl font-bold text-slate-900 dark:text-white mb-1" data-translate="partners_count">25+</p>
-                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium" data-translate="partners">Partenaires</p>
-            </div>
-            <div class="stats-card bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg border border-white/20 dark:border-slate-700/20">
-                <div class="w-16 h-16 mx-auto bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                    <span class="material-symbols-outlined text-primary text-3xl">sentiment_satisfied</span>
-                </div>
-                <p class="text-3xl font-bold text-slate-900 dark:text-white mb-1" data-translate="clients_count">300+</p>
-                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium" data-translate="clients">Clients satisfaits</p>
-            </div>
-        </div>
-
-        <!-- Services Preview Section -->
-        <div class="mb-12">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white" data-translate="our_services">Nos Services</h2>
-                <a href="services.html" class="text-primary font-semibold flex items-center gap-1 hover:gap-2 transition-all">
-                    <span data-translate="view_all">Voir tout</span>
-                    <span class="material-symbols-outlined">arrow_forward</span>
-                </a>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <a href="services.html#flights" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border border-slate-100 dark:border-slate-700 hover:border-primary/30">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-primary text-2xl">flight_takeoff</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors" data-translate="flights">Vols</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="flights_desc">Billets d'avion aux meilleurs tarifs</p>
-                </a>
-                
-                <a href="services.html#hotels" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border border-slate-100 dark:border-slate-700 hover:border-primary/30">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-primary text-2xl">hotel</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors" data-translate="hotels">Hôtels</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="hotels_desc">Réservation d'hébergements</p>
-                </a>
-                
-                <a href="services.html#cars" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border border-slate-100 dark:border-slate-700 hover:border-primary/30">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors" data-translate="cars">Voitures</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="cars_desc">Location de véhicules</p>
-                </a>
-                
-                <a href="services.html#assistance" class="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border border-slate-100 dark:border-slate-700 hover:border-primary/30">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-primary text-2xl">support_agent</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors" data-translate="assistance">Assistance</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="assistance_desc">Support 24h/24, 7j/7</p>
-                </a>
-            </div>
-        </div>
-
-        <!-- Travel Guides Section (Replaces Destinations) -->
-        <div class="mb-12">
-            <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6" data-translate="travel_guides">Guides de Voyage</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="gradient-border">
-                    <div class="gradient-border-inner p-5">
-                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                            <span class="material-symbols-outlined text-primary">passport</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2" data-translate="visa_guide">Guide des Visas</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4" data-translate="visa_guide_desc">Tout savoir sur les formalités pour vos voyages</p>
-                        <a href="support.html" class="text-primary font-semibold flex items-center gap-1 text-sm hover:gap-2 transition-all">
-                            <span data-translate="learn_more">En savoir plus</span>
-                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="gradient-border">
-                    <div class="gradient-border-inner p-5">
-                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                            <span class="material-symbols-outlined text-primary">luggage</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2" data-translate="baggage_tips">Conseils Bagages</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4" data-translate="baggage_tips_desc">Franchises, restrictions et astuces</p>
-                        <a href="faq.html" class="text-primary font-semibold flex items-center gap-1 text-sm hover:gap-2 transition-all">
-                            <span data-translate="learn_more">En savoir plus</span>
-                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="gradient-border">
-                    <div class="gradient-border-inner p-5">
-                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                            <span class="material-symbols-outlined text-primary">health_and_safety</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2" data-translate="travel_insurance">Assurance Voyage</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4" data-translate="insurance_desc">Partez l'esprit tranquille</p>
-                        <a href="support.html" class="text-primary font-semibold flex items-center gap-1 text-sm hover:gap-2 transition-all">
-                            <span data-translate="learn_more">En savoir plus</span>
-                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Why Choose Us -->
-        <div class="mb-12">
-            <div class="bg-gradient-to-r from-primary/5 to-primary/10 rounded-3xl p-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6 text-center" data-translate="why_choose_us">Pourquoi nous choisir ?</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                            <span class="material-symbols-outlined text-white text-3xl">verified</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2" data-translate="certified">Certifié IATA</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="certified_desc">Agence agréée et reconnue</p>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                            <span class="material-symbols-outlined text-white text-3xl">support_agent</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2" data-translate="support_247">Support 24/7</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="support_desc">Assistance permanente</p>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                            <span class="material-symbols-outlined text-white text-3xl">payments</span>
-                        </div>
-                        <h3 class="font-bold text-lg mb-2" data-translate="best_prices">Meilleurs prix</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="prices_desc">Tarifs négociés pour vous</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Testimonial Section - Ineza Queen Kethia's Canada Story -->
-        <div class="mb-12">
-            <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden">
-                <div class="grid grid-cols-1 md:grid-cols-3">
-                    <div class="md:col-span-1 bg-primary p-8 text-white flex flex-col justify-center">
-                        <span class="material-symbols-outlined text-5xl mb-4">format_quote</span>
-                        <p class="text-sm font-medium mb-2" data-translate="client_story">Témoignage client</p>
-                        <h3 class="text-2xl font-bold mb-2" data-translate="inspiring_story">Une histoire inspirante</h3>
-                        <div class="flex text-yellow-300 mb-4">
-                            <span class="material-symbols-outlined fill-1">star</span>
-                            <span class="material-symbols-outlined fill-1">star</span>
-                            <span class="material-symbols-outlined fill-1">star</span>
-                            <span class="material-symbols-outlined fill-1">star</span>
-                            <span class="material-symbols-outlined fill-1">star</span>
-                        </div>
-                    </div>
-                    <div class="md:col-span-2 p-8">
-                        <p class="text-lg italic text-slate-600 dark:text-slate-300 mb-4" data-translate="testimonial_text">
-                            "Sans Sure Travel Agency, je n'aurais jamais pu aller au Canada. Je cherchais des billets abordables depuis des mois sans succès. Leur équipe a trouvé un vol au moment parfait et m'a accompagnée pendant toutes les escales jusqu'à mon arrivée. Une expérience incroyable !"
-                        </p>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                                <span class="text-primary font-bold text-xl">I</span>
-                            </div>
-                            <div>
-                                <p class="font-bold text-slate-900 dark:text-white">Ineza Queen Kethia</p>
-                                <p class="text-sm text-slate-500" data-translate="canada_trip">✈️ Voyage au Canada</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Newsletter Section -->
-        <div class="mb-12">
-            <div class="bg-gradient-to-r from-primary to-primary-dark rounded-3xl p-8 md:p-12 text-white text-center">
-                <span class="material-symbols-outlined text-5xl mb-4">mail</span>
-                <h2 class="text-2xl md:text-3xl font-bold mb-3" data-translate="newsletter_title">Restez informé</h2>
-                <p class="text-white/90 mb-6 max-w-lg mx-auto" data-translate="newsletter_desc">Recevez nos offres exclusives et conseils de voyage directement dans votre boîte mail</p>
-                <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                    <input type="email" placeholder="Votre adresse email" class="flex-1 px-6 py-3 rounded-xl border-none focus:ring-4 focus:ring-white/30 outline-none text-slate-900" data-translate="email_placeholder">
-                    <button class="bg-white text-primary px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all" data-translate="subscribe">S'abonner</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Contact Section -->
-        <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-lg">
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary">contact_support</span>
-                <span data-translate="contact_us">Contactez-nous</span>
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary">phone</span>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500 uppercase font-bold" data-translate="phones">Téléphones</p>
-                            <a href="tel:+25779639803" class="font-semibold hover:text-primary">+257 79 639 803</a>
-                            <a href="tel:+25769314640" class="font-semibold block hover:text-primary">+257 69 314 640</a>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary">mail</span>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500 uppercase font-bold" data-translate="email">Email</p>
-                            <a href="mailto:suretravelagency9@gmail.com" class="font-semibold hover:text-primary">suretravelagency9@gmail.com</a>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary">location_on</span>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500 uppercase font-bold" data-translate="address">Adresse</p>
-                            <p class="font-semibold">Excellence House, Bureau 3.17</p>
-                            <p class="text-sm text-slate-500">Boulevard de l'Indépendance, Bujumbura</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-primary/5 rounded-2xl p-6">
-                    <h3 class="font-bold text-lg mb-3" data-translate="need_help">Besoin d'aide ?</h3>
-                    <p class="text-sm text-slate-500 mb-4" data-translate="contact_description">Notre équipe est disponible 24h/24 pour répondre à vos questions</p>
-                    <a href="support.html" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary/90 transition-all">
-                        <span class="material-symbols-outlined">chat</span>
-                        <span data-translate="contact_support">Contacter le support</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 mt-8">
-        <div class="max-w-container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                            <img alt="Logo" class="w-8 h-8 object-contain" src="./Images/logo.jpeg">
-                        </div>
-                        <span class="font-bold text-primary">SURE TRAVEL</span>
-                    </div>
-                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate="footer_desc">Votre partenaire de confiance pour des voyages inoubliables.</p>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4" data-translate="quick_links">Liens rapides</h4>
-                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
-                        <li><a href="aboutus.html" class="hover:text-primary transition-colors" data-translate="about_us">À propos</a></li>
-                        <li><a href="services.html" class="hover:text-primary transition-colors" data-translate="our_services">Nos services</a></li>
-                        <li><a href="booking.html" class="hover:text-primary transition-colors" data-translate="book_now">Réserver</a></li>
-                        <li><a href="support.html" class="hover:text-primary transition-colors" data-translate="contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4" data-translate="legal">Informations légales</h4>
-                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
-                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="privacy">Politique de confidentialité</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="terms">Conditions générales</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-translate="cookies">Cookies</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4" data-translate="follow_us">Suivez-nous</h4>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-                            <span class="material-symbols-outlined">public</span>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-                            <span class="material-symbols-outlined">photo_camera</span>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-                            <span class="material-symbols-outlined">videocam</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-sm text-slate-500">
-                <p data-translate="copyright">© 2026 Sure Travel Agency. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bottom Navigation for Mobile -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pb-6 pt-2 z-50">
-        <div class="flex items-center justify-around">
-            <a href="./index.html" class="flex flex-col items-center gap-1 text-primary">
-                <span class="material-symbols-outlined fill-1">home</span>
-                <span class="text-[10px] font-medium" data-translate="home">Accueil</span>
-            </a>
-            <a href="./services.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">business_center</span>
-                <span class="text-[10px] font-medium" data-translate="services">Services</span>
-            </a>
-            <a href="./booking.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">calendar_month</span>
-                <span class="text-[10px] font-medium" data-translate="bookings">Réservations</span>
-            </a>
-            <a href="./aboutus.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">info</span>
-                <span class="text-[10px] font-medium" data-translate="about">À Propos</span>
-            </a>
-            <a href="./support.html" class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">contact_support</span>
-                <span class="text-[10px] font-medium" data-translate="help">Aide</span>
-            </a>
-        </div>
+    <nav id="nav-menu">
+      <a href="index.html" data-translate="nav_home">Home</a>
+      <a href="pages/about.html" data-translate="nav_about">About</a>
+      <a href="pages/services.html" data-translate="nav_services">Services</a>
+      <a href="pages/booking.html" data-translate="nav_booking">Booking</a>
+      <a href="pages/testimonials.html" data-translate="nav_testimonials">Testimonials</a>
+      <a href="pages/faq.html" data-translate="nav_faq">FAQ</a>
+      <a href="pages/support.html" data-translate="nav_support">Contact</a>
+      <a href="pages/booking.html" class="btn-nav" data-translate="nav_book_now">Book Now</a>
     </nav>
 
-    <!-- Translation System -->
-    <script>
-        const translations = {
-            fr: {
-                'welcome_badge': '✈️ Votre agence de confiance',
-                'hero_title': 'Voyagez en toute confiance',
-                'hero_subtitle': 'Découvrez nos solutions de voyage sur mesure avec Sure Travel Agency.',
-                'book_now': 'Réserver maintenant',
-                'discover_services': 'Découvrir nos services',
-                'destinations_count': '50+',
-                'destinations': 'Destinations',
-                'partners_count': '25+',
-                'partners': 'Partenaires',
-                'clients_count': '300+',
-                'clients': 'Clients satisfaits',
-                'our_services': 'Nos Services',
-                'view_all': 'Voir tout',
-                'flights': 'Vols',
-                'flights_desc': 'Billets d\'avion aux meilleurs tarifs',
-                'hotels': 'Hôtels',
-                'hotels_desc': 'Réservation d\'hébergements',
-                'cars': 'Voitures',
-                'cars_desc': 'Location de véhicules',
-                'assistance': 'Assistance',
-                'assistance_desc': 'Support 24h/24, 7j/7',
-                'travel_guides': 'Guides de Voyage',
-                'visa_guide': 'Guide des Visas',
-                'visa_guide_desc': 'Tout savoir sur les formalités pour vos voyages',
-                'learn_more': 'En savoir plus',
-                'baggage_tips': 'Conseils Bagages',
-                'baggage_tips_desc': 'Franchises, restrictions et astuces',
-                'travel_insurance': 'Assurance Voyage',
-                'insurance_desc': 'Partez l\'esprit tranquille',
-                'why_choose_us': 'Pourquoi nous choisir ?',
-                'certified': 'Certifié IATA',
-                'certified_desc': 'Agence agréée et reconnue',
-                'support_247': 'Support 24/7',
-                'support_desc': 'Assistance permanente',
-                'best_prices': 'Meilleurs prix',
-                'prices_desc': 'Tarifs négociés pour vous',
-                'client_story': 'Témoignage client',
-                'inspiring_story': 'Une histoire inspirante',
-                'testimonial_text': '"Sans Sure Travel Agency, je n\'aurais jamais pu aller au Canada. Je cherchais des billets abordables depuis des mois sans succès. Leur équipe a trouvé un vol au moment parfait et m\'a accompagnée pendant toutes les escales jusqu\'à mon arrivée. Une expérience incroyable !"',
-                'canada_trip': '✈️ Voyage au Canada',
-                'newsletter_title': 'Restez informé',
-                'newsletter_desc': 'Recevez nos offres exclusives et conseils de voyage directement dans votre boîte mail',
-                'email_placeholder': 'Votre adresse email',
-                'subscribe': 'S\'abonner',
-                'contact_us': 'Contactez-nous',
-                'phones': 'Téléphones',
-                'email': 'Email',
-                'address': 'Adresse',
-                'need_help': 'Besoin d\'aide ?',
-                'contact_description': 'Notre équipe est disponible 24h/24 pour répondre à vos questions',
-                'contact_support': 'Contacter le support',
-                'footer_desc': 'Votre partenaire de confiance pour des voyages inoubliables.',
-                'quick_links': 'Liens rapides',
-                'about_us': 'À propos',
-                'our_services': 'Nos services',
-                'book_now': 'Réserver',
-                'contact': 'Contact',
-                'legal': 'Informations légales',
-                'privacy': 'Politique de confidentialité',
-                'terms': 'Conditions générales',
-                'cookies': 'Cookies',
-                'follow_us': 'Suivez-nous',
-                'copyright': '© 2026 Sure Travel Agency. Tous droits réservés.',
-                'home': 'Accueil',
-                'services': 'Services',
-                'bookings': 'Réservations',
-                'about': 'À Propos',
-                'help': 'Aide',
-            },
-            en: {
-                'welcome_badge': '✈️ Your trusted agency',
-                'hero_title': 'Travel with confidence',
-                'hero_subtitle': 'Discover our tailor-made travel solutions with Sure Travel Agency.',
-                'book_now': 'Book now',
-                'discover_services': 'Discover our services',
-                'destinations_count': '50+',
-                'destinations': 'Destinations',
-                'partners_count': '25+',
-                'partners': 'Partners',
-                'clients_count': '300+',
-                'clients': 'Happy clients',
-                'our_services': 'Our Services',
-                'view_all': 'View all',
-                'flights': 'Flights',
-                'flights_desc': 'Flight tickets at best rates',
-                'hotels': 'Hotels',
-                'hotels_desc': 'Accommodation booking',
-                'cars': 'Cars',
-                'cars_desc': 'Vehicle rental',
-                'assistance': 'Assistance',
-                'assistance_desc': '24/7 Support',
-                'travel_guides': 'Travel Guides',
-                'visa_guide': 'Visa Guide',
-                'visa_guide_desc': 'Everything about travel formalities',
-                'learn_more': 'Learn more',
-                'baggage_tips': 'Baggage Tips',
-                'baggage_tips_desc': 'Allowances, restrictions and tips',
-                'travel_insurance': 'Travel Insurance',
-                'insurance_desc': 'Travel with peace of mind',
-                'why_choose_us': 'Why choose us?',
-                'certified': 'IATA Certified',
-                'certified_desc': 'Accredited agency',
-                'support_247': '24/7 Support',
-                'support_desc': 'Permanent assistance',
-                'best_prices': 'Best prices',
-                'prices_desc': 'Negotiated rates for you',
-                'client_story': 'Client story',
-                'inspiring_story': 'An inspiring story',
-                'testimonial_text': '"Without Sure Travel Agency, I would never have made it to Canada. I had been looking for affordable tickets for months without success. Their team found the perfect flight and accompanied me through all the transfers until I arrived. An incredible experience!"',
-                'canada_trip': '✈️ Trip to Canada',
-                'newsletter_title': 'Stay informed',
-                'newsletter_desc': 'Receive our exclusive offers and travel tips directly in your inbox',
-                'email_placeholder': 'Your email address',
-                'subscribe': 'Subscribe',
-                'contact_us': 'Contact us',
-                'phones': 'Phones',
-                'email': 'Email',
-                'address': 'Address',
-                'need_help': 'Need help?',
-                'contact_description': 'Our team is available 24/7 to answer your questions',
-                'contact_support': 'Contact support',
-                'footer_desc': 'Your trusted partner for unforgettable travels.',
-                'quick_links': 'Quick links',
-                'about_us': 'About us',
-                'our_services': 'Our services',
-                'book_now': 'Book now',
-                'contact': 'Contact',
-                'legal': 'Legal',
-                'privacy': 'Privacy policy',
-                'terms': 'Terms & conditions',
-                'cookies': 'Cookies',
-                'follow_us': 'Follow us',
-                'copyright': '© 2026 Sure Travel Agency. All rights reserved.',
-                'home': 'Home',
-                'services': 'Services',
-                'bookings': 'Bookings',
-                'about': 'About',
-                'help': 'Help',
-            },
-            rn: {
-                'welcome_badge': '✈️ Ishirahamwe ryawe',
-                'hero_title': 'Ngenza urugendo mu kwizigira',
-                'hero_subtitle': 'Shakira ibisubizo vy\'urugendo twakugeneye hamwe na Sure Travel Agency.',
-                'book_now': 'Kubika ubu',
-                'discover_services': 'Menya serivisi zacu',
-                'destinations_count': '50+',
-                'destinations': 'Ibihugu',
-                'partners_count': '25+',
-                'partners': 'Abafatanyabikorwa',
-                'clients_count': '300+',
-                'clients': 'Abakiriya banyishimiye',
-                'our_services': 'Serivisi zacu',
-                'view_all': 'Raba vyose',
-                'flights': 'Indege',
-                'flights_desc': 'Amatike y\'indege adakenyereye',
-                'hotels': 'Amahoteli',
-                'hotels_desc': 'Gukodesha amahoteli',
-                'cars': 'Amodoka',
-                'cars_desc': 'Gukodesha imodoka',
-                'assistance': 'Ubufasha',
-                'assistance_desc': 'Ubufasha 24/24',
-                'travel_guides': 'Ubuyobozi bw\'urugendo',
-                'visa_guide': 'Ubuyobozi bwa visa',
-                'visa_guide_desc': 'Ivyose kugira ngo utegure',
-                'learn_more': 'Menya vyinshi',
-                'baggage_tips': 'Inama ku migendekwa',
-                'baggage_tips_desc': 'Uburuhukiro n\'imipaka',
-                'travel_insurance': 'Ubwishingizi',
-                'insurance_desc': 'Ngenza urugendo umutima utari',
-                'why_choose_us': 'Kuki uduhitamwo?',
-                'certified': 'Vyemewe na IATA',
-                'certified_desc': 'Ishirahamwe ryemewe',
-                'support_247': 'Ubufasha 24/7',
-                'support_desc': 'Ubufasha bw\'ikaduhamwe',
-                'best_prices': 'Ibiciro vyiza',
-                'prices_desc': 'Twateguriye wewe',
-                'client_story': 'Ubuhamya',
-                'inspiring_story': 'Inkuru itera inkunga',
-                'testimonial_text': '"Nta Sure Travel Agency, sinari kugera muri Kanada. Narondoye amatike adakenyereye amezi atari make ariko sinshobora kubona. Itsinda ryabo ryaronse indege y\'igihe kandi baranyerekeza mu ngendo zose kugeza nshitse. Ubunararibonye butangaje!"',
-                'canada_trip': '✈️ Urugendo muri Kanada',
-                'newsletter_title': 'Menya ibishasha',
-                'newsletter_desc': 'Ronka amakuru meza y\'urugendo n\'inama mu buryo bworoshye',
-                'email_placeholder': 'Email yawe',
-                'subscribe': 'Kwiyandikisha',
-                'contact_us': 'Twandikire',
-                'phones': 'Telefone',
-                'email': 'Imeri',
-                'address': 'Akarere',
-                'need_help': 'Urakenera ubufasha?',
-                'contact_description': 'Ikipe yacu iraboneka 24/24 ngo igufashe',
-                'contact_support': 'Vugana n\'ubufasha',
-                'footer_desc': 'Ushurwe wawe wo kwizigirwa ku rugendo rutazobibagirana.',
-                'quick_links': 'Amahuza',
-                'about_us': 'Kuber',
-                'our_services': 'Serivisi zacu',
-                'book_now': 'Kubika ubu',
-                'contact': 'Aho twohamwe',
-                'legal': 'Amategeko',
-                'privacy': 'Ibanga',
-                'terms': 'Amasezerano',
-                'cookies': 'Cookies',
-                'follow_us': 'Dukurikire',
-                'copyright': '© 2026 Sure Travel Agency. Uburenganzira bwose burubahirizwa.',
-                'home': 'Ahabanza',
-                'services': 'Serivisi',
-                'bookings': 'Kubika',
-                'about': 'Kuber',
-                'help': 'Ubufasha',
-            }
-        };
-
-        let currentLanguage = localStorage.getItem('language') || 'fr';
-
-        function changeLanguage(lang) {
-            currentLanguage = lang;
-            localStorage.setItem('language', lang);
-            
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.dataset.lang === lang) {
-                    option.classList.add('active');
-                }
-            });
-            
-            const langDisplay = document.getElementById('current-language');
-            if (lang === 'fr') langDisplay.textContent = 'FR';
-            else if (lang === 'en') langDisplay.textContent = 'EN';
-            else if (lang === 'rn') langDisplay.textContent = 'RN';
-            
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (translations[lang] && translations[lang][key]) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[lang][key];
-                    } else if (element.tagName === 'OPTION') {
-                        element.textContent = translations[lang][key];
-                    } else {
-                        element.textContent = translations[lang][key];
-                    }
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            changeLanguage(currentLanguage);
-        });
-    </script>
-
-    <script>
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('darkMode', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('darkMode', 'dark');
-            }
-        }
-        
-        if (localStorage.getItem('darkMode') === 'dark') {
-            document.documentElement.classList.add('dark');
-        }
-    </script>
-
-    <!-- AI Chatbot Assistant -->
-    <style>
-        .chatbot-container {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 320px;
-            max-width: 90vw;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            z-index: 1000;
-            transition: all 0.3s ease;
-            transform: translateY(20px);
-            opacity: 0;
-            visibility: hidden;
-            border: 1px solid rgba(15, 73, 189, 0.2);
-        }
-        .dark .chatbot-container {
-            background: #1e293b;
-            border-color: rgba(255,255,255,0.1);
-        }
-        .chatbot-container.open {
-            transform: translateY(0);
-            opacity: 1;
-            visibility: visible;
-        }
-        .chatbot-header {
-            background: #0f49bd;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-        .chatbot-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .chatbot-avatar {
-            width: 32px;
-            height: 32px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .chatbot-title {
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .chatbot-subtitle {
-            font-size: 11px;
-            opacity: 0.8;
-        }
-        .chatbot-close {
-            cursor: pointer;
-            font-size: 20px;
-        }
-        .chatbot-messages {
-            height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-            background: #f8fafc;
-        }
-        .dark .chatbot-messages {
-            background: #0f172a;
-        }
-        .message {
-            margin-bottom: 15px;
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .message.bot {
-            justify-content: flex-start;
-        }
-        .message.user {
-            justify-content: flex-end;
-        }
-        .message-content {
-            max-width: 80%;
-            padding: 12px 15px;
-            border-radius: 18px;
-            font-size: 13px;
-            line-height: 1.4;
-        }
-        .bot .message-content {
-            background: #e9eef5;
-            color: #1e293b;
-            border-bottom-left-radius: 4px;
-        }
-        .dark .bot .message-content {
-            background: #334155;
-            color: #f1f5f9;
-        }
-        .user .message-content {
-            background: #0f49bd;
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-        .chatbot-input-area {
-            padding: 15px;
-            border-top: 1px solid #e2e8f0;
-            background: white;
-            border-radius: 0 0 20px 20px;
-        }
-        .dark .chatbot-input-area {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        .chatbot-input-wrapper {
-            display: flex;
-            gap: 10px;
-        }
-        .chatbot-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 25px;
-            outline: none;
-            font-size: 13px;
-            background: #f8fafc;
-        }
-        .dark .chatbot-input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .chatbot-input:focus {
-            border-color: #0f49bd;
-        }
-        .chatbot-send {
-            width: 45px;
-            height: 45px;
-            background: #0f49bd;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-        }
-        .chatbot-send:hover {
-            transform: scale(1.05);
-        }
-        .chatbot-toggle {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: #0f49bd;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(15, 73, 189, 0.4);
-            z-index: 999;
-            transition: transform 0.2s;
-            border: 2px solid white;
-        }
-        .dark .chatbot-toggle {
-            border-color: #1e293b;
-        }
-        .chatbot-toggle:hover {
-            transform: scale(1.1);
-        }
-        .chatbot-quick-questions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
-        }
-        .quick-question {
-            padding: 6px 12px;
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            border-radius: 15px;
-            font-size: 11px;
-            cursor: pointer;
-            color: #1e293b;
-            transition: all 0.2s;
-        }
-        .dark .quick-question {
-            background: #334155;
-            color: #f1f5f9;
-            border-color: #475569;
-        }
-        .quick-question:hover {
-            background: #0f49bd;
-            color: white;
-            border-color: #0f49bd;
-        }
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            padding: 12px 15px;
-            background: #e9eef5;
-            border-radius: 18px;
-            width: fit-content;
-            border-bottom-left-radius: 4px;
-        }
-        .dark .typing-indicator {
-            background: #334155;
-        }
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: #64748b;
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-        .dark .typing-dot {
-            background: #94a3b8;
-        }
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-8px); }
-        }
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 20px;
-            height: 20px;
-            background: #ef4444;
-            color: white;
-            border-radius: 50%;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid white;
-        }
-    </style>
-
-    <div class="chatbot-toggle" onclick="toggleChatbot()" id="chatbotToggle">
-        <span class="material-symbols-outlined">chat</span>
-        <span class="notification-badge" id="chatNotification" style="display: none;">1</span>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="ki">KI</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </div>
+</header>
 
-    <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-header" onclick="toggleChatbot()">
-            <div class="chatbot-header-left">
-                <div class="chatbot-avatar">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">smart_toy</span>
-                </div>
-                <div>
-                    <div class="chatbot-title" data-translate="assistant_title">Assistant Sure Travel</div>
-                    <div class="chatbot-subtitle" data-translate="assistant_subtitle">En ligne • Réponse instantanée</div>
-                </div>
-            </div>
-            <span class="chatbot-close material-symbols-outlined" onclick="event.stopPropagation(); toggleChatbot()">close</span>
-        </div>
-        
-        <div class="chatbot-messages" id="chatMessages">
-            <div class="message bot">
-                <div class="message-content" data-translate="welcome_message">
-                    Bonjour ! 👋 Je suis l'assistant virtuel de Sure Travel. Comment puis-je vous aider aujourd'hui ?
-                </div>
-            </div>
-        </div>
-        
-        <div class="chatbot-input-area">
-            <div class="chatbot-quick-questions" id="quickQuestions">
-                <span class="quick-question" onclick="quickQuestion('paiement')">💳 Paiement</span>
-                <span class="quick-question" onclick="quickQuestion('bagages')">🧳 Bagages</span>
-                <span class="quick-question" onclick="quickQuestion('annulation')">❌ Annulation</span>
-                <span class="quick-question" onclick="quickQuestion('vols')">✈️ Vols</span>
-                <span class="quick-question" onclick="quickQuestion('hotels')">🏨 Hôtels</span>
-                <span class="quick-question" onclick="quickQuestion('contact')">📞 Contact</span>
-                <span class="quick-question" onclick="quickQuestion('safari')">🦁 Safari</span>
-            </div>
-            <div class="chatbot-input-wrapper">
-                <input type="text" class="chatbot-input" id="chatInput" placeholder="Posez votre question..." onkeypress="handleKeyPress(event)" data-translate="chat_placeholder">
-                <button class="chatbot-send" onclick="sendMessage()">
-                    <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
-                </button>
-            </div>
-        </div>
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">✈ Sure Travel Agency</div>
+    <h1><em data-translate="hero_tagline">Your Journey Begins Here</em></h1>
+    <p class="hero-subtitle" data-translate="hero_subtitle">Affordable flights, seamless travel, 24/7 support — Sure Travel Agency gets you there safely.</p>
+    <div class="hero-actions">
+      <a href="pages/booking.html" class="btn-primary" data-translate="hero_cta_book">Book a Flight</a>
+      <a href="pages/about.html" class="btn-outline" data-translate="hero_cta_learn">Learn More</a>
     </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-number">200+</div><div class="stat-label" data-translate="hero_stat1">Happy Travelers</div></div>
+      <div class="stat"><div class="stat-number">120+</div><div class="stat-label" data-translate="hero_stat2">Destinations</div></div>
+      <div class="stat"><div class="stat-number">24/7</div><div class="stat-label" data-translate="hero_stat3">Support Hours</div></div>
+      <div class="stat"><div class="stat-number">5+</div><div class="stat-label" data-translate="hero_stat4">Years Experience</div></div>
+    </div>
+  </div>
 
-    <script>
-        // Chatbot State
-        let isChatbotOpen = false;
-        let unreadMessages = 1;
-        
-        function toggleChatbot() {
-            const container = document.getElementById('chatbotContainer');
-            const toggle = document.getElementById('chatbotToggle');
-            
-            if (container.classList.contains('open')) {
-                container.classList.remove('open');
-                isChatbotOpen = false;
-            } else {
-                container.classList.add('open');
-                isChatbotOpen = true;
-                unreadMessages = 0;
-                document.getElementById('chatNotification').style.display = 'none';
-            }
-        }
-        
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-        
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (message === '') return;
-            
-            addMessage(message, 'user');
-            input.value = '';
-            
-            showTypingIndicator();
-            
-            setTimeout(() => {
-                removeTypingIndicator();
-                const response = getAIResponse(message);
-                addMessage(response, 'bot');
-            }, 1500);
-        }
-        
-        function quickQuestion(type) {
-            let question = '';
-            const lang = currentLanguage;
-            
-            if (lang === 'fr') {
-                switch(type) {
-                    case 'paiement': question = 'Quels sont les modes de paiement acceptés ?'; break;
-                    case 'bagages': question = 'Quelle est la franchise bagages ?'; break;
-                    case 'annulation': question = 'Comment annuler ma réservation ?'; break;
-                    case 'vols': question = 'Comment réserver un vol ?'; break;
-                    case 'hotels': question = 'Quels hôtels recommandez-vous ?'; break;
-                    case 'contact': question = 'Comment contacter le support ?'; break;
-                    case 'safari': question = 'Pouvez-vous me parler des safaris ?'; break;
-                }
-            } else if (lang === 'en') {
-                switch(type) {
-                    case 'paiement': question = 'What payment methods are accepted?'; break;
-                    case 'bagages': question = 'What is the baggage allowance?'; break;
-                    case 'annulation': question = 'How do I cancel my booking?'; break;
-                    case 'vols': question = 'How do I book a flight?'; break;
-                    case 'hotels': question = 'Which hotels do you recommend?'; break;
-                    case 'contact': question = 'How do I contact support?'; break;
-                    case 'safari': question = 'Can you tell me about safaris?'; break;
-                }
-            } else {
-                switch(type) {
-                    case 'paiement': question = 'Ni ubuhe buryo bwo kwishura bwemerwa?'; break;
-                    case 'bagages': question = 'Ibipimo vy\'imigendekwa ni ibiki?'; break;
-                    case 'annulation': question = 'Nigute nakuraho ikibanza cyanje?'; break;
-                    case 'vols': question = 'Nigute nakwiyandikisha ku ndege?'; break;
-                    case 'hotels': question = 'Ni ayahe mahoteli mwotwemerera?'; break;
-                    case 'contact': question = 'Nigute novugana n\'ubufasha?'; break;
-                    case 'safari': question = 'Murashobora kumbwira kuri safari?'; break;
-                }
-            }
-            
-            addMessage(question, 'user');
-            showTypingIndicator();
-            
-            setTimeout(() => {
-                removeTypingIndicator();
-                const response = getAIResponse(question);
-                addMessage(response, 'bot');
-            }, 1000);
-        }
-        
-        function addMessage(text, sender) {
-            const messages = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            messageDiv.innerHTML = `<div class="message-content">${text}</div>`;
-            messages.appendChild(messageDiv);
-            messages.scrollTop = messages.scrollHeight;
-            
-            if (!isChatbotOpen && sender === 'bot') {
-                unreadMessages++;
-                document.getElementById('chatNotification').style.display = 'flex';
-                document.getElementById('chatNotification').textContent = unreadMessages;
-            }
-        }
-        
-        function showTypingIndicator() {
-            const messages = document.getElementById('chatMessages');
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message bot';
-            typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `
-                <div class="typing-indicator">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            `;
-            messages.appendChild(typingDiv);
-            messages.scrollTop = messages.scrollHeight;
-        }
-        
-        function removeTypingIndicator() {
-            const typing = document.getElementById('typingIndicator');
-            if (typing) typing.remove();
-        }
-        
-        function getAIResponse(question) {
-            const q = question.toLowerCase();
-            const lang = currentLanguage;
-            
-            if (lang === 'fr') {
-                if (q.includes('paiement') || q.includes('payer')) {
-                    return "Nous acceptons plusieurs modes de paiement :\n\n• 💳 MTN MoMo (79 639 803)\n• 📱 Airtel Money\n• 🏦 Virement bancaire (BCB, BANCOBU, Interbank)\n• 💳 Visa/Mastercard\n• 💵 Espèces en agence";
-                } else if (q.includes('bagage') || q.includes('valise')) {
-                    return "🛄 Franchise standard : 1 bagage 23kg + 1 cabine 7kg en économique.";
-                } else if (q.includes('annulation')) {
-                    return "❌ Contactez-nous au +257 79 639 803 pour toute annulation.";
-                } else {
-                    return "Merci pour votre question ! Contactez-nous au +257 79 639 803 pour plus d'aide.";
-                }
-            } else if (lang === 'en') {
-                if (q.includes('payment')) {
-                    return "We accept MTN MoMo, Airtel Money, bank transfer, Visa/Mastercard, and cash.";
-                } else {
-                    return "Thank you! Contact us at +257 79 639 803 for help.";
-                }
-            } else {
-                if (q.includes('kwishura')) {
-                    return "Twemera MTN MoMo, Airtel Money, banki, Visa/Mastercard, n' amafaranga mu biro.";
-                } else {
-                    return "Urakoze! Twandikire kuri +257 79 639 803.";
-                }
-            }
-        }
-        
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                if (!isChatbotOpen) {
-                    document.getElementById('chatNotification').style.display = 'flex';
-                }
-            }, 5000);
-        });
-    </script>
-    <!-- End AI Chatbot Assistant -->
+  <!-- Floating cards -->
+  <div class="hero-float">
+    <div class="float-card">
+      <div class="float-icon">✈️</div>
+      <div>
+        <h4>Nairobi → Paris</h4>
+        <p>From $420 · Economy</p>
+      </div>
+    </div>
+    <div class="float-card">
+      <div class="float-icon">🏨</div>
+      <div>
+        <h4>Hotel Included</h4>
+        <p>Best rates guaranteed</p>
+      </div>
+    </div>
+    <div class="float-card">
+      <div class="float-icon">🕐</div>
+      <div>
+        <h4>24/7 Support</h4>
+        <p>Always here for you</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SERVICES ========== -->
+<section class="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">What We Offer</span>
+      <h2 class="section-title" data-translate="services_title">Our Services</h2>
+      <p class="section-subtitle" data-translate="services_subtitle">Everything you need for a perfect journey</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">✈️</div>
+        <h3 data-translate="service1_title">Flight Tickets</h3>
+        <p data-translate="service1_desc">Find the most affordable flight tickets to any destination worldwide. We compare hundreds of airlines to get you the best deal.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏨</div>
+        <h3 data-translate="service2_title">Hotel Booking</h3>
+        <p data-translate="service2_desc">Handpicked hotels for every budget. From luxury resorts to cozy guesthouses, we find your perfect stay.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚗</div>
+        <h3 data-translate="service3_title">Car Rental</h3>
+        <p data-translate="service3_desc">Reliable airport car rental services. Pick up your vehicle the moment you land and travel at your own pace.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛡️</div>
+        <h3 data-translate="service4_title">Travel Assistance</h3>
+        <p data-translate="service4_desc">Complete travel support from visa guidance to itinerary planning. We're with you every step of the way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DESTINATIONS ========== -->
+<section class="destinations">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Popular Destinations</span>
+      <h2 class="section-title">Explore the World</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.6)">Top destinations our clients love</p>
+    </div>
+    <div class="dest-grid">
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80" alt="Paris" loading="lazy" />
+        <div class="dest-overlay"><h3>Paris</h3><span>France</span></div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80" alt="Dubai" loading="lazy" />
+        <div class="dest-overlay"><h3>Dubai</h3><span>UAE</span></div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=600&q=80" alt="London" loading="lazy" />
+        <div class="dest-overlay"><h3>London</h3><span>United Kingdom</span></div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1555992336-03a23c7b20ee?w=600&q=80" alt="Istanbul" loading="lazy" />
+        <div class="dest-overlay"><h3>Istanbul</h3><span>Turkey</span></div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80" alt="Nairobi" loading="lazy" />
+        <div class="dest-overlay"><h3>Nairobi</h3><span>Kenya</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY US ========== -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Why Sure Travel</span>
+      <h2 class="section-title" data-translate="why_title">Why Choose Sure Travel?</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-icon">🕐</span>
+        <h3 data-translate="why1_title">Available 24/7</h3>
+        <p data-translate="why1_desc">Our team is available around the clock, every day of the week.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">💰</span>
+        <h3 data-translate="why2_title">Best Prices</h3>
+        <p data-translate="why2_desc">We search hundreds of options to guarantee the lowest fares.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🛡️</span>
+        <h3 data-translate="why3_title">Safe Travel</h3>
+        <p data-translate="why3_desc">Your safety is our priority. We ensure every trip is secure.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">⭐</span>
+        <h3 data-translate="why4_title">Expert Team</h3>
+        <p data-translate="why4_desc">Experienced travel professionals dedicated to your satisfaction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA STRIP ========== -->
+<section style="background: linear-gradient(135deg, #0a1628, #1a3a6e); padding: 60px 0;">
+  <div class="container" style="text-align:center;">
+    <h2 style="color:#fff; font-size:2.2rem; margin-bottom:14px;">Ready to Travel?</h2>
+    <p style="color:rgba(255,255,255,0.7); margin-bottom:32px; font-size:1.05rem;">Let us plan your perfect trip today. Contact us anytime.</p>
+    <a href="pages/booking.html" class="btn-primary" style="font-size:1rem; padding: 16px 40px;" data-translate="hero_cta_book">Book a Flight</a>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/logo.jpeg" alt="Sure Travel Agency" style="height:48px;border-radius:8px;" />
+          <div class="logo-text">
+            <span class="logo-name">Sure Travel</span>
+            <span class="logo-sub">Travel Agency</span>
+          </div>
+        </a>
+        <p style="margin-top:18px;max-width:300px;" data-translate="footer_tagline">Your trusted travel partner. Available 24/7 to help you explore the world.</p>
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <a href="https://wa.me/25769314640" target="_blank" style="background:var(--gold);color:var(--navy);font-weight:700;font-size:0.8rem;padding:8px 16px;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:6px;">💬 WhatsApp</a>
+          <a href="mailto:suretravelagency9@gmail.com" style="background:rgba(255,255,255,0.1);color:white;font-weight:600;font-size:0.8rem;padding:8px 16px;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,0.15);">✉️ Email</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_quick_links">Quick Links</h4>
+        <ul>
+          <li><a href="index.html" data-translate="nav_home">Home</a></li>
+          <li><a href="pages/about.html" data-translate="nav_about">About</a></li>
+          <li><a href="pages/services.html" data-translate="nav_services">Services</a></li>
+          <li><a href="pages/booking.html" data-translate="nav_booking">Booking</a></li>
+          <li><a href="pages/testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+          <li><a href="pages/faq.html" data-translate="nav_faq">FAQ</a></li>
+          <li><a href="pages/support.html" data-translate="nav_support">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_contact">Contact Us</h4>
+        <ul>
+          <li style="margin-bottom:12px;">
+            <a href="mailto:suretravelagency9@gmail.com" style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:center;gap:8px;text-decoration:none;transition:color 0.2s;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;">📧</span>
+              suretravelagency9@gmail.com
+            </a>
+          </li>
+          <li style="margin-bottom:12px;">
+            <a href="tel:+25779639803" style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:center;gap:8px;text-decoration:none;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;">📱</span>
+              +257 79 639 803
+            </a>
+          </li>
+          <li style="margin-bottom:12px;">
+            <a href="tel:+25769314640" style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:center;gap:8px;text-decoration:none;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;">📱</span>
+              +257 69 31 46 40
+            </a>
+          </li>
+          <li>
+            <span style="color:rgba(255,255,255,0.7);font-size:0.875rem;display:flex;align-items:flex-start;gap:8px;">
+              <span style="width:28px;height:28px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;margin-top:2px;">📍</span>
+              Excellence House, Bureau 3.17,<br>Bujumbura, Burundi
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-translate="footer_rights">© 2025 Sure Travel Agency. All rights reserved.</span>
+      <span data-translate="footer_founders">Founded by Keza Nadia & Mr. Eric</span>
+    </div>
+  </div>
+</footer>
+
+<!-- AI CHAT WIDGET -->
+<button id="ai-chat-toggle" aria-label="Open AI Assistant" aria-expanded="false">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+</button>
+<div id="ai-chat-widget" style="display:none;">
+  <div class="ai-chat-header">
+    <div class="ai-avatar">✈</div>
+    <div>
+      <h4 data-translate="ai_title">Sure Travel AI</h4>
+      <p data-translate="ai_status">Online · Replies fast</p>
+    </div>
+    <button class="ai-chat-close" id="ai-chat-close" type="button" aria-label="Close">✕</button>
+  </div>
+  <div id="ai-chat-messages"></div>
+  <div id="ai-quick-chips" class="quick-replies"></div>
+  <div class="ai-chat-input-row">
+    <input type="text" id="ai-chat-input" data-translate-placeholder="ai_placeholder" placeholder="Ask about flights, hotels, payments..." autocomplete="off" />
+    <button id="ai-chat-send" type="button">&#10148;</button>
+  </div>
+</div>
+
+<script src="js/translations.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script src="js/ai-assistant.js"></script>
 </body>
 </html>

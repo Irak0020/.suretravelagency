@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testimonials — Sure Travel Agency</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../images/logo.jpeg" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    .star-btn {
+      font-size: 2.4rem;
+      cursor: pointer;
+      color: #d1d5db;
+      transition: color 0.15s, transform 0.1s;
+      user-select: none;
+      -webkit-user-select: none;
+      display: inline-block;
+      line-height: 1;
+      padding: 4px;
+    }
+    .star-btn:hover,
+    .star-btn.hovered,
+    .star-btn.selected { color: #f59e0b; }
+    .star-btn:active { transform: scale(1.2); }
+    #star-rating { display: flex; justify-content: center; gap: 4px; margin: 8px 0; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">
+      <img src="../images/logo.jpeg" alt="Sure Travel Agency" />
+      <div class="logo-text">
+        <span class="logo-name">Sure Travel</span>
+        <span class="logo-sub">Travel Agency</span>
+      </div>
+    </a>
+    <nav id="nav-menu">
+      <a href="../index.html" data-translate="nav_home">Home</a>
+      <a href="about.html" data-translate="nav_about">About</a>
+      <a href="services.html" data-translate="nav_services">Services</a>
+      <a href="booking.html" data-translate="nav_booking">Booking</a>
+      <a href="testimonials.html" class="active" data-translate="nav_testimonials">Testimonials</a>
+      <a href="faq.html" data-translate="nav_faq">FAQ</a>
+      <a href="support.html" data-translate="nav_support">Contact</a>
+      <a href="booking.html" class="btn-nav" data-translate="nav_book_now">Book Now</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="ki">KI</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <h1 data-translate="testimonials_title">What Our Clients Say</h1>
+    <p data-translate="testimonials_subtitle">Real stories from real travelers we have helped</p>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section style="background:var(--navy);padding:36px 0;">
+  <div class="container">
+    <div style="display:flex;justify-content:center;gap:52px;flex-wrap:wrap;">
+      <div class="stat" style="text-align:center;">
+        <div class="stat-number" id="total-count">200+</div>
+        <div class="stat-label" data-translate="hero_stat1">Happy Clients</div>
+      </div>
+      <div class="stat" style="text-align:center;">
+        <div class="stat-number">4.9&#9733;</div>
+        <div class="stat-label" data-translate="stat_avg_rating">Average Rating</div>
+      </div>
+      <div class="stat" style="text-align:center;">
+        <div class="stat-number">98%</div>
+        <div class="stat-label" data-translate="stat_satisfaction">Satisfaction Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS GRID -->
+<section class="testimonials-bg" style="padding:72px 0;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge" data-translate="testimonials_title">Client Testimonials</span>
+      <h2 class="section-title" data-translate="testimonials_title">What Our Clients Say</h2>
+    </div>
+    <div class="testimonials-grid" id="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote data-translate="test1_text">Sure Travel found me an amazing deal to Dubai. The ticket arrived within hours. Highly recommend!</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">MD</div>
+          <div class="author-info">
+            <h4 data-translate="test1_name">Marie Dupont</h4>
+            <p data-translate="test1_location">Paris, France</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote data-translate="test2_text">Excellent service! They handled my Nairobi flight perfectly. Fast, professional and very affordable.</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">HJ</div>
+          <div class="author-info">
+            <h4 data-translate="test2_name">Hakizimana Juvenal</h4>
+            <p data-translate="test2_location">Bujumbura, Burundi</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote data-translate="test3_text">I was skeptical at first but they delivered my ticket in under 2 hours. Absolutely outstanding!</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">SJ</div>
+          <div class="author-info">
+            <h4 data-translate="test3_name">Sarah Johnson</h4>
+            <p data-translate="test3_location">London, UK</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote data-translate="test4_text">Best travel agency I have used. They found me a business class seat at economy price. Incredible!</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">AR</div>
+          <div class="author-info">
+            <h4 data-translate="test4_name">Ahmed Al-Rashid</h4>
+            <p data-translate="test4_location">Dubai, UAE</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>The team at Sure Travel was professional, friendly and incredibly fast. My visa assistance was handled smoothly. Highly recommended!</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">NP</div>
+          <div class="author-info"><h4>Ndayishimiye Prosper</h4><p>Gitega, Burundi</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>I have used many travel agencies but Sure Travel is by far the best. They always find the cheapest flights and respond instantly.</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">NV</div>
+          <div class="author-info"><h4>Niyonzima Vestine</h4><p>Ngozi, Burundi</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW FORM -->
+<section class="review-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge" style="background:rgba(212,168,67,0.15);color:var(--gold);" data-translate="review_badge">Share Your Experience</span>
+      <h2 class="section-title" data-translate="review_title">Rate &amp; Review Sure Travel</h2>
+      <p class="section-subtitle" data-translate="review_subtitle">Whether you are a new visitor or a returning client, we would love to hear from you.</p>
+    </div>
+
+    <div class="review-form-wrap">
+      <!-- Success state -->
+      <div id="review-success-box" style="display:none;text-align:center;padding:24px 0;">
+        <div style="font-size:3rem;margin-bottom:12px;">🙏</div>
+        <h3 style="font-size:1.3rem;color:var(--navy);margin-bottom:8px;">Thank you for your review!</h3>
+        <p style="color:var(--text-gray);font-size:0.93rem;margin-bottom:20px;" data-translate="review_sent">Your review now appears with the other testimonials.</p>
+        <button onclick="resetReviewForm()" class="btn-primary" style="font-size:0.9rem;padding:10px 28px;">Write Another Review</button>
+      </div>
+
+      <!-- Form -->
+      <div id="review-form-inner">
+        <form id="testimonial-form" novalidate>
+
+          <!-- STAR RATING -->
+          <div style="margin-bottom:28px;text-align:center;">
+            <label style="display:block;font-weight:700;color:var(--navy);margin-bottom:10px;font-size:0.93rem;" data-translate="review_rate_label">Your Rating</label>
+            <div id="star-rating" role="group" aria-label="Star rating">
+              <span class="star-btn" data-val="1" role="button" tabindex="0" aria-label="1 star">&#9733;</span>
+              <span class="star-btn" data-val="2" role="button" tabindex="0" aria-label="2 stars">&#9733;</span>
+              <span class="star-btn" data-val="3" role="button" tabindex="0" aria-label="3 stars">&#9733;</span>
+              <span class="star-btn" data-val="4" role="button" tabindex="0" aria-label="4 stars">&#9733;</span>
+              <span class="star-btn" data-val="5" role="button" tabindex="0" aria-label="5 stars">&#9733;</span>
+            </div>
+            <input type="hidden" id="review-rating" value="0" />
+            <p id="rating-hint" style="font-size:0.875rem;color:var(--text-gray);margin-top:6px;min-height:1.4em;" data-translate="review_rate_hint">Click a star to rate</p>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label style="font-weight:600;color:var(--navy);font-size:0.88rem;" data-translate="review_name">Your Name</label>
+              <input type="text" id="rev-name" style="width:100%;padding:12px 15px;border:2px solid var(--light-gray);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.93rem;background:var(--off-white);outline:none;transition:border 0.2s;box-sizing:border-box;" required />
+            </div>
+            <div class="form-group">
+              <label style="font-weight:600;color:var(--navy);font-size:0.88rem;" data-translate="review_location">City / Country</label>
+              <input type="text" id="rev-location" style="width:100%;padding:12px 15px;border:2px solid var(--light-gray);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.93rem;background:var(--off-white);outline:none;transition:border 0.2s;box-sizing:border-box;" />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:16px;">
+            <label style="font-weight:600;color:var(--navy);font-size:0.88rem;" data-translate="review_message">Your Review</label>
+            <textarea id="rev-message" rows="4" style="width:100%;padding:12px 15px;border:2px solid var(--light-gray);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.93rem;resize:vertical;background:var(--off-white);outline:none;transition:border 0.2s;box-sizing:border-box;margin-top:7px;" required></textarea>
+          </div>
+
+          <div style="margin:20px 0 24px;">
+            <label style="font-weight:600;color:var(--navy);font-size:0.88rem;display:block;margin-bottom:10px;" data-translate="review_client_type">Are you a...</label>
+            <div style="display:flex;gap:20px;flex-wrap:wrap;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.9rem;color:var(--text-gray);">
+                <input type="radio" name="client-type" value="returning" style="accent-color:var(--navy);width:16px;height:16px;" checked />
+                <span data-translate="review_returning">Returning Client</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.9rem;color:var(--text-gray);">
+                <input type="radio" name="client-type" value="new" style="accent-color:var(--navy);width:16px;height:16px;" />
+                <span data-translate="review_new">New / Prospective Client</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="review-error" style="display:none;margin-bottom:14px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:12px 16px;color:#b91c1c;font-size:0.88rem;text-align:center;" data-translate="review_rating_required">Please select a star rating before submitting.</div>
+
+          <button type="submit" class="btn-primary btn-full" style="font-size:1rem;padding:15px;" data-translate="review_submit">⭐ Submit Review</button>
+          <p style="text-align:center;color:var(--text-gray);font-size:0.78rem;margin-top:10px;">Your review appears instantly. We never share your personal data.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:linear-gradient(135deg,#0a1628,#1a3a6e);padding:64px 0;">
+  <div class="container" style="text-align:center;">
+    <h2 style="color:white;margin-bottom:12px;" data-translate="cta_join">Join Our Happy Travelers</h2>
+    <p style="color:rgba(255,255,255,0.7);margin-bottom:28px;" data-translate="cta_join_sub">Book your trip today and experience the Sure Travel difference.</p>
+    <a href="booking.html" class="btn-primary" style="text-decoration:none;" data-translate="nav_book_now">Book Now</a>
+  </div>
+</section>
+
+<!-- AI CHAT -->
+<button id="ai-chat-toggle" aria-label="Open AI Assistant" aria-expanded="false">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+</button>
+<div id="ai-chat-widget">
+  <div class="ai-chat-header">
+    <div class="ai-avatar">✈</div>
+    <div><h4 data-translate="ai_title">Sure Travel AI</h4><p data-translate="ai_status">Online · Replies fast</p></div>
+    <button class="ai-chat-close" id="ai-chat-close" type="button">✕</button>
+  </div>
+  <div id="ai-chat-messages"></div>
+  <div id="ai-quick-chips" class="quick-replies"></div>
+  <div class="ai-chat-input-row">
+    <input type="text" id="ai-chat-input" data-translate-placeholder="ai_placeholder" placeholder="Ask about flights, hotels, payments..." autocomplete="off" />
+    <button id="ai-chat-send" type="button">&#10148;</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <img src="../images/logo.jpeg" alt="Sure Travel Agency" style="height:48px;border-radius:8px;" />
+          <div class="logo-text">
+            <span class="logo-name">Sure Travel</span>
+            <span class="logo-sub">Travel Agency</span>
+          </div>
+        </a>
+        <p style="margin-top:18px;max-width:300px;" data-translate="footer_tagline">Your trusted travel partner. Available 24/7 to help you explore the world.</p>
+        <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+          <a href="https://wa.me/25769314640" target="_blank" class="footer-wa-btn">💬 WhatsApp</a>
+          <a href="mailto:suretravelagency9@gmail.com" class="footer-email-btn">✉️ Email</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_quick_links">Quick Links</h4>
+        <ul>
+          <li><a href="../index.html" data-translate="nav_home">Home</a></li>
+          <li><a href="about.html" data-translate="nav_about">About</a></li>
+          <li><a href="services.html" data-translate="nav_services">Services</a></li>
+          <li><a href="booking.html" data-translate="nav_booking">Booking</a></li>
+          <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+          <li><a href="faq.html" data-translate="nav_faq">FAQ</a></li>
+          <li><a href="support.html" data-translate="nav_support">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-translate="footer_contact">Contact Us</h4>
+        <ul>
+          <li><a href="mailto:suretravelagency9@gmail.com" class="footer-contact-link"><span class="footer-icon">📧</span>suretravelagency9@gmail.com</a></li>
+          <li><a href="tel:+25779639803" class="footer-contact-link"><span class="footer-icon">📱</span>+257 79 639 803</a></li>
+          <li><a href="tel:+25769314640" class="footer-contact-link"><span class="footer-icon">📱</span>+257 69 31 46 40</a></li>
+          <li><span class="footer-contact-link"><span class="footer-icon">📍</span>Excellence House, Bureau 3.17, Bujumbura, Burundi</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-translate="footer_rights">2025 Sure Travel Agency. All rights reserved.</span></span>
+      <span data-translate="footer_founders">Founded by Keza Nadia &amp; Mr. Eric</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/translations.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/ai-assistant.js"></script>
+<script>
+emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
+
+/* ============ STAR RATING — runs after DOM is ready ============ */
+document.addEventListener('DOMContentLoaded', function() {
+
+  var ratingInput  = document.getElementById('review-rating');
+  var ratingHint   = document.getElementById('rating-hint');
+  var starBtns     = document.querySelectorAll('.star-btn');
+  var currentRating = 0;
+
+  var ratingLabels = {
+    en: ['Click a star to rate','Poor','Fair','Good','Very Good','Excellent!'],
+    fr: ['Cliquez pour noter','Mauvais','Passable','Bien','Tres bien','Excellent!'],
+    ki: ['Kanda inyenyeri ngo utegekanye','Bibi','Bisanzwe','Bimeze','Bimeze Cane','Birabura!']
+  };
+
+  function getLang() {
+    try { return localStorage.getItem('sureTravelLang') || 'en'; } catch(e) { return 'en'; }
+  }
+
+  function paintStars(upTo) {
+    starBtns.forEach(function(s, i) {
+      s.style.color = i < upTo ? '#f59e0b' : '#d1d5db';
+    });
+  }
+
+  function setRating(val) {
+    currentRating = val;
+    ratingInput.value = val;
+    paintStars(val);
+    var lang = getLang();
+    var labels = ratingLabels[lang] || ratingLabels.en;
+    ratingHint.textContent = val ? labels[val] : labels[0];
+  }
+
+  /* Attach events to each star */
+  starBtns.forEach(function(star) {
+    var val = parseInt(star.getAttribute('data-val'), 10);
+
+    star.addEventListener('click', function(e) {
+      e.preventDefault();
+      setRating(val);
+    });
+
+    star.addEventListener('mouseenter', function() {
+      paintStars(val);
+    });
+
+    star.addEventListener('mouseleave', function() {
+      paintStars(currentRating);
+    });
+
+    star.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setRating(val);
+      }
+    });
+
+    /* Touch support for mobile */
+    star.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      setRating(val);
+    });
+  });
+
+  /* ============ REVIEW FORM SUBMIT ============ */
+  document.getElementById('testimonial-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (currentRating === 0) {
+      document.getElementById('review-error').style.display = 'block';
+      document.getElementById('star-rating').scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+    document.getElementById('review-error').style.display = 'none';
+
+    var btn  = this.querySelector('button[type="submit"]');
+    var name = document.getElementById('rev-name').value.trim();
+    var loc  = document.getElementById('rev-location').value.trim();
+    var msg  = document.getElementById('rev-message').value.trim();
+    var type = document.querySelector('input[name="client-type"]:checked').value;
+
+    btn.textContent = '...';
+    btn.disabled = true;
+
+    /* Inject card into grid IMMEDIATELY */
+    injectReviewCard(name, loc, msg, currentRating);
+
+    /* Show success */
+    document.getElementById('review-form-inner').style.display = 'none';
+    document.getElementById('review-success-box').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('review-success-box').getBoundingClientRect().top + window.scrollY - 120, behavior:'smooth' });
+
+    /* Send email (fire and forget) */
+    var starsStr = Array(currentRating+1).join('\u2605') + Array(6-currentRating).join('\u2606');
+    var params = {
+      from_name:         name,
+      reviewer_name:     name,
+      reviewer_location: loc || 'Not provided',
+      review_rating:     starsStr + ' (' + currentRating + '/5)',
+      review_message:    msg,
+      client_type:       type === 'new' ? 'New Client' : 'Returning Client',
+      from_email:        'review@noreply.com',
+    };
+    emailjs.send('YOUR_SERVICE_ID','YOUR_REVIEW_TEMPLATE_ID', params).catch(function() {
+      var body = 'Name: '+name+'\nLocation: '+(loc||'N/A')+'\nRating: '+starsStr+'\nType: '+params.client_type+'\n\n'+msg;
+      window.location.href = 'mailto:suretravelagency9@gmail.com?subject=' + encodeURIComponent('New Review from '+name+' — '+currentRating+'/5') + '&body=' + encodeURIComponent(body);
+    });
+  });
+
+}); /* end DOMContentLoaded */
+
+/* ============ INJECT REVIEW CARD ============ */
+function injectReviewCard(name, location, message, rating) {
+  var grid = document.getElementById('testimonials-grid');
+  var starsHtml = Array(rating+1).join('&#9733;') + Array(6-rating).join('&#9734;');
+  var initials  = name.trim().split(' ').map(function(p){ return p[0]; }).join('').toUpperCase().substring(0,2);
+  var grads = [
+    'linear-gradient(135deg,#0a1628,#2563eb)',
+    'linear-gradient(135deg,#1a3a6e,#d4a843)',
+    'linear-gradient(135deg,#0a1628,#10b981)',
+  ];
+  var grad = grads[Math.floor(Math.random() * grads.length)];
+
+  var card = document.createElement('div');
+  card.className = 'testimonial-card new-review';
+  card.innerHTML =
+    '<div class="stars">' + starsHtml + '</div>' +
+    '<blockquote>' + message.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</blockquote>' +
+    '<div class="testimonial-author">' +
+      '<div class="author-avatar" style="background:' + grad + ';">' + initials + '</div>' +
+      '<div class="author-info">' +
+        '<h4>' + name.replace(/</g,'&lt;') + '</h4>' +
+        '<p>' + (location || 'Anonymous').replace(/</g,'&lt;') + '</p>' +
+      '</div>' +
+    '</div>';
+
+  grid.insertBefore(card, grid.firstChild);
+
+  /* Update total count */
+  var countEl = document.getElementById('total-count');
+  if (countEl) {
+    var n = parseInt(countEl.textContent) || 200;
+    countEl.textContent = (n + 1) + '+';
+  }
+}
+
+function resetReviewForm() {
+  document.getElementById('testimonial-form').reset();
+  document.getElementById('review-rating').value = '0';
+  document.querySelectorAll('.star-btn').forEach(function(s){ s.style.color = '#d1d5db'; });
+  var hint = document.getElementById('rating-hint');
+  if (hint) { try { hint.setAttribute('data-translate','review_rate_hint'); hint.textContent = 'Click a star to rate'; } catch(e){} }
+  document.getElementById('review-form-inner').style.display = 'block';
+  document.getElementById('review-success-box').style.display = 'none';
+  document.getElementById('review-form-inner').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+</script>
+</body>
+</html>
